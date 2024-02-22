@@ -36,6 +36,8 @@ ___
 ~$ breads-ad
 </pre>
 
+If you encounter any error when trying to install you might use --break-system-packages flag
+
 <br>
 
 <h3> Credits </h3>
@@ -44,6 +46,14 @@ ___
     <li>Impacket</li>
     <li>NetExec</li>
 </ul>
+
+<br>
+
+<h3> Known Errors </h3>
+<h4> ⚠️ pip failed to build package: python-ldap </h4>
+<pre>
+sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
+</pre>
 
 <br>
 
