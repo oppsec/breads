@@ -15,17 +15,17 @@ ___
 </div>
 
 <h3> What is Breads? </h3>
-<p> <b>BREADS</b> is a tool focused to enumerate and attack Active Directory environments through LDAP, SMB and other protocols (not done yet). This project is inspired on other existing tools like CrackMapExec and NetExec. </p>
+<p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like CrackMapExec and NetExec. </p>
 
 <br>
 
 <h3> Why use this? </h3>
-<p> This project is created and maintained by security researchers that want to study and discover more about Active Directory environments, then you don't need to use this necessary but I promise the team is trying his best to make this a really usable tool and a cool project </p>
+<p> This project is created and maintained by security researchers who want to study and discover more about Active Directory environments, then you don't need to use this necessary but I promise the team is trying its best to make this a usable tool and a cool project </p>
 
 <br>
 
 <h3> Any advantage? </h3>
-<p> Yes, the principal Breads advantages is the flexibility of creating profiles that is directed stored on the local machine (through the .breads directory created on user home) and the easy way to execute commands without needing to re-type the same credentials everytime. I personally like how 'whoami' command works and that's all. </p>
+<p> Yes, the principal Breads advantages are the flexibility of creating profiles that are directly stored on the local machine (through the .breads directory created on the user's home) and the easy way to execute commands without needing to re-type the same credentials every time. I like how the 'whoami' command works and that's all. </p>
 
 <br>
 
