@@ -40,6 +40,9 @@ If you encounter any error when trying to install you might use --break-system-p
 
 <br>
 
+<h3> Preview </h3>
+<img src="https://i.imgur.com/DMBGUqh.png">
+
 <h3> Credits </h3>
 <ul>
     <li>CrackMapExec</li>
