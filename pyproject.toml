@@ -1,0 +1,25 @@
+[project]
+name = "breads-ad"
+version = "1.1.5"
+authors = [{ name = "oppsec", email = "opps3c@gmail.com" }]
+description = "Breaking Active Directory Security (BREADS) is a tool design to attack Active Directory environments"
+readme = "README.md"
+keywords = ["python3", "red team", "active directory", "pentest"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["python-ldap>=3.4.4", 'rich>=13.5.3', 'impacket>=0.11.0']
+license = { file = "LICENSE" }
+
+[project.urls]
+Homepage = "https://github.com/pypa/sampleproject"
+Issues = "https://github.com/pypa/sampleproject/issues"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+breads-ad = "main:BreadsPrompt.cmdloop"
