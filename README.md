@@ -31,7 +31,7 @@ ___
 
 <h3> Installation </h3>
 <pre>
-~$ pipx install git+https://github.com/oppsec/breads
+~$ pipx install git+https://github.com/oppsec/breads.git
 ~$ pipx ensurepath
 ~$ breads-ad
 </pre>
