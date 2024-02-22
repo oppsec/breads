@@ -39,9 +39,11 @@ ___
 <br>
 
 <h3> Credits </h3>
-<li>CrackMapExec</li>
-<li>Impacket</li>
-<li>NetExec</li>
+<ul>
+    <li>CrackMapExec</li>
+    <li>Impacket</li>
+    <li>NetExec</li>
+</ul>
 
 <br>
 
