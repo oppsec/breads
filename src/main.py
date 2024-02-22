@@ -5,7 +5,7 @@ from rich.console import Console
 from pathlib import Path
 from pkgutil import iter_modules
 
-from handlers.help_cmd import help_table
+from handlers.help_table import help_table
 from handlers.profile.create_profile import profile_folder
 from handlers.profile.load_profile import select_and_load_profile
 from ui.banner import get_banner
