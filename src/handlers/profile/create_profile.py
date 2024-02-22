@@ -44,7 +44,7 @@ def profile_folder(inp) -> None:
 def initialize_profile_json() -> None:
     ''' Create the base JSON file to be used by the profile to store the information collected '''
 
-    base_profile = {
+    profile_structure = {
         "profile_name": profile_name,
         "profile_uuid": PROFILE_UUID,
         "host": "",
@@ -52,14 +52,14 @@ def initialize_profile_json() -> None:
         "password": ""
     }
 
-    base_profile_json_path: str = f"{BREADS_FOLDER}/{profile_name}/settings.json"
+    json_path: str = f"{BREADS_FOLDER}/{profile_name}/settings.json"
 
     try:
-        with open(base_profile_json_path, 'w') as base_profile_json:
-            json.dump(base_profile, base_profile_json, ensure_ascii=False, indent=4)
-            base_profile_json.truncate()
+        with open(json_path, 'w') as profile_json:
+            json.dump(profile_structure, json_path, ensure_ascii=False, indent=4)
+            profile_json.truncate()
 
-            print(f"[yellow][!][/] [bright_white][i]\_ Profile name: {profile_name} - UUID: {PROFILE_UUID} - Path: {base_profile_json_path}[/][/]")
+            print(f"[yellow][!][/] [bright_white][i]\_ Profile name: {profile_name} - UUID: {PROFILE_UUID} - Path: {json_path}[/][/]")
 
     except Exception as error:
         print(f"[red][!][/] [bright_white]Error when trying to create the base profile JSON file: {error}[/]")

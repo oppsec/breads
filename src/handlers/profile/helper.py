@@ -2,7 +2,7 @@ from pathlib import Path
 from os import environ
 
 def get_user_home() -> None:
-    ''' Return user home directory '''
+    ''' Return $USER home directory '''
 
     return str(Path.home())
 

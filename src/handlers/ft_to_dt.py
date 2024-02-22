@@ -1,4 +1,4 @@
-# Origin: https://gist.github.com/Mostafa-Hamdy-Elgiar/9714475f1b3bc224ea063af81566d873
+# Source: https://gist.github.com/Mostafa-Hamdy-Elgiar/9714475f1b3bc224ea063af81566d873
 
 from datetime import datetime, timedelta
 
