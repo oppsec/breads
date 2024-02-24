@@ -55,8 +55,8 @@ def initialize_profile_json() -> None:
     json_path: str = f"{BREADS_FOLDER}/{profile_name}/settings.json"
 
     try:
-        with open(json_path, 'w') as profile_json:
-            json.dump(profile_structure, json_path, ensure_ascii=False, indent=4)
+        with open(json_path, 'w', encoding='utf-8') as profile_json:
+            json.dump(profile_structure, profile_json, ensure_ascii=False, indent=4)
             profile_json.truncate()
 
             print(f"[yellow][!][/] [bright_white][i]\_ Profile name: {profile_name} - UUID: {PROFILE_UUID} - Path: {json_path}[/][/]")
