@@ -24,7 +24,7 @@ class BreadsPrompt(Cmd):
 
     def load_modules(self, package_name):
         package = importlib.import_module(package_name)
-        package_path = Path(package.__file__).parent
+        package_path = str(Path(package.__file__).parent)
 
         for _, module_name, _ in iter_modules([package_path]):
             if not module_name.startswith('__'):
