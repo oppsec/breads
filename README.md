@@ -31,8 +31,9 @@ ___
 
 <h3> Installation </h3>
 <pre>
-~$ pipx install git+https://github.com/oppsec/breads.git
+~$ apt install pipx
 ~$ pipx ensurepath
+~$ pipx install git+https://github.com/oppsec/breads.git
 ~$ breads-ad
 </pre>
 
@@ -56,6 +57,11 @@ If you encounter any error when trying to install you might use --break-system-p
 <h4> ⚠️ pip failed to build package: python-ldap </h4>
 <pre>
 sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
+</pre>
+
+<h4> ⚠️ breads has a 'pyproject.toml' and its build backend is missing the 'build_editable' hook. </h4>
+<pre>
+You need to install breads with pipx install git+https://github.com/oppsec/breads.git
 </pre>
 
 <br>
