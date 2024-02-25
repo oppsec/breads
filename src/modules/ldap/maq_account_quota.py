@@ -12,7 +12,7 @@ class MaqAccountQuota:
     multiple_hosts = False
     user_target = None
     search_filter = '(objectClass=*)'
-    requires_args = True
+    requires_args = False
 
     def __init__(self, context=None, module_options=None):
         self.context = context

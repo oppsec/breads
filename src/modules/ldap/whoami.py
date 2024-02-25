@@ -23,7 +23,7 @@ class Whoami:
         pass
 
     def print_user_info(self, results):
-        attributes = ['sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 'lastLogoff', 'userAccountControl']
+        attributes = ['sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 'lastLogoff', 'userAccountControl', 'description']
         uac_values = {
             '512': '[bold green]User is Enabled[/] - Password Expires',
             '514': '[bold red]User is Disabled[/] - Password Expires',

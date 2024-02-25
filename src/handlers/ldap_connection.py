@@ -35,7 +35,6 @@ class Connection:
             username = data['username']
             hostname = data['host']
             password = data['password']
-
             ldap_uri = f'ldap://{hostname}'
 
             base_dn = username.split('/')[0]
@@ -43,57 +42,40 @@ class Connection:
             username = f"{username.split('/')[1]}@{base_dn}"
             base_dn = "DC=" + ",DC=".join(base_dn.split("."))
 
-            ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
-                    
-            connect = ldap.initialize(ldap_uri)
-            connect.set_option(ldap.OPT_REFERRALS, 0)
-            connect.simple_bind_s(username, password)
+            try:
+                ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+                connect = ldap.initialize(ldap_uri)
+                connect.set_option(ldap.OPT_REFERRALS, 0)
+                connect.simple_bind_s(username, password)
+            except ldap.LDAPError as error:
+                if error.args[0]['desc'] == 'Strong(er) authentication required':
+                    ldap_uri = f'ldaps://{hostname}'
+                    connect = ldap.initialize(ldap_uri)
+                    connect.simple_bind_s(username, password)
 
             search_scope = ldap.SCOPE_SUBTREE
-
             total_results = []
             req_ctrl = SimplePagedResultsControl(True, size=page_size, cookie='')
 
             with Progress() as progress:
-                task = progress.add_task("[cyan][*][/] [bright_white]Executing command[/]", total=100)
+                task = progress.add_task("[cyan][*][/] [bright_white]Executing command[/]", total=100, completed=0)
 
-                while not progress.finished:
+                while True:
                     progress.update(task, advance=10)
-
-                    ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
-                    
-                    connect = ldap.initialize(ldap_uri)
-                    connect.set_option(ldap.OPT_REFERRALS, 0)
-                    connect.simple_bind_s(username, password)
-
-                    search_scope = ldap.SCOPE_SUBTREE
-
                     try:
-                        total_results = []
-                        req_ctrl = SimplePagedResultsControl(criticality=True, size=page_size, cookie='')
+                        query = connect.search_ext(base_dn, search_scope, search_filter, serverctrls=[req_ctrl])
+                        rtype, rdata, rmsgid, serverctrls = connect.result3(query)
+                        total_results.extend(rdata)
 
-                        while True:
-                            query = connect.search_ext(base_dn, search_scope, search_filter, serverctrls=[req_ctrl])
-                            
-                            rtype, rdata, rmsgid, serverctrls = connect.result3(query)
-                            total_results.extend(rdata)
-
-                            pctrls = [c for c in serverctrls if c.controlType == SimplePagedResultsControl.controlType]
-                            if pctrls:
-                                if pctrls[0].cookie:
-                                    req_ctrl.cookie = pctrls[0].cookie
-                                else:
-                                    break
-                            else:
-                                break
-
-                        progress.update(task, advance=40)
-                        return total_results
-                    
+                        pctrls = [c for c in serverctrls if c.controlType == SimplePagedResultsControl.controlType]
+                        if pctrls and pctrls[0].cookie:
+                            req_ctrl.cookie = pctrls[0].cookie
+                        else:
+                            break
                     except ldap.LDAPError as error:
                         print(f"[red][!][/] [bright_white]LDAP Error: {error}[/]")
                         return []
-                    
-                    finally:
-                        connect.unbind_s()
-                        progress.update(task, advance=50)
+
+                progress.update(task, completed=100)
+                connect.unbind_s()
+                return total_results

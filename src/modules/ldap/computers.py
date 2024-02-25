@@ -27,7 +27,7 @@ class Computers:
   
         if results:
             console.print(f"[yellow][!][/] Computers found:", highlight=False)
-            attributes = ['sAMAccountName', 'name', 'operatingSystem', 'dNSHostName']
+            attributes = ['dNSHostName']
         
             for _dn, result in results:
                 for attribute_name in result:

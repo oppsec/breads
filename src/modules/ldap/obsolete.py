@@ -31,7 +31,7 @@ class Obsolete:
         results = conn.ldap_con(self.search_filter, conn.domain, conn.hostname, conn.username, conn.password)
   
         if results:
-            console.print(f"[yellow][!][/] Computers found:", highlight=False)
+            console.print(f"[yellow][!][/] Obsolete computers found:", highlight=False)
             attributes = ['dNSHostName', 'operatingSystem']
         
             for _dn, result in results:
