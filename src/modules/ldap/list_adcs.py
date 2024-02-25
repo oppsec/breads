@@ -3,8 +3,8 @@ from handlers.ldap_connection import Connection
 from rich.console import Console
 console = Console()
 
-class ADCS:
-    name = "adcs"
+class ListAdcs:
+    name = "list-adcs"
     desc = "Retrieve 'dNSHostName', 'cn', 'msPKI-Enrollment-Servers  from all ADCS computers"
     module_protocol = ['ldap']
     opsec_safe = True
