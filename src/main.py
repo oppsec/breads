@@ -10,6 +10,8 @@ from handlers.profile.create_profile import profile_folder
 from handlers.profile.load_profile import select_and_load_profile
 from ui.banner import get_banner
 
+import shlex
+
 console = Console()
 
 class BreadsPrompt(Cmd):
@@ -39,7 +41,15 @@ class BreadsPrompt(Cmd):
                     pass
 
     def register_command(self, command_name, command_instance):
-        setattr(self, f"do_{command_name}", lambda inp, *args: self.on_command(command_instance, inp))
+        def command_handler(inp, *args):
+            parts = shlex.split(inp)
+            
+            if len(parts) < getattr(command_instance, 'min_args', 0):
+                console.print(f"[red][!][/] Missing required arguments. Expected at least {command_instance.min_args} arguments. Use 'help' command to more details")
+            else:
+                command_instance.on_login(*parts)
+
+        setattr(self, f"do_{command_name}", command_handler)
 
     def on_command(self, command_instance, args):
         if getattr(command_instance, 'requires_args', False):
@@ -60,7 +70,7 @@ class BreadsPrompt(Cmd):
         help_table()
 
     def do_exit(self, inp):
-        console.log("[red][!] Exiting... [/]")
+        console.print("[red][!] Exiting... [/]")
         sys.exit(0)
 
     def do_banner(self, inp):
