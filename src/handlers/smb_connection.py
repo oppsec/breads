@@ -41,12 +41,12 @@ class SMBConnectionManager:
             return None
         
         try:
-            smb_connection = SMBConnection(target, target)
+            smb_connection = SMBConnection(remoteName=target, remoteHost=target)
             
-            if '/' in self.username:
-                domain, username = self.username.split('/', 1)
+            if '\\' in self.username:
+                domain, username = self.username.split('\\', 1)
             else:
-                domain = '' 
+                domain = ''
                 username = self.username
 
             smb_connection.login(username, self.password, domain=domain)
@@ -54,4 +54,3 @@ class SMBConnectionManager:
         except Exception as e:
             console.print(f"[red][!][/] Error establishing SMB connection: {e}")
             return None
-

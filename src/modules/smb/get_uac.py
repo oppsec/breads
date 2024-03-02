@@ -12,6 +12,7 @@ class GetUac:
     opsec_safe = True
     multiple_hosts = False
     requires_args = True
+    min_args = 1
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -27,7 +28,8 @@ class GetUac:
 
         target = con_input.split()[0]
         smb_manager = SMBConnectionManager()
-        smb_connection = smb_manager.get_smb_connection(target=target) 
+        smb_connection = smb_manager.get_smb_connection(target) 
+
         if smb_connection is None:
             console.print("[red][!][/] Unable to establish SMB connection.")
             return
