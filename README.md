@@ -37,7 +37,14 @@ ___
 ~$ breads-ad
 </pre>
 
-If you encounter any error when trying to install you might use --break-system-packages flag
+- If you encounter any error when trying to install you might use <b>--break-system-packages</b> flag
+
+<br>
+
+<h4> Update </h4>
+<pre>
+~$ pipx install git+https://github.com/oppsec/breads.git --force
+</pre>
 
 <br>
 
@@ -60,8 +67,9 @@ sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
 </pre>
 
 <h4> ⚠️ breads has a 'pyproject.toml' and its build backend is missing the 'build_editable' hook. </h4>
+Install BREADS with pipx
 <pre>
-You need to install breads with pipx install git+https://github.com/oppsec/breads.git
+pipx install git+https://github.com/oppsec/breads.git
 </pre>
 
 <br>
