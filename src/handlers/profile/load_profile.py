@@ -38,9 +38,12 @@ def load_profile(profile_name):
     with settings_path.open('r+') as json_file:
             existing_data = json.load(json_file)
 
-            host     = existing_data['host']
+            host = existing_data['host']
             username = existing_data['username']
             password = existing_data['password']
+
+            if not host:
+                console.print("[green][+][/] [bright_white]You need to define a target, username and host to be used[/]")
 
             if(len(host) > 2): # If the length of host variable on profile json file is greater than 2 we can assume we already have an host defined
                 console.print(f"[yellow][!][/] [bright_white]Profile settings: {host}, {username}, {password}[/]", highlight=False)
@@ -49,27 +52,27 @@ def load_profile(profile_name):
 
                 if(keep_data_input == 'y' or keep_data_input == 'yes'):
                     console.print("[yellow][!][/] [bright_white]Not changing current configuration[/]\n")
-                    pass
-            else:
-                target_host_input = Prompt.ask("> Type the target host (ex: 127.0.0.1)")
-                username_input    = Prompt.ask("> Type the username to be used (example.lab/Administrator)")
-                password_input    = Prompt.ask("> Type the password to be used")
+                    return existing_data
 
-                profile_data = {
-                    "host": target_host_input,
-                    "username": username_input,
-                    "password": password_input
-                }
+            target_host_input = Prompt.ask("> Type the target host (ex: 127.0.0.1)")
+            username_input = Prompt.ask("> Type the username to be used (example.lab\Administrator)")
+            password_input = Prompt.ask("> Type the password to be used")
 
-                try:
-                    existing_data.update(profile_data)
-                    json_file.seek(0)
-                    json.dump(existing_data, json_file, ensure_ascii=False, indent=4)
-                    json_file.truncate()
+            profile_data = {
+                "host": target_host_input,
+                "username": username_input,
+                "password": password_input
+            }
 
-                    console.print(f"[green][+][/] [bright_white]Profile information stored successfully![/]\n")
-                except Exception as error:
-                    console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
+            try:
+                existing_data.update(profile_data)
+                json_file.seek(0)
+                json.dump(existing_data, json_file, ensure_ascii=False, indent=4)
+                json_file.truncate()
+
+                console.print(f"[green][+][/] [bright_white]Profile information stored successfully![/]\n")
+            except Exception as error:
+                console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
 
         # return existing_data
 
@@ -94,8 +97,7 @@ def select_and_load_profile(inp):
         return
     
     if len(inp) == 0:
-        console.print("[red][!][/] [bright_white]You need to specify a profile name, use: [b]load_profile example[/][/]")
-        
+        console.print("[red][!][/] [bright_white]You need to specify a profile name, use: [b]load_profile <profile_name>[/][/]")
         return True
     
     global profile_name
