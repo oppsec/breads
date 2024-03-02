@@ -1,6 +1,6 @@
 [project]
 name = "breads-ad"
-version = "1.1.6"
+version = "1.1.7"
 authors = [{ name = "oppsec", email = "opps3c@gmail.com" }]
 description = "Breaking Active Directory Security (BREADS) is a tool design to attack Active Directory environments"
 readme = "README.md"
@@ -11,7 +11,7 @@ classifiers = [
     'Programming Language :: Python :: 3',
     'Topic :: Security',
 ]
-dependencies = ["python-ldap>=3.4.4", 'rich>=13.5.3', 'impacket>=0.11.0']
+dependencies = ["ldap3>=2.9.1", 'rich>=13.5.3', 'impacket>=0.11.0']
 license = { file = "LICENSE" }
 
 [project.urls]
