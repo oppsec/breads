@@ -1,3 +1,20 @@
+# 1.1.7
+- Improved ldap_connection.py code
+- Improved attributes reading code
+- Added missing module "trusted_delegation" to help command
+- Changed commands name
+    - list_users -> users
+    - list_groups -> groups
+    - administrators -> admins
+- Fixed 'whoami' module
+- Improved 'maq_account_quota' module through search_scope=ldap.SCOPE_BASE
+- New module: 'add_to_group <username> <group_name>'
+- Started using 'ldap3' library instead of 'python-ldap'
+- Fixed 'get_uac' module
+
+# 1.1.6b
+- Added 'list_groups' module
+
 # 1.1.6
 - Module 'list_adcs' not being recognized as module
 - Fixed no support to SSL/TLS LDAP servers
