@@ -1,18 +1,21 @@
+import ldap
+
 from typing import Optional, Dict
 from rich.console import Console
 console = Console()
 
-from handlers.ldap_connection import Connection
+from handlers.ldap_connection import LdapHandler
 
 class MaqAccountQuota:
     name = "maq_account_quota"
-    desc = "Get the Macchine Account Quota value domain-level attribute"
+    desc = "Get ms-DS-MachineAccountQuota value"
     module_protocol = ['ldap']
     opsec_safe = True
     multiple_hosts = False
     user_target = None
     search_filter = '(objectClass=*)'
     requires_args = False
+    attributes = 'ms-DS-MachineAccountQuota'
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -22,19 +25,13 @@ class MaqAccountQuota:
         pass
 
     def on_login(self):
-        conn = Connection()
-        results = conn.ldap_con(self.search_filter, conn.domain, conn.hostname, conn.username, conn.password)
+        conn, base_dn = LdapHandler.connection(self)
+        results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
+        res_status = results[0]
+        res_response = results[2][0]
   
-        if results:
-            console.print(f"[yellow][!][/] Querying Machine Account Quota value:")
-            attributes = ['ms-DS-MachineAccountQuota']
-        
-            for _dn, result in results:
-                for attribute_name in result:
-                    for attribute in attributes:
-                        if attribute_name == attribute:
-                            for value in result[attribute]:
-                                value = value.decode('utf-8')
-                                console.print(f"[bright_white]{value}[/]")
+        if res_status:
+            maq_value = res_response['attributes']['ms-DS-MachineAccountQuota']
+            console.print(f'[green][+][/] {self.attributes}: {maq_value}', highlight=False)
         else:
-            console.print("[red][!][/] No information found or unable to retrieve. Check your profile settings.")
+            console.print("[red][!][/] No entries found in the results.")

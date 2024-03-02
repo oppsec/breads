@@ -2,8 +2,7 @@ from typing import Optional, Dict
 from rich.console import Console
 console = Console()
 
-from handlers.ldap_connection import Connection
-from handlers.ft_to_dt import filetime_to_dt
+from handlers.ldap_connection import LdapHandler
 
 class Whoami:
     name = "whoami"
@@ -14,6 +13,8 @@ class Whoami:
     user_target = None
     search_filter = None
     requires_args = True
+    min_args = 1
+    attributes = ['sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 'lastLogoff', 'userAccountControl', 'description', 'adminCount']
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -22,45 +23,42 @@ class Whoami:
     def options (self):
         pass
 
-    def print_user_info(self, results):
-        attributes = ['sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 'lastLogoff', 'userAccountControl', 'description']
-        uac_values = {
-            '512': '[bold green]User is Enabled[/] - Password Expires',
-            '514': '[bold red]User is Disabled[/] - Password Expires',
-            '66048': "[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/]",
-            '66050': "[bold red]User is Disabled[/] - [bold yellow]Password Never Expires[/]",
-            '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Not Delegated[/]',
-            '1049088': "[bold green]User is Enabled[/] - Password Expires - [bold yellow]User Not Delegated[/]",
-            '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]'
-        }
-
-        for _dn, result in results:
-            for attribute_name in result:
-                if attribute_name in attributes:
-                    for value in result[attribute_name]:
-                        value = value.decode('utf-8')
-                        self.process_attribute(attribute_name, value, uac_values)
-
-    def process_attribute(self, attribute_name, value, uac_values):
-        if attribute_name == "userAccountControl":
-            console.print(f"[green][+][/] UAC Status: [bright_white]{uac_values.get(value, 'Unknown')}[/]", highlight=False)
-        elif attribute_name in ["lastLogon", "lastLogoff"] and value != "0":
-            dt = filetime_to_dt(int(value))
-            console.print(f"[green][+][/] {attribute_name} (DT): [bright_white]{dt}[/]", highlight=False)
-        else:
-            console.print(f"[green][+][/] [bright_white]{attribute_name}: {value}[/]", highlight=False)
+    uac_values = {
+        '512': '[bold green]User is Enabled[/] - Password Expires',
+        '514': '[bold red]User is Disabled[/] - Password Expires',
+        '66048': "[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/]",
+        '66050': "[bold red]User is Disabled[/] - [bold yellow]Password Never Expires[/]",
+        '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Not Delegated[/]',
+        '1049088': "[bold green]User is Enabled[/] - Password Expires - [bold yellow]User Not Delegated[/]",
+        '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]'
+    }
 
     def on_login(self, target: str):
-        if not target or len(target.split()) < 1:
-            console.print("[red]Usage:[/] whoami <username>")
-            return
+        conn, base_dn = LdapHandler.connection(self)
+        results = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=self.attributes)
+        res_status = results[0]
+        res_response = results[2]
 
-        user_target = target.split()[0]
-        conn = Connection()
-        results = conn.ldap_con(f'(&(objectClass=user)(sAMAccountName={user_target}))', conn.domain, conn.hostname, conn.username, conn.password)
+        if res_status:
+            console.print(f"[green][+][/] Whoami [bold yellow]{target}[/]:", highlight=False)
+            user_info = {}
+            seen_attributes = set()
+            uac_printed = False
 
-        if results:
-            console.print(f"[yellow][!][/] Whoami {user_target}:")
-            self.print_user_info(results)
+            for entry in res_response:
+                if entry['type'] == 'searchResEntry':
+                    for attribute, value in entry['attributes'].items():
+                        if attribute not in seen_attributes:
+                            user_info[attribute] = value
+                            seen_attributes.add(attribute)
+
+            uac_value = user_info.get('userAccountControl')
+            for value, description in self.uac_values.items():
+                if str(uac_value) == str(value) and not uac_printed:
+                    user_info['userAccountControl'] = description
+                    uac_printed = True 
+
+            for attribute, value in user_info.items():
+                console.print(f"[green][+][/] [bright_white]{attribute}: {value}[/]", highlight=False)
         else:
-            console.print("[red][!][/] No information found or unable to retrieve. Check your profile settings.")
+            console.print("[red][!][/] No entries found in the results.")

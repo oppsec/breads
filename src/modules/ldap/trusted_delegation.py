@@ -1,16 +1,17 @@
-from handlers.ldap_connection import Connection
+from handlers.ldap_connection import LdapHandler
 
 from rich.console import Console
 console = Console()
 
 class TrustedDelegation:
     name = "trusted-delegation"
-    desc = "Retrieve 'sAMAccountName' from all accounts that has msds-allowedtodelegateto enabled"
+    desc = "Get 'sAMAccountName' from accounts that has 'msds-allowedtodelegateto' enabled"
     module_protocol = ['ldap']
     opsec_safe = True
     multiple_hosts = False
     search_filter = '(userAccountControl:1.2.840.113556.1.4.803:=524288)'
     requires_args = False
+    attributes='sAMAccountName'
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -20,19 +21,16 @@ class TrustedDelegation:
         pass
 
     def on_login(self):
-        conn = Connection()
-        results = conn.ldap_con(self.search_filter, conn.domain, conn.hostname, conn.username, conn.password)
-        
-        if results:
-            console.print(f"[yellow][!][/] Trusted to Delegation:")
-            attributes = ['sAMAccountName']
-        
-            for _dn, result in results:
-                for attribute_name in result:
-                    for attribute in attributes:
-                        if attribute_name == attribute:
-                            for value in result[attribute]:
-                                value = value.decode('utf-8')
-                                console.print(f"[bright_white]{value}[/]")
+        conn, base_dn = LdapHandler.connection(self)
+        results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
+        res_status = results[0]
+        res_response = results[2]
+
+        if res_status:
+            console.print("[green][+][/] Trusted Delegation Users:")
+            for entry in res_response:
+                if entry['type'] == 'searchResEntry':
+                    hostname = entry['attributes'][self.attributes]
+                    console.print(hostname)
         else:
-            console.print("[red][!][/] No information found or unable to retrieve. Check your profile settings.")
+            console.print("[red][!][/] No entries found in the results.")

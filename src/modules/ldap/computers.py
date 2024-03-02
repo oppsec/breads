@@ -2,7 +2,7 @@ from typing import Optional, Dict
 from rich.console import Console
 console = Console()
 
-from handlers.ldap_connection import Connection
+from handlers.ldap_connection import LdapHandler
 
 class Computers:
     name = "computers"
@@ -13,6 +13,7 @@ class Computers:
     user_target = None
     search_filter = '(&(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))'
     requires_args = False
+    attributes='dNSHostName'
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -22,19 +23,16 @@ class Computers:
         pass
 
     def on_login(self):
-        conn = Connection()
-        results = conn.ldap_con(self.search_filter, conn.domain, conn.hostname, conn.username, conn.password)
-  
-        if results:
-            console.print(f"[yellow][!][/] Computers found:", highlight=False)
-            attributes = ['dNSHostName']
-        
-            for _dn, result in results:
-                for attribute_name in result:
-                    for attribute in attributes:
-                        if attribute_name == attribute:
-                            for value in result[attribute]:
-                                value = value.decode('utf-8')
-                                console.print(f"[bright_white]{value}[/]")
+        conn, base_dn = LdapHandler.connection(self)
+        results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
+        res_status = results[0]
+        res_response = results[2]
+
+        if res_status:
+            console.print("[green][+][/] Computers:")
+            for entry in res_response:
+                if entry['type'] == 'searchResEntry':
+                    hostname = entry['attributes'][self.attributes]
+                    console.print(hostname)
         else:
-            console.print("[red][!][/] No information found or unable to retrieve. Check your profile settings.")
+            console.print("[red][!][/] No entries found in the results.")

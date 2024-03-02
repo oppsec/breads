@@ -1,15 +1,16 @@
-from handlers.ldap_connection import Connection
+from handlers.ldap_connection import LdapHandler
 
 from rich.console import Console
 console = Console()
 
 class ListDcs:
     name = "list-dcs"
-    desc = "Retrieve 'dNSHostName' from all Domain Controllers that can be found on Active Directory"
+    desc = "Get 'dNSHostName' attribute value from all Domain Controllers"
     module_protocol = ['ldap']
     opsec_safe = True
     multiple_hosts = False
     search_filter = '(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))'
+    attributes = 'dnsHostname'
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -19,19 +20,16 @@ class ListDcs:
         pass
 
     def on_login(self):
-        conn = Connection()
-        results = conn.ldap_con(self.search_filter, conn.domain, conn.hostname, conn.username, conn.password)
-  
-        if results:
-            console.print(f"[yellow][!][/] Domain Controllers:")
-            attributes = ['dNSHostName']
-        
-            for _dn, result in results:
-                for attribute_name in result:
-                    for attribute in attributes:
-                        if attribute_name == attribute:
-                            for value in result[attribute]:
-                                value = value.decode('utf-8')
-                                console.print(f"[bright_white]{value}[/]")
+        conn, base_dn = LdapHandler.connection(self)
+        results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
+        res_status = results[0]
+        res_response = results[2]
+
+        if res_status:
+            console.print("[green][+][/] Domain Controllers:")
+            for entry in res_response:
+                if entry['type'] == 'searchResEntry':
+                    hostname = entry['attributes'][self.attributes]
+                    console.print(hostname)
         else:
-            console.print("[red][!][/] No information found or unable to retrieve. Check your profile settings.")
+            console.print("[red][!][/] No entries found in the results.")
