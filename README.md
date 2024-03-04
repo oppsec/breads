@@ -14,7 +14,7 @@ ___
 
 </div>
 
-<h3> What is Breads? </h3>
+<h3> What is BREADS? </h3>
 <p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like CrackMapExec and NetExec. </p>
 
 <br>
