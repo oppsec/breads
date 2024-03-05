@@ -63,7 +63,8 @@ ___
 <h3> Known Errors </h3>
 <h4> ⚠️ pip failed to build package: python-ldap </h4>
 <pre>
-sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
+Ubuntu/Debian: sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
+Arch: sudo pacman -S libsasl libldap openssl
 </pre>
 
 <h4> ⚠️ breads has a 'pyproject.toml' and its build backend is missing the 'build_editable' hook. </h4>
