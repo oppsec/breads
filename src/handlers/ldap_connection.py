@@ -7,14 +7,6 @@ console = Console()
 from handlers.profile.helper import get_current_profile, BREADS_FOLDER
 BREADS_FOLDER = Path(BREADS_FOLDER)
 
-# def handle_ldap_error(error):
-#     if isinstance(error, ldap.INSUFFICIENT_ACCESS):
-#         console.print("[red][!][/] Insufficient permissions to modify group membership.\n")
-#     elif isinstance(error, ldap.ALREADY_EXISTS):
-#         console.print("[yellow][!][/] User is already a member of the specified group.\n")
-#     else:
-#         console.print(f"[red][!][/] LDAP error: {error}\n")
-
 from ldap3 import Server, Connection, ALL, NTLM, KERBEROS, SAFE_SYNC
 
 class LdapHandler:

@@ -1,16 +1,15 @@
 import importlib
 from cmd import Cmd
-from os import sys
+from os import sys, environ
 from rich.console import Console
 from pathlib import Path
 from pkgutil import iter_modules
+from shlex import split
 
 from handlers.help_table import help_table
 from handlers.profile.create_profile import profile_folder
 from handlers.profile.load_profile import select_and_load_profile
 from ui.banner import get_banner
-
-import shlex
 
 console = Console()
 
@@ -42,7 +41,11 @@ class BreadsPrompt(Cmd):
 
     def register_command(self, command_name, command_instance):
         def command_handler(inp, *args):
-            parts = shlex.split(inp)
+            parts = split(inp)
+
+            if not environ.get('breads_profile'):
+                    console.print("[red][!][/] You need to load a profile first, use 'load_profile' command")
+                    return
             
             if len(parts) < getattr(command_instance, 'min_args', 0):
                 console.print(f"[red][!][/] Missing required arguments. Expected at least {command_instance.min_args} arguments. Use 'help' command to more details")

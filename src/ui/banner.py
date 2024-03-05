@@ -2,7 +2,7 @@ from random import choice
 from rich.console import Console
 console = Console()
 
-VERSION = '1.1.7'
+VERSION = '1.1.8'
 BANNER = f'''
 BREADS :: Breaking Active Directory Security :: {VERSION}
 TIP: Use 'help' to list all modules
