@@ -1,19 +1,17 @@
-import ldap
-
 from typing import Optional, Dict
 from rich.console import Console
 console = Console()
 
 from handlers.ldap_connection import LdapHandler
 
-class MaqAccountQuota:
-    name = "maq_account_quota"
+class Maq:
+    name = "maq-account-quota"
     desc = "Get ms-DS-MachineAccountQuota value"
     module_protocol = ['ldap']
     opsec_safe = True
     multiple_hosts = False
     user_target = None
-    search_filter = '(objectClass=*)'
+    search_filter = '(objectClass=domainDNS)'
     requires_args = False
     attributes = 'ms-DS-MachineAccountQuota'
 
