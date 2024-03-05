@@ -1,3 +1,13 @@
+# 1.1.8
+- Changed MAQ LDAP query from (objectClass=*) to (objectClass=domainDNS)
+- Renamed maq_account_quota to just maq
+- Removed unecessary python-ldap library from maq.py (old maq_account_quota.py)
+- Added 'pass_pol' (Password Policy) module
+- Minor changes on 'help' command
+- Fixed no profile loaded handling
+- Added 'kerberoasting' module (not finished yet)
+- Added 'adcs' module
+
 # 1.1.7
 - Improved ldap_connection.py code
 - Improved attributes reading code
