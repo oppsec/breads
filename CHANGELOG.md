@@ -1,3 +1,7 @@
+# 1.1.8a
+- Removed 'list_adcs' from help command (renamed to adcs)
+- Added 'add_to_group' module to help command
+
 # 1.1.8
 - Changed MAQ LDAP query from (objectClass=*) to (objectClass=domainDNS)
 - Renamed maq_account_quota to just maq

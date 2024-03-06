@@ -27,7 +27,6 @@ def help_table() -> None:
     table.add_row("LDAP", "users", "Get 'sAMAccountName' attribute value from Users Accounts", "users")
     table.add_row("LDAP", "disabled_accounts", "Get 'sAMAccountName' attribute value from Disabled Accounts", "disabled_accounts")
     table.add_row("LDAP", "whoami", "Get information from targeted used", "whoami <username>")
-    table.add_row("LDAP", "list_adcs", "Get attributes from ADCS server", "list_adcs")
     table.add_row("LDAP", "admins", "Get all the accounts from domain that has administrator privilege in somewhere", "admins")
     table.add_row("LDAP", "computers", "Get 'sAMAccountName' from all computers", "computers")
     table.add_row("LDAP", "maq", "Get ms-DS-MachineAccountQuota value", "maq")
@@ -37,6 +36,7 @@ def help_table() -> None:
     table.add_row("LDAP", "trusted_delegation", "Get 'sAMAccountName' from accounts that has 'ms-DS-AllowedToDelegateTo' enabled", "trusted_delegation")
     table.add_row("LDAP", "pass_pol", "Get the domain password policy", "pass_pol")
     table.add_row("LDAP", "adcs", "Get 'dNSHostName' attribute value from all ADCS servers", "adcs")
+    table.add_row("LDAP", "add_to_grou´", "Add desired user to an existent desired group", "add_to_group <username> <group_name>")
     table.add_row("SMB", "get_uac", "Get the UAC value from a specified target (Adminstrator privilege is required)", "get_uac <target>")
     table.add_row("SMB", "kerberoasting", "Search for kerberoastable computers and users", "kerberoasting <dc_ip>")
 
