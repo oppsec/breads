@@ -1,3 +1,7 @@
+# 1.1.9
+- New module: 'change_password <username> <new_password>'
+- Added tab "Admin Privileges" to help table
+
 # 1.1.8a
 - Removed 'list_adcs' from help command (renamed to adcs)
 - Added 'add_to_group' module to help command

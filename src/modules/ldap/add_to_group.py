@@ -8,9 +8,9 @@ from handlers.ldap_connection import LdapHandler
 # *******************************
 # * WORKFLOW
 # * 1. Capture username and group desired based on user input
-# * 1. Check if specified user exists on the Active Directory
-# * 2. Check if specified group exists on the Active Directory
-# * 3. Trying to add specified user to the desired group (expecting that the user have permission to do that)
+# * 2. Check if specified user exists on the Active Directory
+# * 3. Check if specified group exists on the Active Directory
+# * 4. Trying to add specified user to the desired group (expecting that the user have permission to do that)
 # *******************************
 
 class AddToGroup:
@@ -78,12 +78,12 @@ class AddToGroup:
             console.print(f'[yellow][!][/] Operation status: [b]{add_to_group_response}[/b]')
 
             permissions = {
-                'insufficientAccessRights': f'[red][!][/] User [yellow]{target}[/] has not permission to add [yellow]{target}[/] to [cyan]{group}[/] group',
-                'entryAlreadyExists': f'[red][!][/] User [yellow]{target}[/] is already a member of [cyan]{group}[/] group',
-                'success': f'[green][+][/] User {target} added to group {group} successfully!'
+                'insufficientAccessRights': f'[red][!][/] User [yellow]{target}[/] has not permission to add [yellow]{target}[/] to [cyan]{group}[/] group\n',
+                'entryAlreadyExists': f'[red][!][/] User [yellow]{target}[/] is already a member of [cyan]{group}[/] group\n',
+                'success': f'[green][+][/] User {target} added to group {group} successfully!\n'
             }
 
-            console.print(permissions.get(add_to_group_response, "[red][!][/] Something strange happened, please check 'Operation status' value"))
+            console.print(permissions.get(add_to_group_response, "[red][!][/] Something strange happened, please check 'Operation status' value\n"))
 
         except Exception as e:
             console.print(f"[red][!][/] Error: {e}")

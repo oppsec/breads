@@ -30,6 +30,6 @@ class Maq:
   
         if res_status:
             maq_value = res_response['attributes']['ms-DS-MachineAccountQuota']
-            console.print(f'[green][+][/] {self.attributes}: {maq_value}', highlight=False)
+            console.print(f'[green][+][/] {self.attributes}: {maq_value}\n', highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

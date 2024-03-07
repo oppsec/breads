@@ -14,7 +14,12 @@ class Whoami:
     search_filter = None
     requires_args = True
     min_args = 1
-    attributes = ['sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 'lastLogoff', 'userAccountControl', 'description', 'adminCount']
+    attributes = [
+        'sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 
+        'lastLogoff', 'userAccountControl', 'description', 'adminCount', 
+        'pwdLastSet', 'objectSid', 'badPwdCount'
+    ]
+
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -28,8 +33,8 @@ class Whoami:
         '514': '[bold red]User is Disabled[/] - Password Expires',
         '66048': "[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/]",
         '66050': "[bold red]User is Disabled[/] - [bold yellow]Password Never Expires[/]",
-        '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Not Delegated[/]',
-        '1049088': "[bold green]User is Enabled[/] - Password Expires - [bold yellow]User Not Delegated[/]",
+        '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - User Not Delegated',
+        '1049088': "[bold green]User is Enabled[/] - Password Expires - User Not Delegated",
         '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]'
     }
 
@@ -56,7 +61,7 @@ class Whoami:
             for value, description in self.uac_values.items():
                 if str(uac_value) == str(value) and not uac_printed:
                     user_info['userAccountControl'] = description
-                    uac_printed = True 
+                    uac_printed = True
 
             for attribute, value in user_info.items():
                 console.print(f"[green][+][/] [bright_white]{attribute}: {value}[/]", highlight=False)

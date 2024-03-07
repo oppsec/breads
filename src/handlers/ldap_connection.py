@@ -1,13 +1,11 @@
 from pathlib import Path
 import json
-
 from rich.console import Console 
 console = Console()
+from ldap3 import Server, Connection, ALL, NTLM, KERBEROS, SAFE_SYNC
 
 from handlers.profile.helper import get_current_profile, BREADS_FOLDER
 BREADS_FOLDER = Path(BREADS_FOLDER)
-
-from ldap3 import Server, Connection, ALL, NTLM, KERBEROS, SAFE_SYNC
 
 class LdapHandler:
     def __init__(self):
