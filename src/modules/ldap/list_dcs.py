@@ -19,17 +19,39 @@ class ListDcs:
     def options (self):
         pass
 
+    def get_dc_name(self):
+        conn, base_dn = LdapHandler.connection(self)
+
+        if conn is None:
+            console.print("[red][!][/] Failed to establish LDAP connection.")
+            return []
+        
+        results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
+        res_response = results[2]
+        dcs_list = []
+
+        for entry in res_response:
+            if entry['type'] == 'searchResEntry':
+                hostname = entry['attributes'][self.attributes]
+                dcs_list.append(hostname)
+        return dcs_list
+                
+
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
         results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
         res_status = results[0]
         res_response = results[2]
+        dcs_list = []
 
         if res_status:
             console.print("[green][+][/] Domain Controllers:")
             for entry in res_response:
                 if entry['type'] == 'searchResEntry':
                     hostname = entry['attributes'][self.attributes]
-                    console.print(hostname)
+                    dcs_list.append(hostname)
+
+                    for dc in dcs_list:
+                        console.print(dc)
         else:
             console.print("[red][!][/] No entries found in the results.")
