@@ -27,7 +27,7 @@ class TrustedDelegation:
         res_response = results[2]
 
         if res_status:
-            console.print("[green][+][/] Trusted Delegation Users:")
+            console.print("[green][+][/] Trusted Delegation Users/Computers:")
             for entry in res_response:
                 if entry['type'] == 'searchResEntry':
                     hostname = entry['attributes'][self.attributes]
