@@ -70,7 +70,7 @@ class BreadsPrompt(Cmd):
         select_and_load_profile(inp)
 
     def do_help(self, inp):
-        help_table()
+        help_table(inp)
 
     def do_exit(self, inp):
         console.print("[red][!] Exiting... [/]")
