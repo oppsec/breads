@@ -43,14 +43,15 @@ class AddToGroup:
         return dn_response
 
     def on_login(self, *args):
+        console.print("[yellow]WARNING:[/] The space between the group name need to be replaced with '%'. Example: [green]Domain%Admins[/]\n")
+
         if len(args) != 2:
             console.print("[yellow]Usage:[/] add_to_group <username> <group_name>", highlight=False)
-            console.print("[yellow]WARNING:[/] The space between the group name need to be replaced with '_', example: Domain_Admins")
             return
 
         target = args[0]
         group = args[1]
-        group = group.replace("_", " ")
+        group = group.replace("%", " ")
 
         try:
             conn, base_dn = LdapHandler.connection(self)
@@ -83,7 +84,7 @@ class AddToGroup:
                 'success': f'[green][+][/] User {target} added to group {group} successfully!\n'
             }
 
-            console.print(permissions.get(add_to_group_response, "[red][!][/] Something strange happened, please check 'Operation status' value\n"))
+            console.print(permissions.get(add_to_group_response, "[red][!][/] Something strange happened, please check 'Operation status'\n"))
 
         except Exception as e:
             console.print(f"[red][!][/] Error: {e}")
