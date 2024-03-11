@@ -67,10 +67,31 @@ Ubuntu/Debian: sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl
 Arch: sudo pacman -S libsasl libldap openssl
 </pre>
 
+<br>
+
 <h4> ⚠️ breads has a 'pyproject.toml' and its build backend is missing the 'build_editable' hook. </h4>
 Install BREADS with pipx
 <pre>
 pipx install git+https://github.com/oppsec/breads.git
+</pre>
+
+<br>
+
+<h4> ⚠️ unsupported hash type MD4  </h4>
+Install BREADS with pipx
+<pre>
+1. Go to /etc/ssl/openssl.cnf
+2. Add support legacy_sect
+
+[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1
 </pre>
 
 <br>
