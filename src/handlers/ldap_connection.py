@@ -9,7 +9,7 @@ BREADS_FOLDER = Path(BREADS_FOLDER)
 
 class LdapHandler:
     def __init__(self):
-        self.domain = None
+        self.domain = ""
         self.password = ""
         self.username = ""
         self.hostname = ""
@@ -27,6 +27,7 @@ class LdapHandler:
             self.username = data['username']
             self.hostname = data['host']
             self.password = data['password']
+            self.domain = data['domain']
         try:
             server = Server(f"ldap://{self.hostname}", use_ssl=True, get_info=ALL)
             conn = Connection(server, user=self.username, password=self.password, authentication=NTLM, client_strategy=SAFE_SYNC, auto_bind=True)
@@ -35,7 +36,7 @@ class LdapHandler:
             return conn, base_dn
         except Exception as error:
             console.print(f"[red][!][/] [bright_white]LDAP Error: {error}")
-            return []
+            return None, None
         
     def modify_entry(self, dn, mod_attrs):
         """Modifies an LDAP entry with the given attributes."""

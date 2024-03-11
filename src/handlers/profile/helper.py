@@ -13,3 +13,6 @@ def get_current_profile() -> None:
 
     profile = environ.get("breads_profile") if environ.get("breads_profile", "None") else ""
     return str(profile)
+
+def get_current_profile_path() -> None:
+    return str(BREADS_FOLDER + '/' + get_current_profile())

@@ -1,12 +1,11 @@
 from rich import print
 from os import mkdir, path
 from uuid import uuid4
+PROFILE_UUID = uuid4().hex
 
 import json
 
 from handlers.profile.helper import BREADS_FOLDER
-
-PROFILE_UUID = uuid4().hex
 
 def initial_directory() -> None:
     ''' Create the initial breads directory (.breads/) on user $HOME '''
@@ -49,7 +48,8 @@ def initialize_profile_json() -> None:
         "profile_uuid": PROFILE_UUID,
         "host": "",
         "username": "",
-        "password": ""
+        "password": "",
+        "domain": ""
     }
 
     json_path: str = f"{BREADS_FOLDER}/{profile_name}/settings.json"

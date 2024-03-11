@@ -41,6 +41,7 @@ def load_profile(profile_name):
             host = existing_data['host']
             username = existing_data['username']
             password = existing_data['password']
+            domain = existing_data['domain']
 
             if not host:
                 console.print("[green][+][/] [bright_white]You need to define a target, username and host to be used[/]")
@@ -57,11 +58,13 @@ def load_profile(profile_name):
             target_host_input = Prompt.ask("> Type the target host (ex: 127.0.0.1)")
             username_input = Prompt.ask("> Type the username to be used (example.lab\Administrator)")
             password_input = Prompt.ask("> Type the password to be used")
+            domain  = username_input.split("\\")[0]
 
             profile_data = {
                 "host": target_host_input,
                 "username": username_input,
-                "password": password_input
+                "password": password_input,
+                "domain": domain
             }
 
             try:
