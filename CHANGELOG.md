@@ -3,7 +3,7 @@
 - New module: 'computer <target>'
 - New module: 'domain_sid'
 - Added SID translator (handlers/sid_translate.py)
-- Now to add a member to a group that have spaces on the name, you need to use % as the space, for example: Domain%20Admins (if we use _ for example, we cannot add a user for a group with _ in the name, like IIS_IUSRS)
+- Now to add a member to a group that have spaces on the name, you need to use % as the space, for example: Domain%Admins (if we use _ for example, we cannot add a user for a group with _ in the name, like IIS_IUSRS)
 - Improved help command (help, help <protocol_name>)
 - Module 'kerberoasting' now return kerberoastable user TGS
 
