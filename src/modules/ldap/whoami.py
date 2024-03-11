@@ -14,12 +14,6 @@ class Whoami:
     search_filter = None
     requires_args = True
     min_args = 1
-    attributes = [
-        'sAMAccountName', 'distinguishedName', 'memberOf', 'lastLogon', 
-        'lastLogoff', 'userAccountControl', 'description', 'adminCount', 
-        'pwdLastSet', 'objectSid', 'badPwdCount'
-    ]
-
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -35,12 +29,13 @@ class Whoami:
         '66050': "[bold red]User is Disabled[/] - [bold yellow]Password Never Expires[/]",
         '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - User Not Delegated',
         '1049088': "[bold green]User is Enabled[/] - Password Expires - User Not Delegated",
-        '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]'
+        '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]',
+        '66176': '[bold yellow]Password Never Expires[/] - [bold yellow]ms-DS-User-Encrypted-Text-Password-Allowed is true[/]'
     }
 
     def on_login(self, target: str):
         conn, base_dn = LdapHandler.connection(self)
-        results = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=self.attributes)
+        results = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=['*'])
         res_status = results[0]
         res_response = results[2]
 
