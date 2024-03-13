@@ -30,7 +30,8 @@ class Whoami:
         '1114624': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - User Not Delegated',
         '1049088': "[bold green]User is Enabled[/] - Password Expires - User Not Delegated",
         '17891840': '[bold green]User is Enabled[/] - [bold yellow]Password Never Expires[/] - [bold yellow]User Trusted to Delegate[/]',
-        '66176': '[bold yellow]Password Never Expires[/] - [bold yellow]ms-DS-User-Encrypted-Text-Password-Allowed is true[/]'
+        '66176': '[bold yellow]Password Never Expires[/] - [bold yellow]ms-DS-User-Encrypted-Text-Password-Allowed is true[/]',
+        '4096': '[yellow]WORKSTATION_TRUST_ACCOUNT[/]'
     }
 
     def on_login(self, target: str):
