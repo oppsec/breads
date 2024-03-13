@@ -78,7 +78,6 @@ pipx install git+https://github.com/oppsec/breads.git
 <br>
 
 <h4> ⚠️ unsupported hash type MD4  </h4>
-Install BREADS with pipx
 <pre>
 1. Go to /etc/ssl/openssl.cnf
 2. Add support legacy_sect

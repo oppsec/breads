@@ -25,7 +25,7 @@ def help_table(inp):
         ]
 
         rows = [
-            ("LDAP", "18", "---", "---", "---"),
+            ("LDAP", "20", "---", "---", "---"),
             ("SMB", "2", "---", "---", "---"),
             ("", "", "create_profile", "Ask user input to create a new profile", "create_profile <name>"),
             ("", "", "load_profile", "Ask user input to load a existing profile", "create_profile <name>"),
@@ -61,7 +61,9 @@ def help_table(inp):
             ("LDAP", "add_to_group", "Add desired user to an existent desired group", "add_to_group <username> <group_name>", "[green]Yes[/]"),
             ("LDAP", "change_password", "Change desired user password", "change_password <username> <new_password>", "[green]Yes[/]"),
             ("LDAP", "domain_sid", "Get SID from Domain Controllers", "domain_sid", "[red]No[/]"),
-            ("LDAP", "domain_trusts", "Get Domain Trusts", "domain_trusts", "[red]No[/]")
+            ("LDAP", "domain_trusts", "Get Domain Trusts", "domain_trusts", "[red]No[/]"),
+            ("LDAP", "sid", "Get object information from specified SID", "sid <SID>", "[red]No[/]"),
+            ("LDAP", "group", "Get information from the group name specified", "group <group_name>", "[red]No[/]")
         ]
 
     elif user_input == "smb":

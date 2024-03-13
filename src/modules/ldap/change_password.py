@@ -2,15 +2,13 @@ from typing import Optional, Dict
 from rich.console import Console
 console = Console()
 
-import ldap3
-
 from handlers.ldap_connection import LdapHandler
 
 # *******************************
 # * WORKFLOW
 # * 1. Capture username and group desired based on user input
 # * 2. Check if specified user exists on the Active Directory
-# * 3. Try user password without specifying the old password (Admin privilege is required)
+# * 3. Try changing user password
 # *******************************
 
 class ChangePassword:
@@ -55,11 +53,8 @@ class ChangePassword:
                 console.print("[red][!][/] User not found or LDAP search failed.")
                 return
             
-            encoded_new_password = ('"%s"' % new_pass).encode('utf-16-le')
-            console.print(f'[i] \_ Encoded Password (utf-16-le): {encoded_new_password} [/]', highlight=False)
-            
             user_dn = user_dn[0]['raw_dn'].decode('utf-8')
-            change_pass = ldap3.extend.microsoft.modifyPassword.ad_modify_password(conn, user_dn, new_password=new_pass, old_password=None)
+            change_pass = conn.extend.microsoft.modify_password(user=user_dn, new_password=new_pass, old_password=None)
 
             if(change_pass):
                 console.print(f"[green][+][/] Changed [yellow]{target}[/] password to [yellow]{new_pass}[/] successfully!\n", highlight=False)
