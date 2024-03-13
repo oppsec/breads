@@ -29,7 +29,7 @@ class LdapHandler:
             self.password = data['password']
             self.domain = data['domain']
         try:
-            server = Server(f"ldap://{self.hostname}", use_ssl=True, get_info=ALL)
+            server = Server(f"ldaps://{self.hostname}", use_ssl=True, get_info=ALL)
             conn = Connection(server, user=self.username, password=self.password, authentication=NTLM, client_strategy=SAFE_SYNC, auto_bind=True)
             base_dn = server.info.other['rootDomainNamingContext'][0]
 
