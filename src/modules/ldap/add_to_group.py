@@ -43,7 +43,7 @@ class AddToGroup:
         return dn_response
 
     def on_login(self, *args):
-        console.print("[yellow]WARNING:[/] The space between the group name need to be replaced with '%'. Example: [green]Domain%Admins[/]\n")
+        console.print("[yellow]WARNING:[/] The space between the group name need to be replaced with '%'. Example: [green]Domain%Admins[/]. Or you can use 'Domain Admins'\n")
 
         if len(args) != 2:
             console.print("[yellow]Usage:[/] add_to_group <username> <group_name>", highlight=False)

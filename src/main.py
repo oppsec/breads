@@ -1,4 +1,4 @@
-import importlib
+from importlib import import_module
 from cmd import Cmd
 from os import sys, environ
 from rich.console import Console
@@ -24,13 +24,13 @@ class BreadsPrompt(Cmd):
         self.load_modules("modules.smb")
 
     def load_modules(self, package_name):
-        package = importlib.import_module(package_name)
+        package = import_module(package_name)
         package_path = str(Path(package.__file__).parent)
 
         for _, module_name, _ in iter_modules([package_path]):
             if not module_name.startswith('__'):
                 full_module_name = f"{package_name}.{module_name}"
-                module = importlib.import_module(full_module_name)
+                module = import_module(full_module_name)
                 
                 class_name = ''.join(word.title() for word in module_name.split('_'))
                 try:
@@ -55,10 +55,12 @@ class BreadsPrompt(Cmd):
         setattr(self, f"do_{command_name}", command_handler)
 
     def on_command(self, command_instance, args):
+
         if getattr(command_instance, 'requires_args', False):
             if not args:
                 console.print("[red][!][/] [bright_white]This command requires arguments. Check the requirements in 'help' command[/]")
                 return
+            
             command_instance.on_login(args)
         else:
             command_instance.on_login()
