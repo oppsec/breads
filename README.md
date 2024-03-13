@@ -1,10 +1,11 @@
 <div align="center">
 <img src="https://i.imgur.com/xV6HY67.jpeg">
 
-<h3> 🍞 BREADS (Breaking Active Directory Security) </h3>
 <br>
 
 ___
+
+<br>
 
 <img src="https://img.shields.io/github/license/oppsec/breads?color=blue&logo=github&style=for-the-badge">
 <img src="https://img.shields.io/github/issues/oppsec/breads?color=blue&logo=github&style=for-the-badge">
@@ -13,6 +14,8 @@ ___
 <img src="https://img.shields.io/github/languages/code-size/oppsec/breads?color=blue&logo=github&style=for-the-badge">
 
 </div>
+
+<br>
 
 <h3> What is BREADS? </h3>
 <p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like CrackMapExec and NetExec. </p>
@@ -81,6 +84,7 @@ pipx install git+https://github.com/oppsec/breads.git
 <pre>
 1. Go to /etc/ssl/openssl.cnf
 2. Add support legacy_sect
+<br>
 
 [provider_sect]
 default = default_sect
@@ -92,8 +96,6 @@ activate = 1
 [legacy_sect]
 activate = 1
 </pre>
-
-<br>
 
 <h3> Warning </h3>
 <p> The developer is not responsible for any malicious use of this tool </p>
