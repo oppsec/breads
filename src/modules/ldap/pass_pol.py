@@ -40,7 +40,7 @@ class PassPol:
 
             forced_logoff = pass_info.get('forceLogoff')
             if forced_logoff == _LOGOFF_NOT_ENFORCED and not force_logoff_printed:
-                pass_info['forceLogoff'] = "[yellow]0 - forceLogoff is not enforced[/]"
+                pass_info['forceLogoff'] = f"{_LOGOFF_NOT_ENFORCED} - [yellow]0 - forceLogoff is not enforced[/]"
                 force_logoff_printed = True
 
             for attribute, value in pass_info.items():
