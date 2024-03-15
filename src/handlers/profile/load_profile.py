@@ -107,9 +107,9 @@ def select_and_load_profile(inp):
     profile_name = inp
 
     if profile_name not in [profile.name for profile in profiles]:
-        console.print(f"[red][!][/] [bright_white]Profile {profile_name}'s not found, check if the name is correct[/]")
+        console.print(f"\n[red][!][/] [bright_white]Profile [red]{profile_name}'s[/] not found, check if the name is correct[/]")
     else:
-        console.print(f"[green][+][/] [bright_white]Profile {profile_name}'s selected successfully! [/]")
+        console.print(f"\n[green][+][/] [bright_white]Profile [yellow]{profile_name}'s[/] selected successfully! [/]")
         load_profile(profile_name)
 
     environ["breads_profile"] = profile_name
