@@ -14,13 +14,6 @@ class PassPol:
     search_filter = '(objectClass=domainDNS)'
     attributes = ['forceLogoff', 'lockoutDuration', 'lockoutThreshold', 'maxPwdAge', 'minPwdAge', 'minPwdLength']
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options
-
-    def options (self):
-        pass
-
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
         results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
@@ -51,6 +44,6 @@ class PassPol:
                 force_logoff_printed = True
 
             for attribute, value in pass_info.items():
-                console.print(f"[green][+][/] [bright_white]{attribute}: {value}[/]", highlight=False)
+                console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

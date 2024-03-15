@@ -23,13 +23,6 @@ class ChangePassword:
     min_args = 2
     attributes = 'sAMAccountName'
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options: Optional[Dict] = module_options
-
-    def options (self):
-        pass
-
     def get_user_dn(self, conn, base_dn, target):
         dn_query = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=['*'])
         dn_response = dn_query[2]

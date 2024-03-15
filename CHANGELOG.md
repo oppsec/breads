@@ -1,3 +1,9 @@
+# 🎉 1.2.0a
+- Filtered results for whoami command ('description', 'memberOf', 'userAccountControl', 'badPwdCount', 'lastLogoff', 'lastLogon', 'objectSid', 'adminCount', 'accountExpires', 'sAMAccountName')
+- Changed the way and colors of the information got printed
+- Fixed bug in kerberoasting module
+- Improved SID objectClass type identification
+
 # 🎉 1.2.0
 - Fixed bugs on 'change_password' module
 - New module: 'group'

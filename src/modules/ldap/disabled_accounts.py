@@ -12,12 +12,6 @@ class DisabledAccounts:
     search_filter = '(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))'
     attributes = 'sAMAccountName'
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options
-
-    def options (self):
-        pass
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)

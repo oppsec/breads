@@ -13,12 +13,12 @@ class DomainTrusts:
     search_filter = '(objectClass=trustedDomain)'
     attributes = ['cn', 'distinguishedName', 'objectGUID', 'securityIdentifier', 'trustDirection']
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options    
+    # def __init__(self, context=None, module_options=None):
+    #     self.context = context
+    #     self.module_options = module_options    
 
-    def options (self):
-        pass
+    # def options (self):
+    #     pass
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)

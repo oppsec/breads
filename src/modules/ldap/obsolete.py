@@ -20,13 +20,6 @@ class Obsolete:
     requires_args = False
     attributes = ['dNSHostName', 'operatingSystem']
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options: Optional[Dict] = module_options
-
-    def options (self):
-        pass
-
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
         results = conn.search(base_dn, self.search_filter, attributes=self.attributes)

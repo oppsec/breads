@@ -49,9 +49,9 @@ class GetUac:
             _data_type, uac_value = rrp.hBaseRegQueryValue(remoteOps._RemoteOperations__rrp, key_handle, "EnableLUA")
 
             if uac_value == 1:
-               console.print("[green][+][/] [bright_white]UAC Status: 1 [green](UAC Enabled)[/]", highlight=False)
+               console.print(f"- [cyan]UAC Status[/]: 1 [green](Enabled)[/]", highlight=False)
             elif uac_value == 0:
-                console.print("[green][+][/] [bright_white]UAC Status: 0 [yellow](UAC Disabled)[/]", highlight=False)
+                console.print(f"- [cyan]UAC Status[/]: 0 [red](Disabled)[/]", highlight=False)
 
             rrp.hBaseRegCloseKey(remoteOps._RemoteOperations__rrp, key_handle)
             remoteOps.finish()

@@ -13,13 +13,6 @@ class DomainSid:
     search_filter = '(userAccountControl:1.2.840.113556.1.4.803:=8192)'
     attributes = ['cn', 'objectSid', 'dNSHostName']
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options    
-
-    def options (self):
-        pass
-
     def search_with_base(self, conn, search_base, search_filter, attributes, scope):
             return conn.search(search_base=search_base, search_filter=search_filter, search_scope=scope, attributes=attributes)
 
@@ -34,7 +27,7 @@ class DomainSid:
             console.print(f"[green][+][/] Domain SID")
             for entry in res_response:
                 if entry['type'] == 'searchResEntry':
-                    for key, value in entry['attributes'].items():
-                            console.print(f"[green][+][/] {key}: {value}", highlight=False)
+                    for attribute, value in entry['attributes'].items():
+                            console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

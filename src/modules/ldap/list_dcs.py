@@ -12,13 +12,6 @@ class ListDcs:
     search_filter = '(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))'
     attributes = 'dnsHostname'
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options
-
-    def options (self):
-        pass
-
     def get_dc_name(self):
         conn, base_dn = LdapHandler.connection(self)
 
