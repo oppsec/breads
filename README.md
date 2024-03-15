@@ -52,7 +52,9 @@ ___
 <br>
 
 <h3> Preview </h3>
-<img src="https://i.imgur.com/Ibr5V9V.jpeg">
+<a href="https://asciinema.org/a/647121" target="_blank"><img src="https://asciinema.org/a/647121.svg" /></a>
+
+<br>
 
 <h3> Credits </h3>
 <ul>
