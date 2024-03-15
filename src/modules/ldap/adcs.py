@@ -11,14 +11,7 @@ class Adcs:
     opsec_safe = True
     multiple_hosts = False
     search_filter = f'(objectClass=pKIEnrollmentService)'
-    attributes = 'dNSHostName'
-
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options
-
-    def options (self):
-        pass
+    attributes = ['cn', 'dNSHostName', 'distinguishedName']
 
     def search_with_base(self, conn, search_base, search_filter, attributes, scope):
         return conn.search(search_base=search_base, search_filter=search_filter, search_scope=scope, attributes=attributes)
@@ -32,8 +25,10 @@ class Adcs:
         res_response = results[2]
 
         if res_status:
-            adcs_servername = res_response[0]['attributes'].get(self.attributes, '[red][!][/] No ADCS found')
-            console.print("[green][+][/] Active Directory Certificate Services: ")
-            console.print(adcs_servername)
+            console.print(f"[green][+][/] Active Directory Certificate Services:")
+            for entry in res_response:
+                if entry['type'] == 'searchResEntry':
+                    for attribute, value in entry['attributes'].items():
+                            console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
