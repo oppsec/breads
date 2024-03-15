@@ -14,13 +14,7 @@ class Whoami:
     search_filter = None
     requires_args = True
     min_args = 1
-
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options: Optional[Dict] = module_options
-
-    def options (self):
-        pass
+    attributes = ['description', 'memberOf', 'userAccountControl', 'badPwdCount', 'lastLogoff', 'lastLogon', 'objectSid', 'adminCount', 'accountExpires', 'sAMAccountName']
 
     uac_values = {
         '512': '[bold green]User is Enabled[/] - Password Expires',
@@ -36,12 +30,12 @@ class Whoami:
 
     def on_login(self, target: str):
         conn, base_dn = LdapHandler.connection(self)
-        results = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=['*'])
+        results = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=self.attributes)
         res_status = results[0]
         res_response = results[2]
 
         if res_status:
-            console.print(f"[green][+][/] Whoami [bold yellow]{target}[/]:", highlight=False)
+            console.print(f"[green][+][/] Whoami [yellow]{target}[/]:", highlight=False)
             user_info = {}
             seen_attributes = set()
             uac_printed = False
@@ -59,7 +53,10 @@ class Whoami:
                     user_info['userAccountControl'] = description
                     uac_printed = True
 
+            for desc in user_info.get('description'):
+                user_info['description'] = desc
+
             for attribute, value in user_info.items():
-                console.print(f"[green][+][/] [bright_white]{attribute}: {value}[/]", highlight=False)
+                console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
