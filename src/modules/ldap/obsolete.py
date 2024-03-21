@@ -30,8 +30,9 @@ class Obsolete:
             console.print("[green][+][/] Obsolete Computers:")
             for entry in res_response:
                 if entry['type'] == 'searchResEntry':
-                    hostname = entry['attributes'][self.attributes]
-                    console.print(hostname)
+                    hostname = entry['attributes']['dnsHostName']
+                    version = entry['attributes']['operatingSystem']
+                    console.print(f"[cyan]- [/]{hostname} - {version}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
 
