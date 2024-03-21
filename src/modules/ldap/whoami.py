@@ -53,7 +53,7 @@ class Whoami:
                     user_info['userAccountControl'] = description
                     uac_printed = True
 
-            for desc in user_info.get('description'):
+            for desc in user_info.get('description', []):
                 user_info['description'] = desc
 
             for attribute, value in user_info.items():
