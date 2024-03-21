@@ -24,7 +24,8 @@ class Kerberoasting:
     multiple_hosts = False
     requires_args = True
     min_args = 1
-    search_filter = '(&(servicePrincipalName=*)(!(objectCategory=computer)))'
+    #search_filter = '(&(servicePrincipalName=*)(!(objectCategory=computer)))'
+    search_filter = '(&(objectClass=user)(servicePrincipalName=*)(!(cn=krbtgt))(!(samaccounttype=805306369)))'
     attributes = ['servicePrincipalName', 'sAMAccountName']
 
     def __init__(self, context=None, module_options=None):
@@ -92,7 +93,7 @@ class Kerberoasting:
             return None
 
         try:
-            tgt, cipher, oldSessionKey, sessionKey = getKerberosTGT(
+            tgt, cipher, _oldSessionKey, sessionKey = getKerberosTGT(
                 user_name, "", domain, lmhash, nthash, "", kdcHost=kdc_server
             )
 
