@@ -25,7 +25,7 @@ def help_table(inp):
         ]
 
         rows = [
-            ("LDAP", "20", "---", "---", "---"),
+            ("LDAP", "25", "---", "---", "---"),
             ("SMB", "2", "---", "---", "---"),
             ("", "", "create_profile", "Ask user input to create a new profile", "create_profile <name>"),
             ("", "", "load_profile", "Ask user input to load a existing profile", "create_profile <name>"),
@@ -63,7 +63,12 @@ def help_table(inp):
             ("LDAP", "domain_sid", "Get SID from Domain Controllers", "domain_sid", "[red]No[/]"),
             ("LDAP", "domain_trusts", "Get Domain Trusts", "domain_trusts", "[red]No[/]"),
             ("LDAP", "sid", "Get object information from specified SID", "sid <SID>", "[red]No[/]"),
-            ("LDAP", "group", "Get information from the group name specified", "group <group_name>", "[red]No[/]")
+            ("LDAP", "group", "Get information from the group name specified", "group <group_name>", "[red]No[/]"),
+            ("LDAP", "gpos", "List the GPOs registed in the domain", "gpos", "[red]No[/]"),
+            ("LDAP", "servers", "Get 'sAMAccountName', 'operatingSystem' and 'dnsHostName' from all Servers", "servers", "[red]No[/]"),
+            ("LDAP", "containers", "Get 'name' and 'distinguishedName' from all Containers", "containers", "[red]No[/]"),
+            ("LDAP", "un_delegation", "List accounts and computers vulnerable to Unconstrained Delegation", "un_delegation", "[red]No[/]"),
+            ("LDAP", "pass_not_req", "List all accounts that does not need an password to authenticate", "pass_not_req", "[red]No[/]"),
         ]
 
     elif user_input == "smb":

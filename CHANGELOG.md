@@ -1,3 +1,13 @@
+# 🎉 1.2.1
+- Added new 4 modules
+    - New module: 'gpos' (List the GPOs registed in the domain)
+    - New module: 'servers' (Get 'sAMAccountName', 'operatingSystem' and 'dnsHostName' from all Servers)
+    - New module: 'containers' (Get 'name' and 'distinguishedName' from all Containers)
+    - New module: 'pass_not_req' (List all accounts that does not need an password to authenticate)
+- Improved module 'obsolete' output
+- Improved module 'kerberoasting' LDAP query
+- Updated 'domain_trusts' output message
+
 # 🎉 1.2.0a
 - Filtered results for whoami command ('description', 'memberOf', 'userAccountControl', 'badPwdCount', 'lastLogoff', 'lastLogon', 'objectSid', 'adminCount', 'accountExpires', 'sAMAccountName')
 - Changed the way and colors of the information got printed

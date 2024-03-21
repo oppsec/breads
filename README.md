@@ -18,7 +18,7 @@ ___
 <br>
 
 <h3> What is BREADS? </h3>
-<p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like CrackMapExec and NetExec. </p>
+<p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like NetExec (CrackMapExec). </p>
 
 <br>
 
@@ -28,7 +28,7 @@ ___
 <br>
 
 <h3> Any advantage? </h3>
-<p> Yes, the principal Breads advantages are the flexibility of creating profiles that are directly stored on the local machine (through the .breads directory created on the user's home) and the easy way to execute commands without needing to re-type the same credentials every time. I like how the 'whoami' command works and that's all. </p>
+<p> Yes, the principal BREADS advantages are the flexibility of creating profiles that are directly stored on the local machine (through the .breads directory created on the user's home) and the easy way to execute commands without needing to re-type the same credentials every time. </p>
 
 <br>
 
@@ -56,48 +56,19 @@ ___
 
 <br>
 
+<h3> Warning </h3>
+<p> The developer is not responsible for any malicious use of this tool </p>
+
+<br>
+
+<h3> Errors </h3>
+<p> The developer is not responsible for any malicious use of this tool </p>
+
+<br>
+
 <h3> Credits </h3>
 <ul>
     <li>CrackMapExec</li>
     <li>Impacket</li>
     <li>NetExec</li>
 </ul>
-
-<br>
-
-<h3> Known Errors </h3>
-<h4> ⚠️ pip failed to build package: python-ldap </h4>
-<pre>
-Ubuntu/Debian: sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
-Arch: sudo pacman -S libsasl libldap openssl
-</pre>
-
-<br>
-
-<h4> ⚠️ breads has a 'pyproject.toml' and its build backend is missing the 'build_editable' hook. </h4>
-Install BREADS with pipx
-<pre>
-pipx install git+https://github.com/oppsec/breads.git
-</pre>
-
-<br>
-
-<h4> ⚠️ unsupported hash type MD4  </h4>
-<pre>
-1. Go to /etc/ssl/openssl.cnf
-2. Add support legacy_sect
-<br>
-
-[provider_sect]
-default = default_sect
-legacy = legacy_sect
-
-[default_sect]
-activate = 1
-
-[legacy_sect]
-activate = 1
-</pre>
-
-<h3> Warning </h3>
-<p> The developer is not responsible for any malicious use of this tool </p>
