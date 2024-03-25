@@ -3,15 +3,15 @@ from handlers.ldap_connection import LdapHandler
 
 console = Console()
 
+
 class DisabledAccounts:
     name = "disabled-accounts"
     desc = "Get 'sAMAccountName' attribute value from Disabled Accounts"
-    module_protocol = ['ldap']
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
-    search_filter = '(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))'
-    attributes = 'sAMAccountName'
-
+    search_filter = "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))"
+    attributes = "sAMAccountName"
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
@@ -22,8 +22,8 @@ class DisabledAccounts:
         if res_status:
             console.print("[green][+][/] Disabled Accounts:")
             for entry in res_response:
-                if entry['type'] == 'searchResEntry':
-                    username = entry['attributes'][self.attributes]
+                if entry["type"] == "searchResEntry":
+                    username = entry["attributes"][self.attributes]
                     console.print(username)
         else:
             console.print("[red][!][/] No entries found in the results.")

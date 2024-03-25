@@ -4,14 +4,22 @@ from handlers.ldap_connection import LdapHandler
 console = Console()
 LOGOFF_NOT_ENFORCED = -9223372036854775808
 
+
 class PassPol:
     name = "pass-pol"
     desc = "Get the domain password policy"
-    module_protocol = ['ldap']
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
-    search_filter = '(objectClass=domainDNS)'
-    attributes = ['forceLogoff', 'lockoutDuration', 'lockoutThreshold', 'maxPwdAge', 'minPwdAge', 'minPwdLength']
+    search_filter = "(objectClass=domainDNS)"
+    attributes = [
+        "forceLogoff",
+        "lockoutDuration",
+        "lockoutThreshold",
+        "maxPwdAge",
+        "minPwdAge",
+        "minPwdLength",
+    ]
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
@@ -27,19 +35,23 @@ class PassPol:
             lockout_thresold_printed = False
             force_logoff_printed = False
 
-            for key, value in res_response[0]['attributes'].items():
+            for key, value in res_response[0]["attributes"].items():
                 if key not in seen_attributes:
                     pass_info[key] = value
                     seen_attributes.add(key)
 
-            lockout_thresold = pass_info.get('lockoutThreshold')
+            lockout_thresold = pass_info.get("lockoutThreshold")
             if lockout_thresold == 0 and not lockout_thresold_printed:
-                pass_info['lockoutThreshold'] = '[yellow]0 - Password Spray possibility[/]'
-                lockout_thresold_printed = True 
+                pass_info["lockoutThreshold"] = (
+                    "[yellow]0 - Password Spray possibility[/]"
+                )
+                lockout_thresold_printed = True
 
-            forced_logoff = pass_info.get('forceLogoff')
+            forced_logoff = pass_info.get("forceLogoff")
             if forced_logoff == LOGOFF_NOT_ENFORCED and not force_logoff_printed:
-                pass_info['forceLogoff'] = f"{LOGOFF_NOT_ENFORCED} - [yellow]0 - forceLogoff is not enforced[/]"
+                pass_info["forceLogoff"] = (
+                    f"{LOGOFF_NOT_ENFORCED} - [yellow]0 - forceLogoff is not enforced[/]"
+                )
                 force_logoff_printed = True
 
             for attribute, value in pass_info.items():

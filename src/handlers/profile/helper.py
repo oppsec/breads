@@ -1,8 +1,8 @@
 from pathlib import Path
 from os import environ
+from json import load, JSONDecodeError
 from rich.console import Console
 console = Console
-from json import load, JSONDecodeError
 
 def get_user_home() -> str:
     """ Return user's home directory path as string """

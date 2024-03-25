@@ -1,27 +1,27 @@
 from rich.prompt import Prompt
 from rich.console import Console
-console = Console()
 from pathlib import Path
 from os import environ
 from uuid import uuid4
 
+from handlers.profile.helper import BREADS_FOLDER
+
 import json
 
-from handlers.profile.helper import BREADS_FOLDER
 BREADS_FOLDER = Path(BREADS_FOLDER)
-
 PROFILE_UUID = uuid4().hex
+console = Console()
 
 def list_profiles():
     ''' List profiles found on $USER/.breads/ '''
 
     if not BREADS_FOLDER.exists():
-        console.print(f"[red][!][/] .breads directory not found. Initialize one with 'create_profile' command\n")
+        console.print("[red][!][/] .breads directory not found. Initialize one with 'create_profile' command\n")
         return []
 
     folders = [folder for folder in BREADS_FOLDER.iterdir() if folder.is_dir()]
     if not folders:
-        console.print(f"[red][!][/] No profiles found in .breads directory. Create one with 'create_profile' command\n")
+        console.print("[red][!][/] No profiles found in .breads directory. Create one with 'create_profile' command\n")
     else:
         for folder in folders:
             console.print(f"[cyan]* {folder.name}[/]")
@@ -73,7 +73,7 @@ def load_profile(profile_name):
                 json.dump(existing_data, json_file, ensure_ascii=False, indent=4)
                 json_file.truncate()
 
-                console.print(f"[green][+][/] [bright_white]Profile information stored successfully![/]\n")
+                console.print("[green][+][/] [bright_white]Profile information stored successfully![/]\n")
             except Exception as error:
                 console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
 
@@ -88,7 +88,7 @@ def update_profile_settings(profile_name, data):
             json_file.seek(0)
             json.dump(data, json_file, ensure_ascii=False, indent=4)
             json_file.truncate()
-        console.print(f"[green][+][/] [bright_white]Profile information stored successfully![/]\n")
+        console.print("[green][+][/] [bright_white]Profile information stored successfully![/]\n")
     except Exception as error:
         console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
 

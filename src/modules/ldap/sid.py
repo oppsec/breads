@@ -4,15 +4,16 @@ from handlers.ldap_connection import LdapHandler
 
 console = Console()
 
+
 class Sid:
     name = "sid"
     desc = "Get object information from specified SID"
-    module_protocol = ['ldap']
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
     user_target = None
     requires_args = True
-    attributes = ['objectClass']
+    attributes = ["objectClass"]
     min_args = 1
 
     def process_info(self, conn, base_dn, search_filter, attribute_list):
@@ -20,19 +21,18 @@ class Sid:
         search_response = search[2]
 
         for entry in search_response:
-                if entry['type'] == 'searchResEntry':
-                    attributes = entry['attributes']
-                    for attr, value in attributes.items():
-                        console.print(f" - [cyan]{attr}[/]: {value}", highlight=False)
+            if entry["type"] == "searchResEntry":
+                attributes = entry["attributes"]
+                for attr, value in attributes.items():
+                    console.print(f" - [cyan]{attr}[/]: {value}", highlight=False)
 
     def on_login(self, sid: str) -> None:
-
         if not sid or len(sid) < 1:
             console.print("[red]Usage:[/] sid <SID>")
             return
-        
+
         sid_bytes = format_sid(sid)
-        search_filter = f'(objectSid={sid_bytes})'
+        search_filter = f"(objectSid={sid_bytes})"
 
         conn, base_dn = LdapHandler.connection(self)
         results = conn.search(base_dn, search_filter, attributes=self.attributes)
@@ -44,28 +44,57 @@ class Sid:
         if res_status:
             console.print("[green][+][/] SID Information:")
             for entry in res_response:
-                if entry['type'] == 'searchResEntry':
-                    for attribute, value in entry['attributes'].items():
+                if entry["type"] == "searchResEntry":
+                    for attribute, value in entry["attributes"].items():
                         if attribute not in seen_attributes:
                             sid_info[attribute] = value
                             seen_attributes.add(attribute)
 
-            objectClass_value = sid_info.get('objectClass', [])
-            console.print(f'[yellow italic] \_ objectClass: {objectClass_value}[/]')
+            objectClass_value = sid_info.get("objectClass", [])
+            console.print(f"[yellow italic] \_ objectClass: {objectClass_value}[/]")
 
-            if 'computer' in objectClass_value:
-                computer_attrs = ['cn', 'distinguishedName', 'memberOf', 'objectSid', 'operatingSystem', 'dNSHostName']
+            if "computer" in objectClass_value:
+                computer_attrs = [
+                    "cn",
+                    "distinguishedName",
+                    "memberOf",
+                    "objectSid",
+                    "operatingSystem",
+                    "dNSHostName",
+                ]
                 self.process_info(conn, base_dn, search_filter, computer_attrs)
 
-            elif 'user' in objectClass_value:
-                user_attrs = ['cn', 'description', 'distinguishedName', 'memberOf', 'whenCreated', 'name', 'userAccountControl', 'badPwdCount', 'lastLogon', 'objectSid', 'sAMAccountName']
+            elif "user" in objectClass_value:
+                user_attrs = [
+                    "cn",
+                    "description",
+                    "distinguishedName",
+                    "memberOf",
+                    "whenCreated",
+                    "name",
+                    "userAccountControl",
+                    "badPwdCount",
+                    "lastLogon",
+                    "objectSid",
+                    "sAMAccountName",
+                ]
                 self.process_info(conn, base_dn, search_filter, user_attrs)
 
-            elif 'group' in objectClass_value:
-                group_attrs = ['cn', 'member', 'distinguishedName', 'whenCreated', 'memberOf', 'objectGUID', 'objectSid']
+            elif "group" in objectClass_value:
+                group_attrs = [
+                    "cn",
+                    "member",
+                    "distinguishedName",
+                    "whenCreated",
+                    "memberOf",
+                    "objectGUID",
+                    "objectSid",
+                ]
                 self.process_info(conn, base_dn, search_filter, group_attrs)
             else:
-                console.print("[yellow] objectClass type not identified, returning all attributes.[/]")
-                self.process_info(conn, base_dn, search_filter, ['*'])
+                console.print(
+                    "[yellow] objectClass type not identified, returning all attributes.[/]"
+                )
+                self.process_info(conn, base_dn, search_filter, ["*"])
         else:
             console.print("[red][!][/] No entries found in the results.")

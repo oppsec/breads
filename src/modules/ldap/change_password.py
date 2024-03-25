@@ -10,26 +10,31 @@ console = Console()
 # * 3. Try changing user password
 # *******************************
 
+
 class ChangePassword:
     name = "change-password"
     desc = "Change desired user password"
-    module_protocol = ['ldap']
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
     user_target = None
     search_filter = None
     requires_args = True
     min_args = 2
-    attributes = 'sAMAccountName'
+    attributes = "sAMAccountName"
 
     def get_user_dn(self, conn, base_dn, target):
-        dn_query = conn.search(base_dn, f'(&(objectClass=user)(sAMAccountName={target}))', attributes=['*'])
+        dn_query = conn.search(
+            base_dn, f"(&(objectClass=user)(sAMAccountName={target}))", attributes=["*"]
+        )
         dn_response = dn_query[2]
         return dn_response
 
     def on_login(self, *args):
         if len(args) != 2:
-            console.print("[yellow]Usage:[/] change_password <username> <new_password>", highlight=False)
+            console.print("[yellow]Usage:[/] change_password <username> <new_password>",
+                highlight=False,
+            )
             return
 
         target = args[0]
@@ -37,22 +42,35 @@ class ChangePassword:
 
         try:
             conn, base_dn = LdapHandler.connection(self)
-            console.print(f"[green][+][/] Changing user [yellow]{target}[/] password to [yellow]{new_pass}[/]")
+            console.print(
+                f"[green][+][/] Changing user [yellow]{target}[/] password to [yellow]{new_pass}[/]"
+            )
 
             user_dn = self.get_user_dn(conn, base_dn, target)
 
-            if not user_dn[0]['type'] == 'searchResEntry':
+            if not user_dn[0]["type"] == "searchResEntry":
                 console.print("[red][!][/] User not found or LDAP search failed.")
                 return
-            
-            user_dn = user_dn[0]['raw_dn'].decode('utf-8')
-            change_pass = conn.extend.microsoft.modify_password(user=user_dn, new_password=new_pass, old_password=None)
 
-            if(change_pass):
-                console.print(f"[green][+][/] Changed [yellow]{target}[/] password to [yellow]{new_pass}[/] successfully!\n", highlight=False)
+            user_dn = user_dn[0]["raw_dn"].decode("utf-8")
+            change_pass = conn.extend.microsoft.modify_password(
+                user=user_dn, new_password=new_pass, old_password=None
+            )
+
+            if change_pass:
+                console.print(
+                    f"[green][+][/] Changed [yellow]{target}[/] password to [yellow]{new_pass}[/] successfully!\n",
+                    highlight=False,
+                )
             else:
-                console.print(f"[red][!][/] Execution returned [red]False[/], unable to change [yellow]{target}[/] password to [yellow]{new_pass}[/]", highlight=False)
-                console.print(f"[red][!][/] Probably reasons: \n 1. Your user does not have required permissions (need to have Administrator privileges)\n 2. Domain Policy does not allow changing user password on this way\n 3. The new password is weak\n", highlight=False)
-            
+                console.print(
+                    f"[red][!][/] Execution returned [red]False[/], unable to change [yellow]{target}[/] password to [yellow]{new_pass}[/]",
+                    highlight=False,
+                )
+                console.print(
+                    "[red][!][/] Probably reasons: \n 1. Your user does not have required permissions (need to have Administrator privileges)\n 2. Domain Policy does not allow changing user password on this way\n 3. The new password is weak\n",
+                    highlight=False,
+                )
+
         except Exception as error:
             raise error

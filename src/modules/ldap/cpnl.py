@@ -3,17 +3,17 @@ from handlers.ldap_connection import LdapHandler
 
 console = Console()
 
+
 class Cpnl:
     name = "cpnl"
     desc = "Find all Users that need to change password on next login"
-    module_protocol = ['ldap']
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
     user_target = None
-    search_filter = '(&(objectCategory=user)(pwdLastSet=0))'
+    search_filter = "(&(objectCategory=user)(pwdLastSet=0))"
     requires_args = False
-    attributes = 'sAMAccountName'
-
+    attributes = "sAMAccountName"
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
@@ -24,8 +24,8 @@ class Cpnl:
         if res_status:
             console.print("[green][+][/] Change Password Next Login:")
             for entry in res_response:
-                if entry['type'] == 'searchResEntry':
-                    username = entry['attributes'][self.attributes]
+                if entry["type"] == "searchResEntry":
+                    username = entry["attributes"][self.attributes]
                     console.print(username)
         else:
             console.print("[red][!][/] No entries found in the results.")

@@ -75,7 +75,7 @@ class BreadsPrompt(Cmd):
         help_table(inp)
 
     def do_exit(self, inp):
-        console.print("\n[red][!] Exiting... [/]")
+        console.print("\n[green][+][/] Goodbye! :wave:")
         sys.exit(0)
 
     def do_banner(self, inp):

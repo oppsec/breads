@@ -1,7 +1,8 @@
 import struct
 
+
 def binary_sid_to_string(sid) -> None:
-    """ Convert the SID binary value to a readable string """
+    """Convert the SID binary value to a readable string"""
 
     revision, sub_authority_count = struct.unpack_from("BB", sid, 0)
     identifier_authority = struct.unpack_from(">Q", b"\x00\x00" + sid[2:8])[0]

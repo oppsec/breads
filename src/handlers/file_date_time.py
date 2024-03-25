@@ -10,6 +10,7 @@ HUNDREDS_OF_NANOSECONDS = 10000000
 ZERO = timedelta(0)
 HOUR = timedelta(hours=1)
 
+
 def filetime_to_dt(ft):
     """Converts a Microsoft filetime number to a Python datetime. The new
     datetime object is time zone-naive but is equivalent to tzinfo=utc.

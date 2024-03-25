@@ -1,7 +1,8 @@
-from rich.console import Console
-console = Console()
 from rich.table import Table
 from rich import box
+from rich.console import Console
+
+console = Console()
 
 def create_table(title, columns, rows, box_type=box.SIMPLE_HEAD) -> None:
     """
