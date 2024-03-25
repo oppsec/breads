@@ -3,7 +3,13 @@ console = Console()
 from rich.table import Table
 from rich import box
 
-def create_table(title, columns, rows, box_type=box.SIMPLE_HEAD):
+def create_table(title, columns, rows, box_type=box.SIMPLE_HEAD) -> None:
+    """
+    @param title: define the table Title
+    @param columns: create the main column with title parameter
+    @param rows: create the rows to be used by the columns
+    """
+
     table = Table(title=title, show_header=True, highlight=False, leading=True, box=box_type, title_justify="center")
     for column in columns:
         table.add_column(column["title"], style=column["style"])
@@ -11,9 +17,11 @@ def create_table(title, columns, rows, box_type=box.SIMPLE_HEAD):
         table.add_row(*row)
     return table
 
-def help_table(inp):
+def help_table(inp) -> None:
+    """ Return the help table based on create_table function structure """
+
     console = Console()
-    user_input = inp.lower()
+    user_input: str = inp.lower()
 
     if user_input == "":
         columns = [
@@ -26,7 +34,7 @@ def help_table(inp):
 
         rows = [
             ("LDAP", "25", "---", "---", "---"),
-            ("SMB", "2", "---", "---", "---"),
+            ("SMB", "3", "---", "---", "---"),
             ("", "", "create_profile", "Ask user input to create a new profile", "create_profile <name>"),
             ("", "", "load_profile", "Ask user input to load a existing profile", "create_profile <name>"),
             ("", "", "banner", "Return BREADS's banner", "banner"),
@@ -74,7 +82,7 @@ def help_table(inp):
     elif user_input == "smb":
         columns = [
             {"title": "Protocol", "style": "green"}, 
-            {"title": "Name", "style": "white"}, 
+            {"title": "Name", "style": "white"},
             {"title": "Description", "style": "green"}, 
             {"title": "Usage", "style": "white"}, 
             {"title": "Admin Privilege", "style": "white"}
@@ -82,7 +90,8 @@ def help_table(inp):
 
         rows = [
             ("SMB", "get_uac", "Get the UAC value from a specified target", "get_uac <target>", "[red]No[/]"),
-            ("SMB", "kerberoasting", "Search for kerberoastable computers and users", "kerberoasting <dc_ip>", "[red]No[/]")
+            ("SMB", "kerberoasting", "Search for kerberoastable computers and users", "kerberoasting <dc_ip>", "[red]No[/]"),
+            ("SMB", "share", "Enumerates the available shares of a target computer", "share <target>", "[red]No[/]")
         ]
     else:
         console.print(f"[red][!][/] Unrecognized command: [yellow]help {user_input}[/]. (Available: ldap, smb)\n")
