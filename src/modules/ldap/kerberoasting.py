@@ -1,3 +1,4 @@
+from uuid import uuid4
 from impacket.krb5 import constants
 from impacket.krb5.types import Principal
 from impacket.krb5.kerberosv5 import getKerberosTGT, getKerberosTGS
@@ -6,20 +7,19 @@ from binascii import hexlify
 from impacket.krb5.asn1 import TGS_REP
 from pyasn1.codec.der import decoder
 from rich.console import Console
-console = Console()
 
 from handlers.smb_connection import SMBConnectionManager
 from handlers.ldap_connection import LdapHandler
 from handlers.profile.get_data import get_domain, get_username, get_password
 from handlers.profile.helper import get_current_profile_path
 
-from uuid import uuid4
+console = Console()
 random_uuid = uuid4().hex
 
 class Kerberoasting:
     name = "kerberoasting"
     desc = "Search for kerberoasting computers and users"
-    module_protocol = ['smb', 'ldap']
+    module_protocol = ['ldap', 'smb']
     opsec_safe = True
     multiple_hosts = False
     requires_args = True
@@ -154,7 +154,7 @@ class Kerberoasting:
         kerberoastable_users = self.get_kerberoastable_users(con_input)
 
         if not kerberoastable_users:
-            console.print(f'[red][!][/] No kerberoastable users found')
+            console.print("[red][!][/] No kerberoastable users found")
             return
 
         console.print(f"- [cyan]Kerberoastable Users[/]: {kerberoastable_users}", highlight=False)
