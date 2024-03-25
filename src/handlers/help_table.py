@@ -33,8 +33,8 @@ def help_table(inp) -> None:
         ]
 
         rows = [
-            ("LDAP", "25", "---", "---", "---"),
-            ("SMB", "3", "---", "---", "---"),
+            ("LDAP", "26", "---", "---", "---"),
+            ("SMB", "2", "---", "---", "---"),
             ("", "", "create_profile", "Ask user input to create a new profile", "create_profile <name>"),
             ("", "", "load_profile", "Ask user input to load a existing profile", "create_profile <name>"),
             ("", "", "banner", "Return BREADS's banner", "banner"),
@@ -77,6 +77,7 @@ def help_table(inp) -> None:
             ("LDAP", "containers", "Get 'name' and 'distinguishedName' from all Containers", "containers", "[red]No[/]"),
             ("LDAP", "un_delegation", "List accounts and computers vulnerable to Unconstrained Delegation", "un_delegation", "[red]No[/]"),
             ("LDAP", "pass_not_req", "List all accounts that does not need an password to authenticate", "pass_not_req", "[red]No[/]"),
+            ("LDAP", "kerberoasting", "Search for kerberoastable computers and users", "kerberoasting <dc_ip>", "[red]No[/]")
         ]
 
     elif user_input == "smb":
@@ -90,7 +91,6 @@ def help_table(inp) -> None:
 
         rows = [
             ("SMB", "get_uac", "Get the UAC value from a specified target", "get_uac <target>", "[red]No[/]"),
-            ("SMB", "kerberoasting", "Search for kerberoastable computers and users", "kerberoasting <dc_ip>", "[red]No[/]"),
             ("SMB", "share", "Enumerates the available shares of a target computer", "share <target>", "[red]No[/]")
         ]
     else:
