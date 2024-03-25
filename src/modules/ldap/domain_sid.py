@@ -10,7 +10,7 @@ class DomainSid:
     module_protocol = ['ldap']
     opsec_safe = True
     multiple_hosts = False
-    search_filter = '(userAccountControl:1.2.840.113556.1.4.803:=8192)'
+    search_filter = '(&(objectClass=computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))'
     attributes = ['cn', 'objectSid', 'dNSHostName']
 
     def search_with_base(self, conn, search_base, search_filter, attributes, scope):
@@ -24,7 +24,7 @@ class DomainSid:
         res_response = results[2]
 
         if res_status:
-            console.print(f"[green][+][/] Domain SID")
+            console.print(f"[green][+][/] Domain SID:")
             for entry in res_response:
                 if entry['type'] == 'searchResEntry':
                     for attribute, value in entry['attributes'].items():

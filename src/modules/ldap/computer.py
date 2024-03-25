@@ -1,9 +1,8 @@
-from handlers.ldap_connection import LdapHandler    
-
 from rich.console import Console
-console = Console()
+from re import search
+from handlers.ldap_connection import LdapHandler
 
-from re import search 
+console = Console()
 
 class Computer:
     name = "Computer"

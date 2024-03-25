@@ -1,6 +1,6 @@
+from rich.console import Console
 from handlers.ldap_connection import LdapHandler
 
-from rich.console import Console
 console = Console()
 
 class Groups:

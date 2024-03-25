@@ -1,7 +1,7 @@
-from handlers.smb_connection import SMBConnectionManager 
 from rich.console import Console
 from impacket.dcerpc.v5 import rrp
 from impacket.examples.secretsdump import RemoteOperations
+from handlers.smb_connection import SMBConnectionManager 
 
 console = Console()
 
@@ -49,9 +49,9 @@ class GetUac:
             _data_type, uac_value = rrp.hBaseRegQueryValue(remoteOps._RemoteOperations__rrp, key_handle, "EnableLUA")
 
             if uac_value == 1:
-               console.print(f"- [cyan]UAC Status[/]: 1 [green](Enabled)[/]", highlight=False)
+               console.print("- [cyan]UAC Status[/]: 1 [green](Enabled)[/]", highlight=False)
             elif uac_value == 0:
-                console.print(f"- [cyan]UAC Status[/]: 0 [red](Disabled)[/]", highlight=False)
+                console.print("- [cyan]UAC Status[/]: 0 [red](Disabled)[/]", highlight=False)
 
             rrp.hBaseRegCloseKey(remoteOps._RemoteOperations__rrp, key_handle)
             remoteOps.finish()

@@ -1,7 +1,7 @@
 from impacket.smbconnection import SMBConnection
 from rich.console import Console
 from pathlib import Path
-import json
+from json import load, JSONDecodeError
 
 from handlers.profile.helper import get_current_profile, BREADS_FOLDER
 
@@ -9,6 +9,8 @@ console = Console()
 BREADS_FOLDER = Path(BREADS_FOLDER)
 
 class SMBConnectionManager:
+    """ BREAD's default SMB handler class """
+
     def __init__(self):
         self.username = ""
         self.password = ""
@@ -23,7 +25,7 @@ class SMBConnectionManager:
 
         try:
             with open(settings_json_file, 'r') as settings_file:
-                data = json.load(settings_file)
+                data = load(settings_file)
 
                 self.username = data.get('username')
                 self.password = data.get('password')
@@ -32,7 +34,7 @@ class SMBConnectionManager:
         except FileNotFoundError:
             console.print("[red][!][/] Could not find the settings file.")
             return False
-        except json.JSONDecodeError:
+        except JSONDecodeError:
             console.print("[red][!][/] Invalid JSON format in settings file.")
             return False
 

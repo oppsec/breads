@@ -1,9 +1,8 @@
-from typing import Optional, Dict
 from rich.console import Console
-console = Console()
 from ldap3.protocol.formatters.formatters import format_sid
-
 from handlers.ldap_connection import LdapHandler
+
+console = Console()
 
 class Sid:
     name = "sid"

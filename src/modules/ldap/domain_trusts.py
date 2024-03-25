@@ -1,7 +1,7 @@
+from rich.console import Console
 from handlers.ldap_connection import LdapHandler
 from handlers.sid_translate import binary_sid_to_string
 
-from rich.console import Console
 console = Console()
 
 class DomainTrusts:

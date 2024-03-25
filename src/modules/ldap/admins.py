@@ -1,8 +1,7 @@
-from typing import Optional, Dict
 from rich.console import Console
-console = Console()
-
 from handlers.ldap_connection import LdapHandler
+
+console = Console()
 
 class Admins:
     name = "admins"
@@ -11,7 +10,7 @@ class Admins:
     opsec_safe = True
     multiple_hosts = False
     user_target = None
-    search_filter = f'(&(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))(adminCount=1))'
+    search_filter = '(&(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))(adminCount=1))'
     requires_args = False
     attributes = 'sAMAccountName'
 

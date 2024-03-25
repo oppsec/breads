@@ -1,9 +1,8 @@
+from rich.console import Console
 from handlers.ldap_connection import LdapHandler
 
-from rich.console import Console
 console = Console()
-
-_LOGOFF_NOT_ENFORCED = -9223372036854775808
+LOGOFF_NOT_ENFORCED = -9223372036854775808
 
 class PassPol:
     name = "pass-pol"
@@ -39,8 +38,8 @@ class PassPol:
                 lockout_thresold_printed = True 
 
             forced_logoff = pass_info.get('forceLogoff')
-            if forced_logoff == _LOGOFF_NOT_ENFORCED and not force_logoff_printed:
-                pass_info['forceLogoff'] = f"{_LOGOFF_NOT_ENFORCED} - [yellow]0 - forceLogoff is not enforced[/]"
+            if forced_logoff == LOGOFF_NOT_ENFORCED and not force_logoff_printed:
+                pass_info['forceLogoff'] = f"{LOGOFF_NOT_ENFORCED} - [yellow]0 - forceLogoff is not enforced[/]"
                 force_logoff_printed = True
 
             for attribute, value in pass_info.items():
