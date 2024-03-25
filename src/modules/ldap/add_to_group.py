@@ -1,9 +1,8 @@
 from ldap3 import MODIFY_ADD
-from typing import Optional, Dict
 from rich.console import Console
-console = Console()
-
 from handlers.ldap_connection import LdapHandler
+
+console = Console()
 
 # *******************************
 # * WORKFLOW
