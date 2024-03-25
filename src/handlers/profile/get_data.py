@@ -1,9 +1,9 @@
-from handlers.profile.helper import BREADS_FOLDER, get_current_profile
 from pathlib import Path
-BREADS_FOLDER = Path(BREADS_FOLDER)
-
-import json
 from rich.console import Console
+from json import load
+from handlers.profile.helper import BREADS_FOLDER, get_current_profile
+
+BREADS_FOLDER = Path(BREADS_FOLDER)
 console = Console()
 
 def get_data(value) -> None:
@@ -14,7 +14,7 @@ def get_data(value) -> None:
     settings_json_file = f"{BREADS_FOLDER}/{get_current_profile()}/settings.json"
 
     with open(settings_json_file, 'r') as settings_file:
-        data = json.load(settings_file)
+        data = load(settings_file)
 
         data_to_get = data[value]
         return data_to_get
