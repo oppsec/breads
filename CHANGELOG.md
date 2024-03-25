@@ -1,3 +1,8 @@
+# 🎉 1.2.2
+- Added new 1 new module:
+    - New module: 'share' (Enumerate the shares available from a targeted computer) 
+- Moved 'kerberoasting' module to LDAP
+
 # 🎉 1.2.1
 - Added new 4 modules
     - New module: 'gpos' (List the GPOs registed in the domain)
