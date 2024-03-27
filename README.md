@@ -61,11 +61,6 @@ ___
 
 <br>
 
-<h3> Errors </h3>
-<p> The developer is not responsible for any malicious use of this tool </p>
-
-<br>
-
 <h3> Credits </h3>
 <ul>
     <li>CrackMapExec</li>

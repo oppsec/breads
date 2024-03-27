@@ -41,14 +41,20 @@ class Group:
         results = conn.search(base_dn, search_filter, attributes=self.attributes)
         res_status = results[0]
         res_response = results[2]
+        group_info = {}
+        seen_attributes = set()
 
         if res_status:
-            console.print(f"[green][+][/] {group_name}'s information:")
+            console.print(f"[green][+][/] {group_name}'s group information:")
+
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     for attribute, value in entry["attributes"].items():
-                        console.print(
-                            f" - [cyan]{attribute}[/]: {value}", highlight=False
-                        )
+                        if attribute not in seen_attributes:
+                            group_info[attribute] = value
+                            seen_attributes.add(attribute)
+                            
+            for attribute, value in group_info.items():
+                console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
