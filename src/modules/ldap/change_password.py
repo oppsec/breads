@@ -68,7 +68,7 @@ class ChangePassword:
                     highlight=False,
                 )
                 console.print(
-                    "[red][!][/] Probably reasons: \n 1. Your user does not have required permissions (need to have Administrator privileges)\n 2. Domain Policy does not allow changing user password on this way\n 3. The new password is weak\n",
+                    "[red][!][/] Probably reasons: \n 1. Your user does not have required permissions (need to have Administrator privileges)\n 2. Domain Policy does not allow changing user password on this way\n 3. The new password is weak for the password policy\n",
                     highlight=False,
                 )
 
