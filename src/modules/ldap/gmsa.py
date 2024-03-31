@@ -9,7 +9,7 @@ console = Console()
 
 class Gmsa:
     name = "gmsa"
-    desc = "Get GMSA account passwords"
+    desc = "Get GMSA accounts passwords"
     module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False

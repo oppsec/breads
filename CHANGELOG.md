@@ -1,8 +1,10 @@
 # 🎉 1.2.3
 - Added new 2 module:
   - New module: 'aces' (Get the nTSecurityDescriptor value from all ACEs and check privileges based on current logged-on user)
-  - New module: 'gmsa' (Get the nTSecurityDescriptor value from all ACEs and check privileges based on current logged-on user)
+  - New module: 'gmsa' (Get GMSA accounts passwords)
 - Added 'servicePrincipalName' attribute in whoami module
+- Added gmsa blob translator (src/helpers/gmsa_blob)
+- Minor changes in domain_trusts and change_password
 
 # 🎉 1.2.2
 
