@@ -1,8 +1,16 @@
+# 🎉 1.2.3
+- Added new 2 module:
+  - New module: 'aces' (Get the nTSecurityDescriptor value from all ACEs and check privileges based on current logged-on user)
+  - New module: 'gmsa' (Get the nTSecurityDescriptor value from all ACEs and check privileges based on current logged-on user)
+- Added 'servicePrincipalName' attribute in whoami module
+
 # 🎉 1.2.2
 
 - Added new 1 new module:
   - New module: 'share' (Enumerate the shares available from a targeted computer)
 - Moved 'kerberoasting' module to LDAP
+
+<br><br>
 
 # 🎉 1.2.1
 
@@ -15,12 +23,16 @@
 - Improved module 'kerberoasting' LDAP query
 - Updated 'domain_trusts' output message
 
+<br><br>
+
 # 🎉 1.2.0a
 
 - Filtered results for whoami command ('description', 'memberOf', 'userAccountControl', 'badPwdCount', 'lastLogoff', 'lastLogon', 'objectSid', 'adminCount', 'accountExpires', 'sAMAccountName')
 - Changed the way and colors of the information got printed
 - Fixed bug in kerberoasting module
 - Improved SID objectClass type identification
+
+<br><br>
 
 # 🎉 1.2.0
 

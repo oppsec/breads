@@ -17,18 +17,21 @@ ___
 
 <br>
 
-<h3> What is BREADS? </h3>
-<p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP, SMB, and other protocols (not done yet). This project is inspired by other existing tools like NetExec (CrackMapExec). </p>
+<h3> BREADS - BREaking Active Directory Security </h2>
+<p> <b>BREADS</b> is a tool focused on enumerating and attacking Active Directory environments through LDAP and SMB protocols. This project is inspired by other existing tools like NetExec (CrackMapExec) and Impacket. </p>
 
 <br>
 
-<h3> Why use this? </h3>
-<p> This project is created and maintained by security researchers who want to study and discover more about Active Directory environments, then you don't need to use this necessary but I promise the team is trying its best to make this a usable tool and a cool project </p>
-
-<br>
-
-<h3> Any advantage? </h3>
-<p> Yes, the principal BREADS advantages are the flexibility of creating profiles that are directly stored on the local machine (through the .breads directory created on the user's home) and the easy way to execute commands without needing to re-type the same credentials every time. </p>
+<h3> Features </h3>
+<ul>
+    <li>Profile management</li>
+    <li>Support kerberoasting</li>
+    <li>Change Password</li>
+    <li>Add User to Group</li>
+    <li>ACEs Enumeration</li>
+    <li>Interactive Shell</li>
+    <li>Others</li>
+</ul>
 
 <br>
 
@@ -44,14 +47,14 @@ ___
 
 <br>
 
-<h4> Update </h4>
+<h3> Updating </h4>
 <pre>
 ~$ pipx install git+https://github.com/oppsec/breads.git --force
 </pre>
 
 <br>
 
-<h3> Preview </h3>
+<h3> Preview usage </h3>
 <a href="https://asciinema.org/a/647121" target="_blank"><img src="https://asciinema.org/a/647121.svg" /></a>
 
 <br>
@@ -63,7 +66,6 @@ ___
 
 <h3> Credits </h3>
 <ul>
-    <li>CrackMapExec</li>
+    <li>NetExec (CrackMapExec)</li>
     <li>Impacket</li>
-    <li>NetExec</li>
 </ul>
