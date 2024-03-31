@@ -25,6 +25,7 @@ class Whoami:
         "adminCount",
         "accountExpires",
         "sAMAccountName",
+        "servicePrincipalName"
     ]
 
     uac_values = {
