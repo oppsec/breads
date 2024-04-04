@@ -26,10 +26,11 @@ ___
 <ul>
     <li>Profile management</li>
     <li>Support kerberoasting</li>
-    <li>Change Password</li>
+    <li>Change User Password</li>
     <li>Add User to Group</li>
     <li>ACEs Enumeration</li>
     <li>Interactive Shell</li>
+    <li>Support to Pass-The-Hash</li>
     <li>Others</li>
 </ul>
 
