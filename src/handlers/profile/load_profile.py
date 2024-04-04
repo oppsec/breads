@@ -24,7 +24,7 @@ def list_profiles():
         console.print("[red][!][/] No profiles found in .breads directory. Create one with 'create_profile' command\n")
     else:
         for folder in folders:
-            console.print(f"[cyan]* {folder.name}[/]")
+            console.print(f"[cyan]-[/] {folder.name}")
     return folders
 
 def get_profile_settings_path(profile_name):
@@ -44,24 +44,26 @@ def load_profile(profile_name):
             domain = existing_data['domain']
 
             if not host:
-                console.print("[yellow][!][/] [bright_white]You need to define a target, username and host to be used by the profile[/]")
+                console.print("[yellow][!][/] You need to define a host, username and password to be used by the profile")
 
-            if(len(host) > 2): # If the length of host variable on profile json file is greater than 2 we can assume we already have an host defined
-                console.print(f"[yellow][!][/] [bright_white]Profile settings: {host}, {username}, {password}[/]", highlight=False)
-                keep_data_input = Prompt.ask("[yellow][!][/] [bright_white]There is already information stored in this profile, do you want to keep it?[/] [yellow](y/n)[/] ")
+            # If the length of host variable on profile json file is greater than 2 we can assume we already have an host defined
+            if(len(host) > 2):
+                console.print(f"[yellow][!][/] [yellow]{profile_name}[/]: [cyan]- IP:[/] {host} - [cyan]Username:[/] {username} - [cyan]Password:[/] {password}", highlight=False)
+
+                keep_data_input = Prompt.ask("[yellow][!][/] There is already information stored in this profile, do you want to keep it? [yellow](y/n)[/]")
                 keep_data_input = keep_data_input.lower()
 
                 if(keep_data_input == 'y' or keep_data_input == 'yes'):
-                    console.print("[yellow][!][/] [bright_white]Not changing current configuration[/]\n")
+                    console.print("[yellow][!][/] Not changing current configuration\n")
                     return existing_data
 
-            target_host_input = Prompt.ask("> Type the target host (ex: 127.0.0.1)")
-            username_input = Prompt.ask("> Type the username to be used (example.lab\Administrator)")
-            password_input = Prompt.ask("> Type the password to be used")
+            host_input = Prompt.ask("[cyan]- IP Address (ex: 127.0.0.1)[/]")
+            username_input = Prompt.ask("[cyan]- Username (example.lab\Administrator)[/]")
+            password_input = Prompt.ask("[cyan]- Password[/]")
             domain  = username_input.split("\\")[0]
 
             profile_data = {
-                "host": target_host_input,
+                "host": host_input,
                 "username": username_input,
                 "password": password_input,
                 "domain": domain

@@ -9,13 +9,10 @@ console = Console()
 
 def get_data(value) -> None:
     if get_current_profile() == "None":
-        console.print(
-            "[red][!][/] You need to load a profile first, use 'load_profile' command"
-        )
+        console.print("[red][!][/] You need to load a profile first, use 'load_profile' command")
         return None, None
 
-    settings_json_file = f"{BREADS_FOLDER}/{get_current_profile()}/settings.json"
-
+    settings_json_file: str = f"{BREADS_FOLDER}/{get_current_profile()}/settings.json"
     with open(settings_json_file, "r") as settings_file:
         data = load(settings_file)
 

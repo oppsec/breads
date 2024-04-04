@@ -1,5 +1,5 @@
 from rich import print
-from os import mkdir, path
+from os import makedirs, path
 from uuid import uuid4
 from handlers.profile.helper import BREADS_FOLDER
 
@@ -12,7 +12,7 @@ def initial_directory() -> None:
     """Create the initial breads directory (.breads/) on user $HOME"""
 
     if not path.exists(BREADS_FOLDER):
-        mkdir(BREADS_FOLDER)
+        makedirs(BREADS_FOLDER)
         print("[green][+][/] [bright_white].breads folder created in user home[/]")
         return True
     else:
@@ -39,7 +39,7 @@ def profile_folder(inp) -> None:
     folder_path = f"{BREADS_FOLDER}/{profile_name}"
 
     if not path.exists(folder_path):
-        mkdir(folder_path)
+        makedirs(folder_path)
         print(f"[green][+][/] [bright_white][b]{profile_name}[/] profile created[/]")
         initialize_profile_json()
     else:
