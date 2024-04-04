@@ -7,9 +7,9 @@ console = Console()
 
 def create_table(title, columns, rows, box_type=box.SIMPLE_HEAD) -> None:
     """
-    @param title: define the table Title
-    @param columns: create the main column with title parameter
-    @param rows: create the rows to be used by the columns
+    title: define the table Title
+    columns: create the main column with title parameter
+    rows: create the rows to be used by the columns
     """
 
     table = Table(
@@ -43,7 +43,7 @@ def help_table(inp) -> None:
         ]
 
         rows = [
-            ("LDAP", "27", "---", "---", "---"),
+            ("LDAP", "29", "---", "---", "---"),
             ("SMB", "2", "---", "---", "---"),
             (
                 "",
@@ -62,10 +62,7 @@ def help_table(inp) -> None:
             ("", "", "banner", "Return BREADS's banner", "banner"),
         ]
 
-        console.print(
-            "[yellow][!][/] Use: [yellow]help <protocol_name>[/] to see specific modules. Example: [yellow]help smb[/]\n",
-            highlight=False,
-        )
+        console.print("\n[yellow]TIP: Use [white]'help <protocol>'[/] to list all protocol modules[/]", highlight=False)
 
     elif user_input == "ldap":
         columns = [
@@ -266,6 +263,20 @@ def help_table(inp) -> None:
                 "Get GMSA accounts passwords",
                 "gmsa",
                 "[cyan]Preferable[/]",
+            ),
+            (
+                "LDAP",
+                "no_pre_auth",
+                "Find all users that do not require Kerberos pre-authentication",
+                "no_pre_auth",
+                "[red]No[/]",
+            ),
+            (
+                "LDAP",
+                "search_group",
+                "Search for all groups that has specify word on CN attribute",
+                "search_group <word>",
+                "[red]No[/]",
             ),
         ]
 

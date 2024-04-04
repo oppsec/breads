@@ -1,3 +1,10 @@
+# 🎉 1.2.3c
+- Added new 2 module:
+  - New module: 'no_pre_auth' (Find all users that do not require Kerberos pre-authentication)
+  - New module: 'search_group' (Search for all groups that has specify word on CN attribute)
+
+<br><br>
+
 # 🎉 1.2.3b
 - Now LDAP, SMB (and RPC) modules support NTLM hash as password
 
@@ -22,7 +29,6 @@
 <br><br>
 
 # 🎉 1.2.2
-
 - Added new 1 new module:
   - New module: 'share' (Enumerate the shares available from a targeted computer)
 - Moved 'kerberoasting' module to LDAP
@@ -30,7 +36,6 @@
 <br><br>
 
 # 🎉 1.2.1
-
 - Added new 4 modules
   - New module: 'gpos' (List the GPOs registed in the domain)
   - New module: 'servers' (Get 'sAMAccountName', 'operatingSystem' and 'dnsHostName' from all Servers)
@@ -43,7 +48,6 @@
 <br><br>
 
 # 🎉 1.2.0a
-
 - Filtered results for whoami command ('description', 'memberOf', 'userAccountControl', 'badPwdCount', 'lastLogoff', 'lastLogon', 'objectSid', 'adminCount', 'accountExpires', 'sAMAccountName')
 - Changed the way and colors of the information got printed
 - Fixed bug in kerberoasting module
@@ -52,7 +56,6 @@
 <br><br>
 
 # 🎉 1.2.0
-
 - Fixed bugs on 'change_password' module
 - New module: 'group'
 - New module: 'sid'
@@ -61,7 +64,6 @@
 <br><br>
 
 # 🎉 1.1.9a
-
 - New module: 'domain_trusts'
 - New module: 'computer <target>'
 - New module: 'domain_sid'
@@ -73,21 +75,18 @@
 <br><br>
 
 # 🎉 1.1.9
-
 - New module: 'change_password <username> <new_password>'
 - Added tab "Admin Privileges" to help table
 
 <br><br>
 
 # 🎉 1.1.8a
-
 - Removed 'list_adcs' from help command (renamed to adcs)
 - Added 'add_to_group' module to help command
 
 <br><br>
 
 # 🎉 1.1.8
-
 - Changed MAQ LDAP query from (objectClass=\*) to (objectClass=domainDNS)
 - Renamed maq_account_quota to just maq
 - Removed unecessary python-ldap library from maq.py (old maq_account_quota.py)
@@ -100,7 +99,6 @@
 <br><br>
 
 # 🎉 1.1.7
-
 - Improved ldap_connection.py code
 - Improved attributes reading code
 - Added missing module "trusted_delegation" to help command
@@ -117,13 +115,11 @@
 <br><br>
 
 # 🎉 1.1.6b
-
 - Added 'list_groups' module
 
 <br><br>
 
 # 🎉 1.1.6
-
 - Module 'list_adcs' not being recognized as module
 - Fixed no support to SSL/TLS LDAP servers
 - Changed all attributes from 'computers.py' just to 'dnsHostName'
@@ -133,14 +129,12 @@
 <br><br>
 
 ### ⚠️ 2/24/24
-
 - Fixed PosixPath problem (added str(Path) on main.py)
 - Fixed error when creating profile (write() and dump() does not support string)
 
 <br><br>
 
 # 🎉 1.1.5
-
 - Moved from inferigang/breads to oppsec/breads
 - Added support to SMB protocol
 - Improved all the code

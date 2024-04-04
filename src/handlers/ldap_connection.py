@@ -21,13 +21,11 @@ class LdapHandler:
         self.username = ""
         self.hostname = ""
 
-    def connection(self):
+    def connection(self) -> None:
         """Default LDAP connection handler"""
 
         if get_current_profile() == "None":
-            console.print(
-                "[red][!][/] You need to load a profile first, use 'load_profile' command"
-            )
+            console.print("[red][!][/] You need to load a profile first, use 'load_profile' command")
             return None, None
 
         prifle_json = f"{BREADS_FOLDER}/{get_current_profile()}/settings.json"
@@ -45,8 +43,8 @@ class LdapHandler:
         try:
             server = Server(f"ldaps://{self.hostname}", use_ssl=True, get_info=ALL)
             conn = Connection(server, user=self.username, password=self.password,
-                                authentication=NTLM, client_strategy=SAFE_SYNC,
-                                auto_bind=True)
+                              authentication=NTLM, client_strategy=SAFE_SYNC,
+                              auto_bind=True)
             
             base_dn = server.info.other["defaultNamingContext"][0]
             return conn, base_dn
@@ -55,8 +53,8 @@ class LdapHandler:
             try:
                 server = Server(f"ldap://{self.hostname}", use_ssl=False, get_info=ALL)
                 conn = Connection(server, user=self.username, password=self.password,
-                                    authentication=NTLM, client_strategy=SAFE_SYNC,
-                                    auto_bind=True)
+                                  authentication=NTLM, client_strategy=SAFE_SYNC,
+                                  auto_bind=True)
                 
                 base_dn = server.info.other["defaultNamingContext"][0]
                 return conn, base_dn
@@ -73,7 +71,7 @@ class LdapHandler:
             console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (SSL): {error}")
             exit(0)
 
-    def modify_entry(self, dn, mod_attrs):
+    def modify_entry(self, dn, mod_attrs) -> None:
         """Modifies an LDAP entry with the given attributes"""
 
         try:
