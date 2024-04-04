@@ -1,8 +1,9 @@
 from ldap3 import Server, Connection, ALL, NTLM, SAFE_SYNC
-from ldap3.core.exceptions import LDAPSocketOpenError
+from ldap3.core.exceptions import LDAPSocketOpenError, LDAPBindError
 from pathlib import Path
 from json import load
 from rich.console import Console
+from sys import exit
 
 from handlers.profile.helper import get_current_profile, BREADS_FOLDER
 
@@ -38,6 +39,9 @@ class LdapHandler:
             self.password = data["password"]
             self.domain = data["domain"]
 
+            if len(self.password) == 32 and all(c in "0123456789abcdefABCDEF" for c in self.password):
+                self.password = f'aad3b435b51404eeaad3b435b51404ee:{self.password}'
+
         try:
             server = Server(f"ldaps://{self.hostname}", use_ssl=True, get_info=ALL)
             conn = Connection(server, user=self.username, password=self.password,
@@ -59,13 +63,15 @@ class LdapHandler:
 
             except Exception as error:
                 console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (NO SSL): {error}")
-                raise Exception
-                #return None, None
+                exit(0)
+
+        except LDAPBindError as error:
+            console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (NO SSL): {error}")
+            exit(0)
 
         except Exception as error:
             console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (SSL): {error}")
-            raise Exception
-            return None, None
+            exit(0)
 
     def modify_entry(self, dn, mod_attrs):
         """Modifies an LDAP entry with the given attributes"""

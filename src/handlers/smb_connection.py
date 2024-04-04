@@ -1,4 +1,5 @@
 from impacket.smbconnection import SMBConnection
+from impacket.ntlm import compute_lmhash, compute_nthash
 from rich.console import Console
 from pathlib import Path
 from json import load, JSONDecodeError
@@ -46,15 +47,22 @@ class SMBConnectionManager:
             return None
 
         try:
-            smb_connection = SMBConnection(remoteName=target, remoteHost=target)
-
             if "\\" in self.username:
                 domain, username = self.username.split("\\", 1)
             else:
                 domain = ""
                 username = self.username
 
-            smb_connection.login(username, self.password, domain=domain)
+            if len(self.password) == 32 and all(c in "0123456789abcdefABCDEF" for c in self.password):
+                lmhash = 'aad3b435b51404eeaad3b435b51404ee'
+                nthash = self.password
+
+                smb_connection = SMBConnection(target, target)
+                smb_connection.login(username, '', domain=domain, lmhash=lmhash, nthash=nthash)
+            else:
+                smb_connection = SMBConnection(target, target)
+                smb_connection.login(username, self.password, domain=domain)
+
             return smb_connection
         except Exception as e:
             console.print(f"[red][!][/] Error establishing SMB connection: {e}")
