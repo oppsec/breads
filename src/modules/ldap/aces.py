@@ -20,30 +20,31 @@ class Aces:
 
     # https://learn.microsoft.com/en-us/windows/win32/api/iads/ne-iads-ads_rights_enum
     known_aces_mask = {
-        983551: "[green]FULL_CONTROL[/]",
-        4: "[magenta]READ_CONTROL[/]",
-        16: "[magenta]READ_PROP[/]",
-        48: "[magenta]DELETE, READ_CONTROL[/]",
-        8: "[magenta]WRITE_DAC[/]",
-        32: "[magenta]READ_CONTROL[/]",
-        131220: "[green]READ_CONTROL and more[/]",
-        983485: "[green]DELETE, READ_CONTROL and more[/]",
-        256: "[magenta]CONTROL_ACCESS[/]",
-        3: "[magenta]WRITE_DAC and WRITE_OWNER[/]",
-        65536: "[red]DELETE_CHILD[/]",
-        4294967295: "[green]FULL_CONTROL[/]",
-        524288: "[magenta]SELF[/]",
-        131072: "[magenta]CONTROL[/]",
-        524288: "[magenta]WRITE_OWNER[/]",
-        1048576: "[magenta]SYNCHRONIZE[/]",
-        16777216: "[magenta]ACCESS_SYSTEM_SECURITY[/]",
-        536870912: "[magenta]GENERIC_EXECUTE[/]",
-        268435456: "[green]GENERIC_ALL[/]",
-        32: "[magenta]WRITE_PROP[/]",
-        64: "[magenta]DELETE_TREE[/]",
-        128: "[magenta]LIST_OBJECT[/]",
-        1: "[magenta]READ[/]"
-    }
+        65536: "The right to delete the object.",
+        131072: "The right to read data from the security descriptor of the object, not including the data in the SACL.",
+        262144: "The right to modify the discretionary access-control list (DACL) in the object security descriptor.",
+        524288: "The right to assume ownership of the object. The user must be an object trustee. The user cannot transfer the ownership to other users.",
+        1048576: "The right to use the object for synchronization. This enables a thread to wait until the object is in the signaled state.",
+        16777216: "The right to get or set the SACL in the object security descriptor.",
+        2147483648: "The right to read permissions on this object, read all the properties on this object, list this object name when the parent container is listed, and list the contents of this object if it is a container.",
+        1073741824: "The right to read permissions on this object, write all the properties on this object, and perform all validated writes to this object.",
+        536870912: "The right to read permissions on, and list the contents of, a container object.",
+        268435456:"The right to create or delete child objects, delete a subtree, read and write properties, examine child objects and the object itself, add and remove the object from the directory, and read or write with an extended right.",
+        1: "The right to create child objects of the object. The ObjectType member of an ACE can contain a GUID that identifies the type of child object whose creation is controlled. If ObjectType does not contain a GUID, the ACE controls the creation of all child object types.",
+        2: "The right to delete child objects of the object. The ObjectType member of an ACE can contain a GUID that identifies a type of child object whose deletion is controlled. If ObjectType does not contain a GUID, the ACE controls the deletion of all child object types.",
+        4: "The right to list child objects of this object. (AD - Controlling Object Visibility)",
+        8: "The right to perform an operation controlled by a validated write access right. The ObjectType member of an ACE can contain a GUID that identifies the validated write. If ObjectType does not contain a GUID, the ACE controls the rights to perform all valid write operations associated with the object.",
+        16: "The right to read properties of the object. The ObjectType member of an ACE can contain a GUID that identifies a property set or property. If ObjectType does not contain a GUID, the ACE controls the right to read all of the object properties.",
+        32: "The right to write properties of the object. The ObjectType member of an ACE can contain a GUID that identifies a property set or property. If ObjectType does not contain a GUID, the ACE controls the right to write all of the object properties.",
+        64: "The right to delete all child objects of this object, regardless of the permissions of the child objects.",
+        128: "The right to list a particular object. If the user is not granted such a right, and the user does not have ADS_RIGHT_ACTRL_DS_LIST set on the object parent, the object is hidden from the user. This right is ignored if the third character of the dSHeuristics property is '0' or not set.",
+        256: "The right to perform an operation controlled by an extended access right. The ObjectType member of an ACE can contain a GUID that identifies the extended right. If ObjectType does not contain a GUID, the ACE controls the right to perform all extended right operations associated with the object.",
+        983551: "FULL_CONTROL (Not confirmed)",
+        131220: "READ_CONTROL and more (Not confirmed)",
+        983485: "DELETE, READ_CONTROL and more (Not confirmed)",
+        3: "WRITE_DAC and WRITE_OWNER (Not confirmed)",
+        4294967295: "FULL_CONTROL (Not confirmed)"
+   }
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
@@ -91,7 +92,7 @@ class Aces:
                             if (ace_typename == "ACCESS_ALLOWED_OBJECT_ACE" or ace_typename == "ACCESS_ALLOWED_ACE"):
                                 if ace_mask in self.known_aces_mask:
                                     permission = self.known_aces_mask[ace_mask]
-                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan]*[/] SID: [yellow]{ace_sid}[/]\n[cyan]*[/] Privileges: {permission} ({ace_mask})\n", highlight=False)
+                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan]*[/] SID: [yellow]{ace_sid}[/]\n[cyan]*[/] Privileges: {permission} [yellow]({ace_mask})[/]\n", highlight=False)
                                 else:
                                     console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan]*[/] SID: [yellow]{ace_sid}[/]\n[cyan]*[/] Unknown privileges: {ace_mask}\n", highlight=False)
                     else:

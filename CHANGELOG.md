@@ -1,3 +1,9 @@
+# 🎉 1.2.3a
+- Improved 'aces' module
+- Minor changes in create and load profile modules
+- Fixed information confliting when interacting with subdomain (ex: internal.example.com / example.com)
+- Fixed SSL error when LDAPS is not required
+
 # 🎉 1.2.3
 - Added new 2 module:
   - New module: 'aces' (Get the nTSecurityDescriptor value from all ACEs and check privileges based on current logged-on user)
