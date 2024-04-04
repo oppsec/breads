@@ -2,7 +2,7 @@ from random import choice
 from rich.console import Console
 console = Console()
 
-VERSION = '1.2.3a'
+VERSION = '1.2.3b'
 
 BANNER_FIRE = f"""                           
     )                   (        

@@ -1,8 +1,15 @@
+# 🎉 1.2.3b
+- Now LDAP, SMB (and RPC) modules support NTLM hash as password
+
+<br><br>
+
 # 🎉 1.2.3a
 - Improved 'aces' module
 - Minor changes in create and load profile modules
 - Fixed information confliting when interacting with subdomain (ex: internal.example.com / example.com)
 - Fixed SSL error when LDAPS is not required
+
+<br><br>
 
 # 🎉 1.2.3
 - Added new 2 module:
@@ -11,6 +18,8 @@
 - Added 'servicePrincipalName' attribute in whoami module
 - Added gmsa blob translator (src/helpers/gmsa_blob)
 - Minor changes in domain_trusts and change_password
+
+<br><br>
 
 # 🎉 1.2.2
 
