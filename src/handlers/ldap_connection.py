@@ -1,4 +1,5 @@
 from ldap3 import Server, Connection, ALL, NTLM, SAFE_SYNC
+from ldap3.core.exceptions import LDAPSocketOpenError
 from pathlib import Path
 from json import load
 from rich.console import Console
@@ -39,27 +40,31 @@ class LdapHandler:
 
         try:
             server = Server(f"ldaps://{self.hostname}", use_ssl=True, get_info=ALL)
-
-            if not (server.ssl):
-                server = Server(f"ldap://{self.hostname}", use_ssl=False, get_info=ALL)
-
-            conn = Connection(
-                server,
-                user=self.username,
-                password=self.password,
-                authentication=NTLM,
-                client_strategy=SAFE_SYNC,
-                auto_bind=True,
-            )
-            base_dn = server.info.other["rootDomainNamingContext"][0]
-
+            conn = Connection(server, user=self.username, password=self.password,
+                                authentication=NTLM, client_strategy=SAFE_SYNC,
+                                auto_bind=True)
+            
+            base_dn = server.info.other["defaultNamingContext"][0]
             return conn, base_dn
+            
+        except LDAPSocketOpenError:
+            try:
+                server = Server(f"ldap://{self.hostname}", use_ssl=False, get_info=ALL)
+                conn = Connection(server, user=self.username, password=self.password,
+                                    authentication=NTLM, client_strategy=SAFE_SYNC,
+                                    auto_bind=True)
+                
+                base_dn = server.info.other["defaultNamingContext"][0]
+                return conn, base_dn
+
+            except Exception as error:
+                console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (NO SSL): {error}")
+                raise Exception
+                #return None, None
 
         except Exception as error:
-            console.print(
-                f"[red][!][/] Failed to authenticate to {self.domain} Active Directory: {error}"
-            )
-            # raise Exception
+            console.print(f"[red][!][/] Failed to authenticate to {self.domain} Active Directory (SSL): {error}")
+            raise Exception
             return None, None
 
     def modify_entry(self, dn, mod_attrs):
@@ -70,5 +75,5 @@ class LdapHandler:
             connect.modify_s(dn, mod_attrs)
             return True
         except Exception as e:
-            print(e)
+            console.print(f"[red][!][/] Error: {e}")
             return False
