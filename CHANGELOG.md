@@ -3,7 +3,7 @@
   - Privesc: Modules designed to abuse a vulnerability or privilege
     - backup: Abuse Backup Operator privilege to dump the SAM, SECURITY and SYSTEM files
 - Removed unecessary code from get_uac module
-- Improved 'memberOf' attribue value response
+- Improved 'memberOf', 'member' attribue value response (helpers/manager/list_attribute_handler)
 - Minor changes in other modules
 
 <br><br>

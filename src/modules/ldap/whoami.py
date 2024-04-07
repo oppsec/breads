@@ -2,6 +2,7 @@ from rich.console import Console
 from re import search
 
 from handlers.ldap_connection import LdapHandler
+from helpers.manager import list_attribute_handler
 
 console = Console()
 
@@ -78,18 +79,6 @@ class Whoami:
 
             # Process memberOf attribute
             for attribute, value in user_info.items():
-                if attribute == "memberOf":
-                    console.print(f" - [cyan]{attribute}[/]:", highlight=False)
-
-                    for group in value:
-                        # Get CN value (CN=([^,]+))
-                        cn_value = search(r"CN=([^,]+)", group)
-                        if(cn_value):
-                            console.print(f"   - {cn_value.group(1)}", highlight=False)
-                        else:
-                            console.print(f"   - {group}", highlight=False)
-
-                elif attribute != "memberOf":
-                    console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
+                list_attribute_handler(attribute, value)
         else:
             console.print("[red][!][/] No entries found in the results.")

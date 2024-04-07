@@ -1,6 +1,8 @@
 from rich.console import Console
 from ldap3.protocol.formatters.formatters import format_sid
+
 from handlers.ldap_connection import LdapHandler
+from helpers.manager import list_attribute_handler
 
 console = Console()
 
@@ -23,8 +25,10 @@ class Sid:
         for entry in search_response:
             if entry["type"] == "searchResEntry":
                 attributes = entry["attributes"]
-                for attr, value in attributes.items():
-                    console.print(f" - [cyan]{attr}[/]: {value}", highlight=False)
+                
+                for attribute, value in attributes.items():
+                    list_attribute_handler(attribute, value)
+                    #console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
 
     def on_login(self, sid: str) -> None:
         if not sid or len(sid) < 1:
@@ -92,9 +96,7 @@ class Sid:
                 ]
                 self.process_info(conn, base_dn, search_filter, group_attrs)
             else:
-                console.print(
-                    "[yellow] objectClass type not identified, returning all attributes.[/]"
-                )
+                console.print("[yellow] objectClass type not identified, returning all attributes.[/]")
                 self.process_info(conn, base_dn, search_filter, ["*"])
         else:
             console.print("[red][!][/] No entries found in the results.")

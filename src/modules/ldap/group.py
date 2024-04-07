@@ -1,5 +1,8 @@
 from rich.console import Console
+from re import search
+
 from handlers.ldap_connection import LdapHandler
+from helpers.manager import list_attribute_handler
 
 console = Console()
 
@@ -55,6 +58,6 @@ class Group:
                             seen_attributes.add(attribute)
                             
             for attribute, value in group_info.items():
-                console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
+                list_attribute_handler(attribute, value)
         else:
             console.print("[red][!][/] No entries found in the results.")
