@@ -1,3 +1,14 @@
+# 🎉 1.2.4a
+- Added new 1 module:
+  - New module (ldap): 'ldapi' (Execute custom LDAP queries)
+    - Usages exemple: 
+      - `ldapi (objectClass=domainDNS) dc`
+      - `ldapi (objectClass=domainDNS) dc,systemFlags`
+      - `ldapi (objectClass=domainDNS) *`
+- Added new command: 'current_profile' (Print current loaded profile settings)
+
+<br><br>
+
 # 🎉 1.2.4
 - Added new module category:
   - Privesc: Modules designed to abuse a vulnerability or privilege
