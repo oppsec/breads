@@ -23,6 +23,7 @@ class Group:
         "memberOf",
         "objectSid",
         "sAMAccountName",
+        "description"
     ]
     min_args = 1
 
@@ -56,6 +57,9 @@ class Group:
                         if attribute not in seen_attributes:
                             group_info[attribute] = value
                             seen_attributes.add(attribute)
+
+            for desc in group_info.get("description", []):
+                group_info["description"] = desc
                             
             for attribute, value in group_info.items():
                 list_attribute_handler(attribute, value)

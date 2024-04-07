@@ -5,6 +5,7 @@
 - Removed unecessary code from get_uac module
 - Improved 'memberOf', 'member' attribue value response (helpers/manager/list_attribute_handler)
 - Minor changes in other modules
+- Added 'description' attribute to 'group' module
 
 <br><br>
 
