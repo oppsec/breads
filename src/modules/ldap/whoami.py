@@ -1,4 +1,6 @@
 from rich.console import Console
+from re import search
+
 from handlers.ldap_connection import LdapHandler
 
 console = Console()
@@ -63,16 +65,31 @@ class Whoami:
                             user_info[attribute] = value
                             seen_attributes.add(attribute)
 
+            # Translate userAccountControl value
             uac_value = user_info.get("userAccountControl")
             for value, description in self.uac_values.items():
                 if str(uac_value) == str(value) and not uac_printed:
                     user_info["userAccountControl"] = description
                     uac_printed = True
 
+            # Avoid KeyError on 'description' attribute
             for desc in user_info.get("description", []):
                 user_info["description"] = desc
 
+            # Process memberOf attribute
             for attribute, value in user_info.items():
-                console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
+                if attribute == "memberOf":
+                    console.print(f" - [cyan]{attribute}[/]:", highlight=False)
+
+                    for group in value:
+                        # Get CN value (CN=([^,]+))
+                        cn_value = search(r"CN=([^,]+)", group)
+                        if(cn_value):
+                            console.print(f"   - {cn_value.group(1)}", highlight=False)
+                        else:
+                            console.print(f"   - {group}", highlight=False)
+
+                elif attribute != "memberOf":
+                    console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
