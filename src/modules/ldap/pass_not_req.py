@@ -26,6 +26,6 @@ class PassNotReq:
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     for _attribute, value in entry["attributes"].items():
-                        console.print(f"[cyan]- [/]{value}", highlight=False)
+                        console.print(f"{value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

@@ -50,8 +50,6 @@ class DomainTrusts:
                             if attr == "cn":
                                 desc = f"[yellow]{desc}[/]"
 
-                            console.print(
-                                f"[cyan] - [/] {attr}: {desc}", highlight=False
-                            )
+                            console.print(f"[cyan] - [/] {attr}: {desc}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

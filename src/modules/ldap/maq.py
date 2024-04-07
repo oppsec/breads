@@ -22,6 +22,8 @@ class Maq:
         res_response = results[2][0]
 
         if res_status:
+            console.print("[green][+][/] ms-DS-MachineAccountQuota attribute value:")
+
             maq_value = res_response["attributes"]["ms-DS-MachineAccountQuota"]
             console.print(
                 f" - [cyan]{self.attributes}[/]: {maq_value}", highlight=False

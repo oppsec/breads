@@ -42,8 +42,6 @@ class DomainSid:
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     for attribute, value in entry["attributes"].items():
-                        console.print(
-                            f" - [cyan]{attribute}[/]: {value}", highlight=False
-                        )
+                        console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

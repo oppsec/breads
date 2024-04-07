@@ -24,6 +24,6 @@ class Groups:
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     group_name = entry["attributes"][self.attributes]
-                    console.print(group_name)
+                    console.print(group_name, highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

@@ -28,8 +28,6 @@ class Containers:
                 if entry["type"] == "searchResEntry":
                     name = entry["attributes"]["name"]
                     dn = entry["attributes"]["distinguishedName"]
-                    console.print(
-                        f"[cyan]- [/]{name} - [yellow]{dn}[/]", highlight=False
-                    )
+                    console.print(f"[cyan]- [/]{name} - [yellow]{dn}[/]", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

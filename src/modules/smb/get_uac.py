@@ -14,13 +14,6 @@ class GetUac:
     requires_args = True
     min_args = 1
 
-    def __init__(self, context=None, module_options=None):
-        self.context = context
-        self.module_options = module_options
-
-    def options(self):
-        pass
-
     def on_login(self, con_input):
         if not con_input or len(con_input.split()) < 1:
             console.print("[red]Usage:[/] get_uac <target>")
