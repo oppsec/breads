@@ -1,3 +1,13 @@
+# 🎉 1.2.4
+- Added new module category:
+  - Privesc: Modules designed to abuse a vulnerability or privilege
+    - backup: Abuse Backup Operator privilege to dump the SAM, SECURITY and SYSTEM files
+- Removed unecessary code from get_uac module
+- Improved 'memberOf' attribue value response
+- Minor changes in other modules
+
+<br><br>
+
 # 🎉 1.2.3c
 - Added new 2 module:
   - New module: 'no_pre_auth' (Find all users that do not require Kerberos pre-authentication)

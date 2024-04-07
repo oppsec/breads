@@ -35,7 +35,7 @@ def help_table(inp) -> None:
 
     if user_input == "":
         columns = [
-            {"title": "Protocol", "style": "green"},
+            {"title": "Target", "style": "green"},
             {"title": "No. Modules", "style": "green"},
             {"title": "Name", "style": "green"},
             {"title": "Description", "style": "green"},
@@ -45,6 +45,7 @@ def help_table(inp) -> None:
         rows = [
             ("LDAP", "29", "---", "---", "---"),
             ("SMB", "2", "---", "---", "---"),
+            ("PRIVESC", "1", "---", "---", "---"),
             (
                 "",
                 "",
@@ -305,6 +306,28 @@ def help_table(inp) -> None:
                 "[cyan]Preferable[/]",
             ),
         ]
+
+    elif user_input == "privesc":
+        columns = [
+            {"title": "Name", "style": "green"},
+            {"title": "Description", "style": "white"},
+            {"title": "Requirements", "style": "green"},
+            {"title": "Usage", "style": "white"},
+            {"title": "Admin Privilege", "style": "green"},
+            {"title": "OPSEC Safe?", "style": "green"},
+        ]
+
+        rows = [
+            (
+                "Backup Operator HIVES dump",
+                "Abuse Backup Operator privilege to dump the SAM, SECURITY and SYSTEM files",
+                "User needs to be a member of the 'Backup Operators' group",
+                "backup <target>",
+                "[green]Yes[/]",
+                "[red]No[/]",
+            ),
+        ]
+
     else:
         console.print(
             f"[red][!][/] Unrecognized command: [yellow]help {user_input}[/]. (Available: ldap, smb)\n"

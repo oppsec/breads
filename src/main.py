@@ -22,6 +22,7 @@ class BreadsPrompt(Cmd):
         self.commands = {}
         self.load_modules("modules.ldap")
         self.load_modules("modules.smb")
+        self.load_modules("modules.privesc")
 
     def load_modules(self, package_name):
         package = import_module(package_name)

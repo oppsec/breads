@@ -25,7 +25,7 @@ ___
 <h3> Features </h3>
 <ul>
     <li>Profile management</li>
-    <li>Support kerberoasting</li>
+    <li>Support Kerberoasting</li>
     <li>Change User Password</li>
     <li>Add User to Group</li>
     <li>ACEs Enumeration</li>
@@ -44,13 +44,17 @@ ___
 ~$ breads-ad
 </pre>
 
-- If you encounter any error when trying to install you might use <b>--break-system-packages</b> flag
+- Arch Linux based Distros: If you encounter any error when trying to install you might use <b>--break-system-packages</b> flag
 
 <br>
 
 <h3> Updating </h4>
 <pre>
 ~$ pipx install git+https://github.com/oppsec/breads.git --force
+<br>
+or
+<br>
+~$ pipx reinstall breads-ad --python /usr/bin/python
 </pre>
 
 <br>
