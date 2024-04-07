@@ -25,7 +25,6 @@ class Sid:
         for entry in search_response:
             if entry["type"] == "searchResEntry":
                 attributes = entry["attributes"]
-                
                 for attribute, value in attributes.items():
                     list_attribute_handler(attribute, value)
                     #console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
