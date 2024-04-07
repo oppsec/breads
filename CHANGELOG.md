@@ -85,7 +85,7 @@
 <br><br>
 
 # 🎉 1.1.9
-- New module: 'change_password <username> <new_password>'
+- New module: `change_password <username> <new_password>`
 - Added tab "Admin Privileges" to help table
 
 <br><br>
