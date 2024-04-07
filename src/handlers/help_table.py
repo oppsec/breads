@@ -43,7 +43,7 @@ def help_table(inp) -> None:
         ]
 
         rows = [
-            ("LDAP", "29", "---", "---", "---"),
+            ("LDAP", "31", "---", "---", "---"),
             ("SMB", "2", "---", "---", "---"),
             ("PRIVESC", "1", "---", "---", "---"),
             (
@@ -58,7 +58,14 @@ def help_table(inp) -> None:
                 "",
                 "load_profile",
                 "Ask user input to load a existing profile",
-                "create_profile <name>",
+                "load_profile <name>",
+            ),
+            (
+                "",
+                "",
+                "current_profile",
+                "Print current loaded profile settings",
+                "current_profile",
             ),
             ("", "", "banner", "Return BREADS's banner", "banner"),
         ]
@@ -277,6 +284,13 @@ def help_table(inp) -> None:
                 "search_group",
                 "Search for all groups that has specify word on CN attribute",
                 "search_group <word>",
+                "[red]No[/]",
+            ),
+            (
+                "LDAP",
+                "ldapi",
+                "Execute custom LDAP queries",
+                "ldapi <query> <attributes>",
                 "[red]No[/]",
             ),
         ]

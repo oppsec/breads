@@ -8,7 +8,7 @@ from shlex import split
 
 from handlers.help_table import help_table
 from handlers.profile.create_profile import profile_folder
-from handlers.profile.load_profile import select_and_load_profile
+from handlers.profile.load_profile import select_and_load_profile, current_profile
 from ui.banner import get_banner
 
 console = Console()
@@ -70,6 +70,9 @@ class BreadsPrompt(Cmd):
 
     def do_load_profile(self, inp):
         select_and_load_profile(inp)
+
+    def do_current_profile(self, inp):
+        current_profile()
 
     def do_help(self, inp):
         help_table(inp)

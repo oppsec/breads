@@ -5,6 +5,7 @@ from os import environ
 from uuid import uuid4
 
 from handlers.profile.helper import BREADS_FOLDER
+from handlers.profile.get_data import get_domain, get_host, get_username, get_password
 
 import json
 
@@ -115,3 +116,14 @@ def select_and_load_profile(inp):
         load_profile(profile_name)
 
     environ["breads_profile"] = profile_name
+
+def current_profile() -> None:
+    """ Print current loaded profile settings """
+    profile_name = environ.get("breads_profile")
+
+    if not profile_name:
+        console.print("[red][!][/] Error: You need to load a profile first, use [green]'load_profile'[/].")
+        return
+    
+    console.print(f"[green][+][/] [yellow]{profile_name}'s[/] profile settings:")
+    console.print(f"- Username: {get_username()}\n- Password - {get_password()}\n- Host - {get_host()}\n- Domain {get_domain()}\n", highlight=False)
