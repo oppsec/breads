@@ -60,7 +60,7 @@ or
 <br>
 
 <h3> Preview usage </h3>
-<a href="https://asciinema.org/a/647121" target="_blank"><img src="https://asciinema.org/a/647121.svg" /></a>
+<a href="https://asciinema.org/a/651710" target="_blank"><img src="https://asciinema.org/a/651710.svg" /></a>
 
 <br>
 

@@ -87,13 +87,12 @@ class Backup:
         
         winreg_ipc = smb_connection.connectTree("IPC$")
         try:
-            console.print("[yellow][!][/] Triggering WinReg...")
+            console.print("[yellow][!][/] Triggering WinReg")
             smb_connection.openFile(winreg_ipc, r'\winreg', 0x12019f, creationOption=0x40, fileAttributes=0x80)
+            sleep(5) # Wait WinReg to start effectively
         except SessionError as error:
             console.print("[yellow][!][/] STATUS_PIPE_NOT_AVAILABLE (IPC$)")
             pass
-
-        sleep(5)
 
         try:
             # Not necessary, but I think is a good idea to connect to svc anyways
