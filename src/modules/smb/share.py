@@ -61,9 +61,7 @@ class Share:
             resp = srvs.hNetrShareEnum(rpc_connection, 2)
 
             if rpc_connection is None:
-                console.print(
-                    f"[red][!][/] Unable to estabilish RPC connection with {target}"
-                )
+                console.print(f"[red][!][/] Unable to estabilish RPC connection with {target}")
                 return
 
             if resp is None or resp["ErrorCode"] != 0:
@@ -78,13 +76,8 @@ class Share:
                 share_path = share["shi2_path"][:-1]
                 share_permissions = share["shi2_permissions"]
 
-                console.print(
-                    f" [cyan]-[/] {share_name} - [yellow]{share_remark}[/] - {share_path} - [yellow]{share_permissions}[/]",
-                    highlight=False,
-                )
+                console.print(f" [cyan]-[/] {share_name} - [yellow]{share_remark}[/] - {share_path} - [yellow]{share_permissions}[/]", highlight=False)
 
         except Exception as error:
-            console.print(
-                f"[red][!][/] Error during share enumeration process: {error}"
-            )
+            console.print(f"[red][!][/] Error during share enumeration process: {error}")
             # raise error

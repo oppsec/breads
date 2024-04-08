@@ -1,3 +1,6 @@
+# 🎉 1.2.4b
+- Fixed DCERPCException error in backup module
+
 # 🎉 1.2.4a
 - Added new 1 module:
   - New module (ldap): 'ldapi' (Execute custom LDAP queries)
