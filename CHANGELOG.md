@@ -1,5 +1,15 @@
+# 🎉 1.2.4c
+- Improved output for 3 modules:
+  - adcs
+  - gmsa
+  - servers
+
+<br><br>
+
 # 🎉 1.2.4b
 - Fixed DCERPCException error in backup module
+
+<br><br>
 
 # 🎉 1.2.4a
 - Added new 1 module:

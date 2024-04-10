@@ -12,7 +12,7 @@ class Gpos:
     multiple_hosts = False
     search_filter = "(objectClass=groupPolicyContainer)"
     requires_args = False
-    attributes = ["displayName", "gPCFileSysPath"]
+    attributes = ["*"]
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)

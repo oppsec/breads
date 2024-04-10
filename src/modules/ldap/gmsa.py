@@ -24,9 +24,11 @@ class Gmsa:
         res_status = results[0]
         res_response = results[2][0]
 
-        console.print("[yellow][!][/] Searching for GMSA accounts and passwords")
+        console.print("[yellow][!][/] Searching for gMSA and passwords")
 
         if res_status:
+            console.print("[green][+][/] gMSA(s) found, dumping information.", highlight=False)
+
             if res_response['type'] == 'searchResEntry':
                 sam_account_name = res_response['attributes']['sAMAccountName']
                 managed_password = res_response['attributes']['msDS-ManagedPassword']
@@ -41,7 +43,6 @@ class Gmsa:
                 hash.update (blob['CurrentPassword'][:-2])
                 hashed_pass = hexlify(hash.digest()).decode("utf-8")
 
-                console.print(f" [cyan]-[/] [yellow]sAMAccountName[/]: {sam_account_name}", highlight=False)
-                console.print(f" [cyan]-[/] [yellow]msDS-ManagedPassword[/]: {hashed_pass}\n", highlight=False)
+                console.print(f"[cyan]-[/] [cyan]sAMAccountName[/]: {sam_account_name}[cyan]:[/]{hashed_pass}\n", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

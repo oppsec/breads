@@ -12,7 +12,7 @@ class Adcs:
     opsec_safe = True
     multiple_hosts = False
     search_filter = "(objectClass=pKIEnrollmentService)"
-    attributes = ["cn", "dNSHostName", "distinguishedName"]
+    attributes = ['*']
 
     def search_with_base(self, conn, search_base, search_filter, attributes, scope):
         return conn.search(
@@ -33,16 +33,38 @@ class Adcs:
             attributes=self.attributes,
             scope=SUBTREE,
         )
+
         res_status = results[0]
         res_response = results[2]
 
         if res_status:
-            console.print("[green][+][/] Active Directory Certificate Services:")
+            console.print("[green][+][/] Active Directory Certificate Services (objectClass=pKIEnrollmentService):")
+
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
-                    for attribute, value in entry["attributes"].items():
-                        console.print(
-                            f" - [cyan]{attribute}[/]: {value}", highlight=False
-                        )
+                    hostname = entry["attributes"]["dNSHostName"]
+                    host_dn = entry["attributes"]["distinguishedName"]
+                    host_cn = entry["attributes"]["cn"]
+
+                    console.print(f"[cyan]-[/] Host: [cyan]{hostname}[/]\n  \_ DN: {host_dn}\n   \_ CN: {host_cn}", highlight=False)
+
+                    try:
+                        certificate_template = entry["attributes"]["certificateTemplates"]
+                        if certificate_template:
+                            certificates_list = []
+
+                            for value in certificate_template:
+                                certificates_list.append(value)
+
+                            if(len(certificates_list) > 0):
+                                for certificate_name in certificates_list:
+                                    console.print(f"    [yellow]*[/] Certificate Template: [cyan]{certificate_name}[/]")
+
+                    except Exception as error:
+                        console.print("[red][!][/] Error when trying to get certificateTemplates")
+                        return
+                    finally:
+                        console.print('\n')
+                        
         else:
             console.print("[red][!][/] No entries found in the results.")
