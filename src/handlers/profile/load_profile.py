@@ -122,7 +122,7 @@ def current_profile() -> None:
     profile_name = environ.get("breads_profile")
 
     if not profile_name:
-        console.print("[red][!][/] Error: You need to load a profile first, use [green]'load_profile'[/].")
+        console.print("[red][!][/] Error: You need to load a profile first. Use [green]'load_profile <profile_name>'[/]\n")
         return
     
     console.print(f"[green][+][/] [yellow]{profile_name}'s[/] profile settings:")
