@@ -38,7 +38,7 @@ class Adcs:
         res_response = results[2]
 
         if res_status:
-            console.print("[green][+][/] Active Directory Certificate Services (objectClass=pKIEnrollmentService):")
+            console.print("[green][+][/] Active Directory Certificate Services (objectClass=pKIEnrollmentService):", highlight=False)
 
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
