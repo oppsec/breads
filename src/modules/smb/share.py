@@ -16,9 +16,9 @@ class Share:
     multiple_hosts = False
     require_args = True
     min_args = 1
+    usage_desc = "[yellow]Usage:[/] share <ip_address> or <computer.domain> (ex: share 192.168.20.1 or share computer.local)"
 
     def get_rpc_connection(self, target_ip: str):
-
         username, password, domain = load_profile_settings(self)
 
         if len(password) == 32 and all(c in "0123456789abcdefABCDEF" for c in password):

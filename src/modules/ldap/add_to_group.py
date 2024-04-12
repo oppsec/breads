@@ -24,32 +24,22 @@ class AddToGroup:
     requires_args = True
     min_args = 2
     attributes = "sAMAccountName"
+    usage_desc = "[yellow]Usage:[/] add_to_group <username> <group_name>"
 
     def get_user_dn(self, conn, base_dn, target):
-        dn_query = conn.search(
-            base_dn, f"(&(objectClass=user)(sAMAccountName={target}))", attributes=["*"]
-        )
+        dn_query = conn.search(base_dn, f"(&(objectClass=user)(sAMAccountName={target}))", attributes=["*"])
         dn_response = dn_query[2]
         return dn_response
 
     def get_group_dn(self, conn, base_dn, group):
-        dn_query = conn.search(
-            base_dn, f"(&(objectClass=group)(cn={group}))", attributes=["*"]
-        )
+        dn_query = conn.search(base_dn, f"(&(objectClass=group)(cn={group}))", attributes=["*"])
         dn_response = dn_query[2]
         return dn_response
 
     def on_login(self, *args):
         console.print(
-            "[yellow]WARNING:[/] The space between the group name need to be replaced with '%'. Example: [green]Domain%Admins[/]. Or you can use 'Domain Admins'\n"
+            "[yellow][!][/]: Use '%' or double quotes to specify the space on the group name. Example: [green]Domain%Admins[/] or [green]'Domain Admins'[/]\n"
         )
-
-        if len(args) != 2:
-            console.print(
-                "[yellow]Usage:[/] add_to_group <username> <group_name>",
-                highlight=False,
-            )
-            return
 
         target = args[0]
         group = args[1]
@@ -57,9 +47,7 @@ class AddToGroup:
 
         try:
             conn, base_dn = LdapHandler.connection(self)
-            console.print(
-                f"[green][+][/] Adding user [yellow]{target}[/] to group [cyan]{group}[/]"
-            )
+            console.print(f"[green][+][/] Adding user [yellow]{target}[/] to group [cyan]{group}[/]")
 
             user_dn = self.get_user_dn(conn, base_dn, target)
             group_dn = self.get_group_dn(conn, base_dn, group)
@@ -78,9 +66,7 @@ class AddToGroup:
             add_to_group = conn.modify(group_dn, {"member": [(MODIFY_ADD, [user_dn])]})
 
             add_to_group_response = add_to_group[1]["description"]
-            console.print(
-                f"[yellow][!][/] Operation status: [b]{add_to_group_response}[/b]"
-            )
+            console.print(f"[yellow][!][/] Operation status: [b]{add_to_group_response}[/b]")
 
             permissions = {
                 "insufficientAccessRights": f"[red][!][/] User [yellow]{target}[/] has not permission to add [yellow]{target}[/] to [cyan]{group}[/] group\n",

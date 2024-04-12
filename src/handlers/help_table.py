@@ -170,7 +170,7 @@ def help_table(inp) -> None:
             (
                 "LDAP",
                 "adcs",
-                "Get 'dNSHostName' attribute value from all ADCS servers",
+                "Enumerate ADCS servers and Certificate Templates",
                 "adcs",
                 "[red]No[/]",
             ),

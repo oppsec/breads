@@ -23,11 +23,13 @@ class Servers:
 
         if res_status:
             console.print("[green][+][/] Servers:")
+
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     hostname = entry["attributes"]["sAMAccountName"]
                     version = entry["attributes"]["operatingSystem"]
                     dnshostname = entry["attributes"]["dNSHostName"]
+                    
                     console.print(f"[cyan]- [/]{hostname} - {version} - {dnshostname}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

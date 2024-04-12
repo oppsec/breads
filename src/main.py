@@ -45,11 +45,13 @@ class BreadsPrompt(Cmd):
             parts = split(inp)
 
             if not environ.get('breads_profile'):
-                console.print("[red][!][/] You need to load a profile first, use 'load_profile' command.")
+                console.print("[red][!][/] You need to load a profile first, use 'load_profile' command\n")
                 return
             
             if len(parts) < getattr(command_instance, 'min_args', 0):
-                console.print(f"[red][!][/] Missing required arguments. Expected at least {command_instance.min_args} arguments. Use 'help' command to more details")
+                usage_desc = getattr(command_instance, 'usage_desc', "[red][!][/] No usage description definied. Please use the help command.")
+                console.print(f"{usage_desc}\n", highlight=False)
+                #console.print(f"[red][!][/] Missing required arguments. Expected at least {command_instance.min_args} arguments. Use 'help' command to more details")
             else:
                 command_instance.on_login(*parts)
 

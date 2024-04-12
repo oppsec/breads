@@ -21,6 +21,7 @@ class Groups:
 
         if res_status:
             console.print("[green][+][/] Groups:")
+            
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     group_name = entry["attributes"][self.attributes]

@@ -1,3 +1,9 @@
+# 🎉 1.2.4d
+- Fixed missing entry type check (searchResEntry) in 'maq' module
+- Minor changes in other modules code
+- Removed unused code from 'list_dcs' module
+- Added usage_desc to arguments required module
+
 # 🎉 1.2.4c
 - Improved output for 3 modules:
   - adcs

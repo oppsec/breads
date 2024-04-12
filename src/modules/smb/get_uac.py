@@ -13,11 +13,9 @@ class GetUac:
     multiple_hosts = False
     requires_args = True
     min_args = 1
+    usage_desc = "[yellow]Usage:[/] get_uac <ip_address> or <computer.domain> (ex: get_uac 192.168.20.1 or get_uac computer.local)"
 
     def on_login(self, con_input):
-        if not con_input or len(con_input.split()) < 1:
-            console.print("[red]Usage:[/] get_uac <target>")
-            return
 
         target = con_input.split()[0]
         smb_manager = SMBConnectionManager()

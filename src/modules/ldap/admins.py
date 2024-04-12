@@ -26,6 +26,6 @@ class Admins:
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     username = entry["attributes"][self.attributes]
-                    console.print(username)
+                    console.print(f"{username}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

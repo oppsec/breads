@@ -78,7 +78,7 @@ def load_profile(profile_name):
 
                 console.print("[green][+][/] [bright_white]Profile information stored successfully![/]\n")
             except Exception as error:
-                console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
+                console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]\n")
 
         # return existing_data
 
@@ -93,7 +93,7 @@ def update_profile_settings(profile_name, data):
             json_file.truncate()
         console.print("[green][+][/] [bright_white]Profile information stored successfully![/]\n")
     except Exception as error:
-        console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]")
+        console.print(f"[red][!][/] [bright_white]Error when trying to store profile information: {error}[/]\n")
 
 def select_and_load_profile(inp):
     ''' Select profile based on user input '''
@@ -103,7 +103,7 @@ def select_and_load_profile(inp):
         return
     
     if len(inp) == 0:
-        console.print("[red][!][/] [bright_white]You need to specify a profile name, use: [b]load_profile <profile_name>[/][/]")
+        console.print("[red][!][/] [bright_white]You need to specify a profile name, use: [green]load_profile <profile_name>[/][/]\n")
         return True
     
     global profile_name

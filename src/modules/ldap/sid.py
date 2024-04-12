@@ -17,6 +17,7 @@ class Sid:
     requires_args = True
     attributes = ["objectClass"]
     min_args = 1
+    usage_desc = "[yellow]Usage:[/] sid <SID> (ex: sid S-1-5-21-38104105-1020608657-3706787590-1001)"
 
     def process_info(self, conn, base_dn, search_filter, attribute_list):
         search = conn.search(base_dn, search_filter, attributes=attribute_list)
@@ -30,9 +31,6 @@ class Sid:
                     #console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
 
     def on_login(self, sid: str) -> None:
-        if not sid or len(sid) < 1:
-            console.print("[red]Usage:[/] sid <SID>")
-            return
 
         sid_bytes = format_sid(sid)
         search_filter = f"(objectSid={sid_bytes})"

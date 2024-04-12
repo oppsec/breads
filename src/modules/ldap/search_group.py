@@ -14,6 +14,7 @@ class SearchGroup:
     attributes = "sAMAccountName"
     requires_args = True
     min_args = 1
+    usage_desc = "[yellow]Usage:[/] search_group <word> (ex: search_group Admin)"
 
     def on_login(self, user_input):
         search_filter = f"(&(objectCategory=group)(cn=*{user_input}*))"
@@ -23,12 +24,8 @@ class SearchGroup:
         res_status = results[0]
         res_response = results[2]
 
-        if(len(user_input)) < 1:
-            console.print("[red][!][/] You need to specify at least one word to be used, example: search_group Admin")
-            return False
-
         if res_status:
-            console.print(f"[green][+][/] Searching for groups with '{user_input}':")
+            console.print(f"[green][+][/] Searching for groups with '{user_input}' on the name:")
 
             for entry in res_response:
                 if entry["type"] == "searchResEntry":

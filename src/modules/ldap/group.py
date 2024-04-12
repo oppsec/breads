@@ -26,16 +26,13 @@ class Group:
         "description"
     ]
     min_args = 1
+    usage_desc = "[yellow]Usage:[/] group <group_name>"
 
     def on_login(self, *args) -> None:
         console.print("[yellow]WARNING:[/] You can use % or ' to specify the space between the group name. [yellow]Domain%Admins[/] or [yellow]'Domain Admins'[/]\n", highlight=False)
 
         group_name = args[0]
         group = group_name.replace("%", " ")
-
-        if not group_name or len(group_name) < 1:
-            console.print("[red]Usage:[/] group <group_name>")
-            return
 
         search_filter = f"(&(objectClass=group)(cn={group}))"
 

@@ -30,6 +30,7 @@ class Obsolete:
 
         if res_status:
             console.print("[green][+][/] Obsolete Computers:")
+            
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     hostname = entry["attributes"]["dnsHostName"]

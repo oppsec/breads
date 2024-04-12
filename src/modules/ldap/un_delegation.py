@@ -21,9 +21,7 @@ class UnDelegation:
         res_response = results[2]
 
         if res_status:
-            console.print(
-                "[green][+][/] Unconstrained Delegation Users/Computers (will include DCs):"
-            )
+            console.print("[green][+][/] Unconstrained Delegation Users/Computers (will include DCs):")
 
             for entry in res_response:
                 if entry["type"] == "searchResEntry":

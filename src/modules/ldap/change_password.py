@@ -22,18 +22,14 @@ class ChangePassword:
     requires_args = True
     min_args = 2
     attributes = "sAMAccountName"
+    usage_desc = "[yellow]Usage:[/] change_password <username> <new_password>"
 
     def get_user_dn(self, conn, base_dn, target):
-        dn_query = conn.search(
-            base_dn, f"(&(objectClass=user)(sAMAccountName={target}))", attributes=["*"]
-        )
+        dn_query = conn.search(base_dn, f"(&(objectClass=user)(sAMAccountName={target}))", attributes=["*"])
         dn_response = dn_query[2]
         return dn_response
 
     def on_login(self, *args):
-        if len(args) != 2:
-            console.print("[yellow]Usage:[/] change_password <username> <new_password>", highlight=False)
-            return
 
         target = args[0]
         new_pass = args[1]

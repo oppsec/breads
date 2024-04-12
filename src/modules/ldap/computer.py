@@ -22,6 +22,7 @@ class Computer:
     ]
     min_args = 1
     require_args = True
+    usage_desc = "[yellow]Usage:[/] computer <computer_name> (ex: computer TEST$)"
 
     def on_login(self, target: str):
         conn, base_dn = LdapHandler.connection(self)
@@ -39,16 +40,12 @@ class Computer:
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     for attribute, value in entry["attributes"].items():
+
                         if attribute == "objectSid":
                             match = search(r"\d{4}$", value)
                             if match:
-                                console.print(
-                                    f" - [cyan]RID[/]: {match.group()}", highlight=False
-                                )
+                                console.print(f" - [cyan]RID[/]: {match.group()}", highlight=False)
 
-                        console.print(
-                            f" - [cyan]{attribute}[/]: {value}", highlight=False
-                        )
-
+                        console.print(f" - [cyan]{attribute}[/]: {value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

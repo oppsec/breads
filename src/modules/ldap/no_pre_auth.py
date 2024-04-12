@@ -23,6 +23,7 @@ class NoPreAuth:
 
         if res_status:
             console.print("[green][+][/] No Pre Auth Required:")
+            
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     username = entry["attributes"]["sAMAccountName"]

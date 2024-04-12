@@ -25,7 +25,7 @@ class PassNotReq:
 
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
-                    for _attribute, value in entry["attributes"].items():
-                        console.print(f"{value}", highlight=False)
+                    username = entry["attributes"][self.attributes]
+                    console.print(f"{username}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")

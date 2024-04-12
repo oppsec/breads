@@ -14,7 +14,7 @@ def random_tip() -> None:
     tip = choice(tips)
     return tip
 
-VERSION = '1.2.4c'
+VERSION = '1.2.4d'
 
 BANNER_FIRE = f"""                           
     )                   (        

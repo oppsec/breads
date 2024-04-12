@@ -16,13 +16,15 @@ class Ldapi:
     requires_args = True
     min_args = 2
     attributes = None
+    usage_desc = (
+        "[yellow]Usage:[/] [bold]ldapi[/] [magenta]<ldap_query> <attributes>[/]\n"
+        "       [cyan]Basic user query[/]: ldapi (&(objectClass=user)(sAMAccountName=test)) sAMAccountName\n"
+        "       [cyan]Query multiple attributes[/]: ldapi (&(objectClass=user)(sAMAccountName=test)) sAMAccountName,memberOf\n"
+        "       [cyan]Query all attributes[/]: ldapi (&(objectClass=user)(sAMAccountName=test)) *"
+    )
 
     def on_login(self, ldap_query, query_attributes):
         conn, base_dn = LdapHandler.connection(self)
-
-        if(len(ldap_query) <= 0):
-            console.print("[yellow][!][/] You need to specify a LDAP query")
-            return
         
         attribute_list = [attr.strip() for attr in query_attributes.split(',')]
         results = conn.search(base_dn,ldap_query, attributes=attribute_list)
@@ -31,6 +33,7 @@ class Ldapi:
 
         if res_status:
             console.print("[green][+][/] LDAP query:")
+
             for entry in res_response:
                 if entry["type"] == "searchResEntry":
                     attributes = entry["attributes"]

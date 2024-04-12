@@ -7,7 +7,7 @@ console = Console()
 
 class Adcs:
     name = "adcs"
-    desc = "Get 'dNSHostName' attribute value from all ADCS servers"
+    desc = "Enumerate ADCS servers and Certificate Templates"
     module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
@@ -47,7 +47,6 @@ class Adcs:
                     host_cn = entry["attributes"]["cn"]
 
                     console.print(f"[cyan]-[/] Host: [cyan]{hostname}[/]\n  \_ DN: {host_dn}\n   \_ CN: {host_cn}", highlight=False)
-
                     try:
                         certificate_template = entry["attributes"]["certificateTemplates"]
                         if certificate_template:
@@ -61,10 +60,9 @@ class Adcs:
                                     console.print(f"    [yellow]*[/] Certificate Template: [cyan]{certificate_name}[/]")
 
                     except Exception as error:
-                        console.print("[red][!][/] Error when trying to get certificateTemplates")
+                        console.print(f"[red][!][/] Error when trying to get certificateTemplates: {error}")
                         return
                     finally:
                         console.print('\n')
-                        
         else:
             console.print("[red][!][/] No entries found in the results.")

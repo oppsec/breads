@@ -30,6 +30,7 @@ class Whoami:
         "sAMAccountName",
         "servicePrincipalName"
     ]
+    usage_desc = "[yellow]Usage:[/] whoami <username> (ex: whoami Administrator)"
 
     uac_values = {
         "512": "[bold green]User is Enabled[/] - Password Expires",

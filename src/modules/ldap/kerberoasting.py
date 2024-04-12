@@ -28,6 +28,7 @@ class Kerberoasting:
     # search_filter = '(&(servicePrincipalName=*)(!(objectCategory=computer)))'
     search_filter = "(&(objectClass=user)(servicePrincipalName=*)(!(cn=krbtgt))(!(samaccounttype=805306369)))"
     attributes = ["servicePrincipalName", "sAMAccountName"]
+    usage_desc = "[yellow]Usage:[/] kerberoasting <dc_ip>"
 
     def __init__(self, context=None, module_options=None):
         self.context = context
@@ -160,22 +161,15 @@ class Kerberoasting:
             console.print(f"[red]![/] Error when writing TGS output to {path}: {error}")
 
     def on_login(self, con_input):
-        if not con_input or len(con_input.split()) < 1:
-            console.print("[red]Usage:[/] kerberoasting <target>")
-            return
 
-        console.print(
-            f"- [cyan]Target[/]: {self.get_machine_name(con_input)}", highlight=False
-        )
+        console.print(f"- [cyan]Target[/]: {self.get_machine_name(con_input)}", highlight=False)
         kerberoastable_users = self.get_kerberoastable_users(con_input)
 
         if not kerberoastable_users:
             console.print("[red][!][/] No kerberoastable users found")
             return
 
-        console.print(
-            f"- [cyan]Kerberoastable Users[/]: {kerberoastable_users}", highlight=False
-        )
+        console.print(f"- [cyan]Kerberoastable Users[/]: {kerberoastable_users}", highlight=False)
 
         domain = get_domain()
         my_username = get_username()
