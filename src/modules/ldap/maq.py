@@ -19,14 +19,14 @@ class Maq:
         conn, base_dn = LdapHandler.connection(self)
         results = conn.search(base_dn, self.search_filter, attributes=self.attributes)
         res_status = results[0]
-        res_response = results[2][0]
+        res_response = results[2]
 
         if res_status:
             console.print("[green][+][/] ms-DS-MachineAccountQuota attribute value:")
 
-            maq_value = res_response["attributes"]["ms-DS-MachineAccountQuota"]
-            console.print(
-                f" - [cyan]{self.attributes}[/]: {maq_value}", highlight=False
-            )
+            for entry in res_response:
+                if entry["type"] == "searchResEntry":
+                    maq_value = entry["attributes"]["ms-DS-MachineAccountQuota"]
+                    console.print(f"[cyan]-[/] [yellow]{self.attributes}[/]: {maq_value}", highlight=False)
         else:
             console.print("[red][!][/] No entries found in the results.")
