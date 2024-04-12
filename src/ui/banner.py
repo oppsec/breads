@@ -9,6 +9,7 @@ def random_tip() -> None:
         "We support NT hash as authentication method",
         "Change a user password with 'change_password' module",
         "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/pytho' command"
+        "Use a module without arguments to see the usage description"
     ]
 
     tip = choice(tips)
