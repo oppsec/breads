@@ -65,7 +65,7 @@ class Aces:
                     object_ntsd = attribute["attributes"]["nTSecurityDescriptor"]
 
                     if len(object_ntsd) == 0:
-                        console.print("[red][!][/] No interesting or privilege above ACEs found :(")
+                        console.print("[red][!][/] You do not have permission on any ACEs")
                         return
 
                     sd = SR_SECURITY_DESCRIPTOR(data=object_ntsd)
@@ -92,9 +92,9 @@ class Aces:
                             if (ace_typename == "ACCESS_ALLOWED_OBJECT_ACE" or ace_typename == "ACCESS_ALLOWED_ACE"):
                                 if ace_mask in self.known_aces_mask:
                                     permission = self.known_aces_mask[ace_mask]
-                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan]*[/] SID: [yellow]{ace_sid}[/]\n[cyan]*[/] Privileges: {permission} [yellow]({ace_mask})[/]\n", highlight=False)
+                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan] *[/] SID: [yellow]{ace_sid}[/]\n[cyan] *[/] Privileges: {permission} [yellow]({ace_mask})[/]\n", highlight=False)
                                 else:
-                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan]*[/] SID: [yellow]{ace_sid}[/]\n[cyan]*[/] Unknown privileges: {ace_mask}\n", highlight=False)
+                                    console.print(f"[cyan]-[/] DN: {object_dn}\n[cyan] *[/] SID: [yellow]{ace_sid}[/]\n[cyan] *[/] Unknown privileges: {ace_mask}\n", highlight=False)
                     else:
                         console.print("[red]DACL is None[/]")
         else:
