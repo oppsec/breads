@@ -1,3 +1,16 @@
+# 🎉 1.2.5
+- Removed useless SMB connection in the 'kerberoasting' module
+- Fixed typo in tip message
+- Improved servicePrincipalName and objectClass outputs
+- Improved 'domain_trusts' module output
+- Minor changes in 'load_profile' command
+- Minor changes in 'current_profile' command
+- Minor changes in 'aces' module
+- Minor changes in 'gpos' module
+- Chaned banner ascii art
+
+<br><br>
+
 # 🎉 1.2.4d
 - Fixed missing entry type check (searchResEntry) in 'maq' module
 - Minor changes in other modules code

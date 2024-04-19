@@ -8,25 +8,21 @@ def random_tip() -> None:
         "Create a profile with 'create_profile <name>' command",
         "We support NT hash as authentication method",
         "Change a user password with 'change_password' module",
-        "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/pytho' command"
+        "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/python' command"
         "Use a module without arguments to see the usage description"
     ]
 
     tip = choice(tips)
     return tip
 
-VERSION = '1.2.4d'
+VERSION = '1.2.5'
 
-BANNER_FIRE = f"""                           
-    )                   (        
- ( /(  (      (     )   )\ )     
- )\()) )(    ))\ ( /(  (()/( (   
-((_)\ (()\  /((_))(_))  ((_)))\  
-| |(_) ((_)(_)) ((_)_   _| |((_) 
-| '_ \| '_|/ -_)/ _` |/ _` |(_-< 
-|_.__/|_|  \___|\__,_|\__,_|/__/   
+BANNER_FIRE = f"""                                            
+   __                   __  
+  / /  _______ ___ ____/ /__
+ / _ \/ __/ -_) _ `/ _  (_-<   Breaking Active Directory Security
+/_.__/_/  \__/\_,_/\_,_/___/   {VERSION} - @opps3c
 
-BREADS :: Breaking Active Directory Security :: {VERSION}
 TIP: {random_tip()}
 """
 
@@ -34,7 +30,7 @@ def get_banner() -> None:
     ''' Return the banner from the application '''
 
     color_list = [
-        'yellow', 'magenta', 'cyan', 'red', 'blue'
+        'yellow', 'magenta', 'cyan', 'red', 'blue', 'green', 'blue_violet'
     ]
 
     color_choice = choice(color_list)
