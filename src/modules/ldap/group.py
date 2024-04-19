@@ -29,7 +29,7 @@ class Group:
     usage_desc = "[yellow]Usage:[/] group <group_name>"
 
     def on_login(self, *args) -> None:
-        console.print("[yellow]WARNING:[/] You can use % or ' to specify the space between the group name. [yellow]Domain%Admins[/] or [yellow]'Domain Admins'[/]\n", highlight=False)
+        console.print("[yellow]TIP:[/] You can use % or ' to specify the space between the group name. [yellow]Domain%Admins[/] or [yellow]'Domain Admins'[/]\n", highlight=False)
 
         group_name = args[0]
         group = group_name.replace("%", " ")

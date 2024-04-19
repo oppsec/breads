@@ -45,6 +45,6 @@ class DomainSid:
                     domain_objectSid = entry["attributes"]["objectSid"]
                     domain_dNSHostName = entry["attributes"]["dNSHostName"]
 
-                    console.print(f"[cyan]-[/] [yellow]{domain_objectSid}[/] - {domain_dNSHostName} - {domain_cn}", highlight=False)   
+                    console.print(f"[cyan]-[/] [yellow]{domain_objectSid}[/] - {domain_dNSHostName} - {domain_cn}\n", highlight=False)   
         else:
             console.print("[red][!][/] No entries found in the results.")

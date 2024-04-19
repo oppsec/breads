@@ -4,9 +4,10 @@ from rich.console import Console
 console = Console()
 
 def list_attribute_handler(attribute, value):
-    """ Filter and print "memberOf" and "member" values in more readable way """
+    """ Filter and print attributes list values in more readable way """
     if attribute in ["memberOf", "member", "servicePrincipalName", "objectClass"]:
         console.print(f" - [cyan]{attribute}[/]:", highlight=False)
+        
         for group in value:
             cn_value = search(r"CN=([^,]+)", group)
             if cn_value:

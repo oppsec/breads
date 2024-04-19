@@ -15,13 +15,11 @@ def random_tip() -> None:
     tip = choice(tips)
     return tip
 
-VERSION = '1.2.5'
-
 BANNER_FIRE = f"""                                            
    __                   __  
   / /  _______ ___ ____/ /__
  / _ \/ __/ -_) _ `/ _  (_-<   Breaking Active Directory Security
-/_.__/_/  \__/\_,_/\_,_/___/   {VERSION} - @opps3c
+/_.__/_/  \__/\_,_/\_,_/___/   1.2.5a - @opps3c
 
 TIP: {random_tip()}
 """

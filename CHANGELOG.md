@@ -1,3 +1,11 @@
+# 🎉 1.2.5a
+- Improved 2 modules output:
+  - domain_sid
+  - gmsa
+- Minor changes in 'group' module
+
+<br><br>
+
 # 🎉 1.2.5
 - Removed useless SMB connection in the 'kerberoasting' module
 - Fixed typo in tip message

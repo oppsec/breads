@@ -24,18 +24,19 @@ class Gmsa:
         res_status = results[0]
         res_response = results[2][0]
 
-        console.print("[yellow][!][/] Searching for gMSA and passwords")
+        console.print("[yellow][!][/] Collecting gMSA(s)...", highlight=False)
 
         if res_status:
-            console.print("[green][+][/] gMSA(s) found, dumping information.", highlight=False)
-
             if res_response['type'] == 'searchResEntry':
+
                 sam_account_name = res_response['attributes']['sAMAccountName']
                 managed_password = res_response['attributes']['msDS-ManagedPassword']
 
                 if len(managed_password) <= 0:
-                    console.print("[red][!][/] No GMSA accounts or your user don't have enough privileges")
+                    console.print("[red][!][/] No gMSA(s) or your user don't have enough privileges!", highlight=False)
                     return
+
+                console.print("[green][+][/] gMSA(s) found, dumping information...", highlight=False)
 
                 blob = MSDS_MANAGEDPASSWORD_BLOB()
                 blob.fromString(managed_password)
