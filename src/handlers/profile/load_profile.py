@@ -49,7 +49,7 @@ def load_profile(profile_name):
 
             # If the length of host variable on profile json file is greater than 2 we can assume we already have an host defined
             if(len(host) > 2):
-                console.print(f"[yellow][!][/] [yellow]{profile_name}[/]: [cyan]- IP:[/] {host} - [cyan]Username:[/] {username} - [cyan]Password:[/] {password}", highlight=False)
+                console.print(f"[green][+][/] [cyan]IP:[/] {host} | [cyan]Username:[/] {username} | [cyan]Password:[/] {password}", highlight=False)
 
                 keep_data_input = Prompt.ask("[yellow][!][/] There is already information stored in this profile, do you want to keep it? [yellow](y/n)[/]")
                 keep_data_input = keep_data_input.lower()
@@ -126,4 +126,4 @@ def current_profile() -> None:
         return
     
     console.print(f"[green][+][/] [yellow]{profile_name}'s[/] profile settings:")
-    console.print(f"- Username: {get_username()}\n- Password - {get_password()}\n- Host - {get_host()}\n- Domain {get_domain()}\n", highlight=False)
+    console.print(f"- Username: {get_username()}\n- Password: {get_password()}\n- Host: {get_host()}\n- Domain: {get_domain()}\n", highlight=False)
