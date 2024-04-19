@@ -63,6 +63,6 @@ class Adcs:
                         console.print(f"[red][!][/] Error when trying to get certificateTemplates: {error}")
                         return
                     finally:
-                        console.print('\n')
+                        console.print('')
         else:
             console.print("[red][!][/] No entries found in the results.")

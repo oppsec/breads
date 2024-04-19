@@ -19,6 +19,7 @@ class DomainTrusts:
         "securityIdentifier",
         "trustDirection",
     ]
+    requires_args = False
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
@@ -40,16 +41,21 @@ class DomainTrusts:
             for entry in res_response:
                 for key, value in entry.items():
                     if key == "attributes":
-                        for attr, desc in value.items():
-                            if attr == "trustDirection":
-                                desc = trust_direction_map.get(desc, desc)
 
-                            if attr == "securityIdentifier":
-                                desc = binary_sid_to_string(desc)
+                        try:
+                            for attr, desc in value.items():
 
-                            if attr == "cn":
-                                desc = f"[yellow]{desc}[/]"
+                                if attr == "trustDirection":
+                                    desc = trust_direction_map.get(desc, desc)
 
-                            console.print(f"[cyan] - [/] {attr}: {desc}", highlight=False)
+                                if attr == "securityIdentifier":
+                                    desc = binary_sid_to_string(desc)
+
+                                if attr == "cn":
+                                    desc = f"[yellow]{desc}[/]"
+
+                                console.print(f"[cyan]-[/] {attr}: {desc}", highlight=False)
+                        finally:
+                            console.print('')                                
         else:
             console.print("[red][!][/] No entries found in the results.")

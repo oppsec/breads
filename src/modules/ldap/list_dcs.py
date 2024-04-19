@@ -12,6 +12,7 @@ class ListDcs:
     multiple_hosts = False
     search_filter = "(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))"
     attributes = "dnsHostname"
+    requires_args = False
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)

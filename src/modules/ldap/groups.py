@@ -12,6 +12,7 @@ class Groups:
     multiple_hosts = False
     search_filter = "(|(|(|(objectClass=posixGroup)(objectClass=groupOfUniqueNames))(objectClass=groupOfNames))(objectClass=group))"
     attributes = "sAMAccountName"
+    requires_args = False
 
     def on_login(self):
         conn, base_dn = LdapHandler.connection(self)
