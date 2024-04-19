@@ -5,7 +5,7 @@ console = Console()
 
 def list_attribute_handler(attribute, value):
     """ Filter and print "memberOf" and "member" values in more readable way """
-    if attribute in ["memberOf", "member"]:
+    if attribute in ["memberOf", "member", "servicePrincipalName", "objectClass"]:
         console.print(f" - [cyan]{attribute}[/]:", highlight=False)
         for group in value:
             cn_value = search(r"CN=([^,]+)", group)
