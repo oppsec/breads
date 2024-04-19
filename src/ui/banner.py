@@ -6,9 +6,9 @@ def random_tip() -> None:
     tips = [
         "Use 'help' to list all modules", 
         "Create a profile with 'create_profile <name>' command",
-        "We support NT hash as authentication method",
+        "You can use the user NT hash in the password attribute",
         "Change a user password with 'change_password' module",
-        "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/python' command"
+        "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/python' command",
         "Use a module without arguments to see the usage description"
     ]
 
