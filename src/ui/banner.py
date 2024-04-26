@@ -6,7 +6,7 @@ def random_tip() -> None:
     tips = [
         "Use 'help' to list all modules", 
         "Create a profile with 'create_profile <name>' command",
-        "You can use the user NT hash in the password attribute",
+        "You can use the user NT hash in the password profile settings",
         "Change a user password with 'change_password' module",
         "Update your BREADS with 'pipx reinstall breads-ad --python /usr/bin/python' command",
         "Use a module without arguments to see the usage description"
@@ -19,7 +19,7 @@ BANNER_FIRE = f"""
    __                   __  
   / /  _______ ___ ____/ /__
  / _ \/ __/ -_) _ `/ _  (_-<   Breaking Active Directory Security
-/_.__/_/  \__/\_,_/\_,_/___/   1.2.5a - @opps3c
+/_.__/_/  \__/\_,_/\_,_/___/   1.2.5b - @opps3c
 
 TIP: {random_tip()}
 """

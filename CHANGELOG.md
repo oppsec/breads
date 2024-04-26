@@ -1,3 +1,8 @@
+# 🎉 1.2.5b
+- Fixed TGS kerberoasting output
+
+<br><br>
+
 # 🎉 1.2.5a
 - Improved 2 modules output:
   - domain_sid
