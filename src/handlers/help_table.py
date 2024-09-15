@@ -293,6 +293,13 @@ def help_table(inp) -> None:
                 "ldapi <query> <attributes>",
                 "[red]No[/]",
             ),
+                        (
+                "LDAP",
+                "search_computer",
+                "Search for all computers that has specify word on CN attribute",
+                "search_computer <word>",
+                "[red]No[/]",
+            ),
         ]
 
     elif user_input == "smb":

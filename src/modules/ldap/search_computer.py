@@ -1,5 +1,3 @@
-# Test
-
 from rich.console import Console
 from handlers.ldap_connection import LdapHandler
 
@@ -12,7 +10,7 @@ class SearchComputer:
     opsec_safe = True
     multiple_hosts = False
     search_filter = None
-    attributes = "sAMAccountName"
+    attributes = "dNSHostName"
     requires_args = True
     min_args = 1
     usage_desc = "[yellow]Usage:[/] search_computer <word> (ex: search_computer PC)"
@@ -29,6 +27,8 @@ class SearchComputer:
             console.print(f"[green][+][/] Searching for computers with '{user_input}' in the name:")
 
             for entry in res_response:
-                console.print(res_response)
+                if entry["type"] == "searchResEntry":
+                    computer_name = entry["attributes"][self.attributes]
+                    console.print(computer_name)
         else:
             console.print("[red][!][/] No entries found in the results.")

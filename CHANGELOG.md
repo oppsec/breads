@@ -1,3 +1,6 @@
+# 🎉 1.2.5c
+- Fixed search_computer.py module output
+
 # 🎉 1.2.5b
 - Fixed TGS kerberoasting output
 
