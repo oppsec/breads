@@ -1,6 +1,6 @@
 [project]
 name = "breads-ad"
-version = "1.2.4"
+version = "1.2.5d"
 authors = [{ name = "oppsec", email = "opps3c@gmail.com" }]
 description = "Breaking Active Directory Security (BREADS) is a tool design to attack Active Directory environments"
 readme = "README.md"

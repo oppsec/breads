@@ -58,10 +58,13 @@ class Adcs:
                             if(len(certificates_list) > 0):
                                 for certificate_name in certificates_list:
                                     console.print(f"    [yellow]*[/] Certificate Template: [cyan]{certificate_name}[/]")
+                            else:
+                                console.print(f"[red][!][/] No certificate templates found for {hostname}")
+                                pass
 
                     except Exception as error:
-                        console.print(f"[red][!][/] Error when trying to get certificateTemplates: {error}")
-                        return
+                        console.print(f"[red][!][/] Error when trying to get certificateTemplates from {hostname}: {error} ")
+                        pass
                     finally:
                         console.print('')
         else:

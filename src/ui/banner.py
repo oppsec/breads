@@ -19,7 +19,7 @@ BANNER_FIRE = f"""
    __                   __  
   / /  _______ ___ ____/ /__
  / _ \/ __/ -_) _ `/ _  (_-<   Breaking Active Directory Security
-/_.__/_/  \__/\_,_/\_,_/___/   1.2.5c - @opps3c
+/_.__/_/  \__/\_,_/\_,_/___/   1.2.5d - @opps3c
 
 TIP: {random_tip()}
 """
